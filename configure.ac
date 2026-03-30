@@ -1,5 +1,5 @@
-# Init the 42sh project
-AC_INIT([Wolf-Compiler], [1.0])
+# Init the Wolf project
+AC_INIT([wolf], [1.0])
 
 # Setup Automake
 AM_INIT_AUTOMAKE([subdir-objects] [foreign])
@@ -14,9 +14,9 @@ AM_PROG_AR
 AC_PROG_RANLIB
 
 # Check if a C compiler is available
-AC_PROG_CC
+AC_PROG_CXX
 
-CFLAGS="$CFLAGS -std=c99 -pedantic -Werror -Wall -Wextra -Wvla"
+CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wold-style-cast -Werror -pedantic -std=c++20"
 
 # Debug option
 AC_ARG_ENABLE([debug],
@@ -26,7 +26,7 @@ AC_ARG_ENABLE([debug],
 )
 
 if test "x$enable_debug" = "xyes"; then
-    CFLAGS="$CFLAGS -fno-builtin -g -O0 -fsanitize=address"
+    CXXFLAGS="$CXXFLAGS -fno-builtin -g -O0 -fsanitize=address"
     LDFLAGS="$LDFLAGS -fno-builtin -g -O0 -fsanitize=address"
 fi
 
@@ -34,5 +34,7 @@ fi
 AC_CONFIG_FILES([
                     Makefile
                     src/Makefile
+                    src/misc/Makefile
+                    src/driver/Makefile
                 ])
 AC_OUTPUT
