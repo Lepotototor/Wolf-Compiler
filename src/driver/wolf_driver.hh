@@ -5,12 +5,12 @@
 
 namespace driver
 {
-  extern const char* program_name;
-
   class WolfDriver
   {
   public:
     WolfDriver(int argc, char** argv);
+
+    std::string program_name;
 
     bool save_temps = false;
 
@@ -24,6 +24,8 @@ namespace driver
     bool compile = true;
     bool assembl = true;
     bool link = true;
+
+    void run();
 
   private:
     void parse_arg(int argc, char** argv);

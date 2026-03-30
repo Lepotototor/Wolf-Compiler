@@ -1,16 +1,16 @@
-#include "../misc/debug.hh"
 #include "wolf_driver.hh"
+#include "../misc/debug.hh"
 
+#include <cstdlib>
 #include <iostream>
 
-const char* driver::program_name = "Wolf";
+using namespace driver;
 
-driver::WolfDriver::WolfDriver(int argc, char** argv)
-{
-  this->parse_arg(argc, argv);
-}
+const char* program_name = "Wolf";
 
-void driver::WolfDriver::parse_arg(int argc, char** argv)
+WolfDriver::WolfDriver(int argc, char** argv) { this->parse_arg(argc, argv); }
+
+void WolfDriver::parse_arg(int argc, char** argv)
 {
   program_name = argv[0];
 
@@ -64,13 +64,74 @@ void driver::WolfDriver::parse_arg(int argc, char** argv)
       else if (arg == "--help")
         {
           notimplmented("Implement help msg for command line");
-          std::cout << "help";
-          exit(0);
         }
 
       else
         {
           std::cerr << "Warning: " << "unknow option `" << arg << "`\n";
+        }
+    }
+}
+
+void WolfDriver::run()
+{
+  for (const std::string& file : input_files_)
+    {
+      int dot = file.find(".");
+      std::string filename = file.substr(0, dot);
+      std::string ext = file.substr(dot);
+
+      std::cout << "File: " << filename << " has extension " << ext << "\n";
+      if (ext == ".c")
+        {
+          std::string cmd = "cpp -P " + file + " -o " + filename + ".i";
+          std::cout << cmd << "\n";
+          int r = system(cmd.c_str());
+          if (r != 0)
+            {
+              exit(1);
+            }
+        }
+
+      if (!compile)
+        continue;
+
+      if (ext == ".c" || ext == ".i")
+        {
+          // do your stuff with compiler
+        }
+
+      if (!assembl)
+        continue;
+
+      if (ext == ".c" || ext == ".i" || ext == ".s" || ext == ".S")
+        {
+          std::string cmd = "as " + (ext == ".S" ? file : filename + ".s")
+            + " -o " + filename + ".o";
+          std::cout << cmd << "\n";
+          int r = system(cmd.c_str());
+          if (r != 0)
+            {
+              exit(1);
+            }
+        }
+    }
+
+  if (compile && assembl && link)
+    {
+      std::string cmd = "ld";
+      for (const std::string& file : input_files_)
+        {
+          std::string filename = file.substr(0, file.find("."));
+          cmd += " " + filename + ".o";
+        }
+      cmd += " -o a.out";
+
+      std::cout << cmd << "\n";
+      int r = system(cmd.c_str());
+      if (r != 0)
+        {
+          exit(1);
         }
     }
 }
