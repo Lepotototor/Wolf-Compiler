@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -8,6 +10,8 @@ namespace driver
   class WolfDriver
   {
   public:
+    WolfDriver(int argc, char** argv);
+
     bool save_temps = false;
 
     bool lex_trace = false;
@@ -21,9 +25,9 @@ namespace driver
     bool assembl = true;
     bool link = true;
 
+  private:
     void parse_arg(int argc, char** argv);
 
-  private:
     std::vector<std::string> input_files_;
   };
 } // namespace driver

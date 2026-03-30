@@ -1,8 +1,14 @@
+#include "../misc/debug.hh"
 #include "wolf_driver.hh"
 
 #include <iostream>
 
 const char* driver::program_name = "Wolf";
+
+driver::WolfDriver::WolfDriver(int argc, char** argv)
+{
+  this->parse_arg(argc, argv);
+}
 
 void driver::WolfDriver::parse_arg(int argc, char** argv)
 {
@@ -57,6 +63,7 @@ void driver::WolfDriver::parse_arg(int argc, char** argv)
 
       else if (arg == "--help")
         {
+          notimplmented("Implement help msg for command line");
           std::cout << "help";
           exit(0);
         }
