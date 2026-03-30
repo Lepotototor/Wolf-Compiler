@@ -10,5 +10,5 @@ wolf_SOURCES = wolf.cc
 wolf_CPPFLAGS = -I%D%  -I%D%/misc -I%D%/driver
 
 wolf_LDADD =  \
-	misc/libmisc.a \
-	driver/libdriver.a 
+	driver/libdriver.a \
+	misc/libmisc.a

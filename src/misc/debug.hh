@@ -1,11 +1,9 @@
 #pragma once
 
-[[noreturn]] void unreachable_terminate(const char* filename,
-                                        const char* filepos);
+[[noreturn]] void unreachable_terminate(const char* filename, int filepos);
 
-[[noreturn]] void not_implemented_terminate(const char* filename,
-                                            const char* filepos,
-                                            const char* msg);
+[[noreturn]] void
+not_implemented_terminate(const char* filename, int filepos, const char* msg);
 
 #define unreachable()                                                          \
   do                                                                           \

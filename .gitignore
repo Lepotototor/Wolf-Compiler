@@ -48,3 +48,4 @@ depcomp
 install-sh
 missing
 *.status
+src/wolf
