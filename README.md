@@ -40,5 +40,17 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [ ] Boostrap
 
 
-# TODO
 ## Build System
+### To init build system
+```bash
+autoreconf --install
+./configure
+```
+### To build the project
+```bash
+make -j 67
+```
+### To install the project (Optional)
+```bash
+sudo make install
+```
