@@ -1,0 +1,35 @@
+# compile files
+*.out
+*.o
+*.so
+*.slo
+*.lo
+*.obj
+*.a
+*.la
+*.lib
+*.s
+*.asm
+
+# precompile headers
+*.gch
+*.pch
+
+# trashfiles
+*.output
+*.log
+*.tar
+*.gz
+*.xz
+*.zip
+*.rar
+*.pdf
+*.txt
+*.gv
+*.png
+*.svg
+*.json
+*.html
+*.xml
+
+__pycache__
