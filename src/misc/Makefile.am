@@ -1,6 +1,9 @@
 lib_LIBRARIES = libmisc.a
 
 libmisc_a_SOURCES =  \
+  error.cc \
+  error.hh \
+  error.hxx \
   debug.cc \
   debug.hh
 
