@@ -4,8 +4,8 @@ libmisc_a_SOURCES =  \
   location.cc \
   location.hh \
   location.hxx \
-  format_helper.cc \
-  format_helper.hh \
+  format-helper.cc \
+  format-helper.hh \
   error.cc \
   error.hh \
   error.hxx \
