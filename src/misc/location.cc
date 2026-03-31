@@ -14,7 +14,7 @@ namespace misc
     return os;
   }
 
-  Locatable::Locatable(const Location& location)
+  Locable::Locable(const Location& location)
     : location_(location)
   {}
 }; // namespace misc

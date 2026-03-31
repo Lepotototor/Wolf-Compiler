@@ -11,5 +11,5 @@ namespace misc
   inline unsigned Location::start_col_get() const { return start_col_; }
   inline unsigned Location::end_col_get() const { return end_col_; }
 
-  inline const Location& Locatable::location_get() const { return location_; }
+  inline const Location& Locable::location_get() const { return location_; }
 } // namespace misc

@@ -29,10 +29,10 @@ namespace misc
     unsigned end_col_;
   };
 
-  class Locatable
+  class Locable
   {
   public:
-    Locatable(const Location&);
+    Locable(const Location&);
     const Location& location_get() const;
 
   private:
