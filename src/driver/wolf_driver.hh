@@ -12,6 +12,13 @@ namespace driver
 
     std::string program_name;
 
+    void run();
+
+  private:
+    void parse_arg(int argc, char** argv);
+
+    std::vector<std::string> input_files_;
+
     bool save_temps = false;
 
     bool lex_trace = false;
@@ -25,11 +32,6 @@ namespace driver
     bool assembl = true;
     bool link = true;
 
-    void run();
-
-  private:
-    void parse_arg(int argc, char** argv);
-
-    std::vector<std::string> input_files_;
+    std::string output_name = "a.out";
   };
 } // namespace driver

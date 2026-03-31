@@ -61,6 +61,19 @@ void WolfDriver::parse_arg(int argc, char** argv)
           link = false;
         }
 
+      else if (arg == "-o")
+        {
+          i++;
+          if (argv[i] == nullptr)
+            {
+              notimplmented("Implement err message for non existent file");
+            }
+          else
+            {
+              output_name = argv[i];
+            }
+        }
+
       else if (arg == "--help")
         {
           notimplmented("Implement help msg for command line");
@@ -125,7 +138,7 @@ void WolfDriver::run()
           std::string filename = file.substr(0, file.find("."));
           cmd += " " + filename + ".o";
         }
-      cmd += " -o a.out";
+      cmd += " -o " + output_name;
 
       std::cout << cmd << "\n";
       int r = system(cmd.c_str());
