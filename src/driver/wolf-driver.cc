@@ -1,6 +1,6 @@
-#include "wolf_driver.hh"
+#include "wolf-driver.hh"
 #include "../misc/debug.hh"
-#include "../misc/format_helper.hh"
+#include "../misc/format-helper.hh"
 
 #include <cstdlib>
 #include <iostream>
@@ -10,6 +10,8 @@ namespace driver
 {
 
   const char* program_name = "Wolf";
+
+  misc::Error& WolfDriver::error_get() { return error_; }
 
   WolfDriver::WolfDriver(int argc, char** argv) { this->parse_arg(argc, argv); }
 

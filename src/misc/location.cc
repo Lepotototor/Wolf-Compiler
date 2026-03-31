@@ -1,6 +1,6 @@
 #include "location.hh"
 
-#include "format_helper.hh"
+#include "format-helper.hh"
 
 namespace misc
 {

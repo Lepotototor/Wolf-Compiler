@@ -16,6 +16,8 @@ namespace driver
 
     void run();
 
+    misc::Error& error_get();
+
   private:
     void parse_arg(int argc, char** argv);
 

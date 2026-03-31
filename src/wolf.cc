@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "driver/wolf_driver.hh"
+#include "driver/wolf-driver.hh"
 
 int main(int argc, char** argv)
 {

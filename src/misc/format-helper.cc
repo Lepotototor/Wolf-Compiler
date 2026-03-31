@@ -1,4 +1,4 @@
-#include "format_helper.hh"
+#include "format-helper.hh"
 #include "error.hh"
 
 #include <unistd.h>
