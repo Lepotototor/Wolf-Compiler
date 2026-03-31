@@ -1,6 +1,8 @@
 lib_LIBRARIES = libmisc.a
 
 libmisc_a_SOURCES =  \
+  format_helper.cc \
+  format_helper.hh \
   error.cc \
   error.hh \
   error.hxx \
