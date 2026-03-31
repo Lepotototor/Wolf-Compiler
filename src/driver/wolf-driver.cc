@@ -91,6 +91,13 @@ namespace driver
                    << "`\n";
           }
       }
+
+    if (input_files_.size() == 0)
+      {
+        error_ << misc::error_type::failure << bold(program_name) << ": "
+               << misc::err() << "not given input files\n";
+        error_.exit();
+      }
   }
 
   void WolfDriver::run()

@@ -13,7 +13,7 @@ namespace misc
   [[noreturn]] void Error::exit()
   {
     std::cerr << std::flush;
-    throw *this;
+    std::exit(status_);
   }
 
   void Error::exit_on_error()
