@@ -5,7 +5,7 @@ AC_INIT([wolf], [1.0])
 AM_INIT_AUTOMAKE([subdir-objects] [foreign])
 
 # Pretty display of Makefile rules
-AM_SILENT_RULES([yes])
+AM_SILENT_RULES([no])
 
 # Enable ar for Makefile
 AM_PROG_AR

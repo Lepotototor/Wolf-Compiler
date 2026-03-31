@@ -4,7 +4,7 @@
 
 using namespace misc;
 
-template <typename T> Error& Error::operator<<(const T& t)
+template <typename T> const Error& Error::operator<<(const T& t) const
 {
   std::cerr << t;
   return *this;

@@ -28,13 +28,8 @@ namespace misc
     // Use to print elements to std::cerr
     template <typename T> const Error& operator<<(const T& t) const;
 
-    static Error& warn(Error& e, bool compile_warn = true);
-    static Error& err(Error& e);
-
     //Use to handle std::flush, std::endl, ..
     const Error& operator<<(std::ostream& (*f)(std::ostream&)) const;
-    // Use to handle warn and err
-    const Error& operator<<(Error& (*f)(Error&)) const;
 
     // Use to stor statistics about errors and warnings
     static unsigned nb_err_get();
@@ -55,3 +50,5 @@ namespace misc
   };
 
 } // namespace misc
+
+#include "error.hxx"

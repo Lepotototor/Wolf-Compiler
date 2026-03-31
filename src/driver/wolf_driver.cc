@@ -82,7 +82,8 @@ void WolfDriver::parse_arg(int argc, char** argv)
 
       else
         {
-          error_ << program_name << ": " << misc::Error::warn(error_, false)
+          error_ << program_name
+                 << ": " /*<< misc::Error::warn(error_, false) */
                  << "unrecognized command-line option `" << arg << "`\n";
         }
     }
