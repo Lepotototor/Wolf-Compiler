@@ -5,6 +5,7 @@
 #include <iostream>
 
 using namespace driver;
+using namespace misc;
 
 const char* program_name = "Wolf";
 
@@ -81,7 +82,8 @@ void WolfDriver::parse_arg(int argc, char** argv)
 
       else
         {
-          std::cerr << "Warning: " << "unknow option `" << arg << "`\n";
+          error_ << program_name << ": " << misc::Error::warn(error_, false)
+                 << "unrecognized command-line option `" << arg << "`\n";
         }
     }
 }

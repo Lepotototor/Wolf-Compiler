@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "../misc/error.hh"
+
 namespace driver
 {
   class WolfDriver
@@ -33,5 +35,7 @@ namespace driver
     bool link = true;
 
     std::string output_name = "a.out";
+
+    misc::Error error_;
   };
 } // namespace driver
