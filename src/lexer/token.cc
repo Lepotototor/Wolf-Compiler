@@ -7,6 +7,12 @@ namespace lexer
 
   const std::string& ValueToken::val_get() const { return val_; }
 
+  bool Token::operator==(const Token& t) const
+  {
+    return this->type_ == t.type_ && this->operator==(tok_repr(t));
+  }
+  bool Token::operator!=(const Token& t) const { return !this->operator==(t); }
+
   bool Token::operator==(const std::string& str) const
   {
     return tok_repr(*this) == str;
@@ -18,14 +24,10 @@ namespace lexer
     return repr.size() == 1 && repr[0] == c;
   }
 
-  bool ValueToken::operator==(const std::string& str) const
+  bool Token::operator!=(const std::string& str) const
   {
-    return this->val_ == str;
+    return !this->operator==(str);
   }
-
-  bool ValueToken::operator==(const char c) const
-  {
-    return this->val_.size() == 1 && this->val_[0] == c;
-  }
+  bool Token::operator!=(const char c) const { return !this->operator==(c); }
 
 } // namespace lexer

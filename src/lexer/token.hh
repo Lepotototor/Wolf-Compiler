@@ -110,8 +110,13 @@ namespace lexer
       , type_(t)
     {}
 
+    bool operator==(const Token&) const;
+    bool operator!=(const Token&) const;
+
     virtual bool operator==(const std::string&) const;
     virtual bool operator==(const char) const;
+    virtual bool operator!=(const std::string&) const;
+    virtual bool operator!=(const char) const;
 
     token_type type() const;
 
@@ -126,9 +131,6 @@ namespace lexer
       : Token(t, location)
       , val_(val)
     {}
-
-    virtual bool operator==(const std::string&) const override;
-    virtual bool operator==(const char) const override;
 
     const std::string& val_get() const;
 
