@@ -25,6 +25,9 @@ namespace ast
       delete body_;
     }
 
+    virtual void accept(ConstVisitor& v) const override { v(*this); }
+    virtual void accept(Visitor& v) override { v(*this); }
+
     const TypeName& return_type_get() const { return *return_type_; }
     TypeName& return_type_get() { return *return_type_; }
 

@@ -15,6 +15,9 @@ namespace ast
 
     ~ReturnExp() { delete return_val_; }
 
+    virtual void accept(ConstVisitor& v) const override { v(*this); }
+    virtual void accept(Visitor& v) override { v(*this); }
+
     const Exp* return_val_get() const { return return_val_; }
     Exp* return_val_get() { return return_val_; }
 

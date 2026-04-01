@@ -21,6 +21,9 @@ namespace ast
         delete exp;
     }
 
+    virtual void accept(ConstVisitor& v) const override { v(*this); }
+    virtual void accept(Visitor& v) override { v(*this); }
+
     const std::vector<Exp*>& exps_get() const { return exps_; }
     std::vector<Exp*>& exps_get() { return exps_; }
 

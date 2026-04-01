@@ -13,6 +13,9 @@ namespace ast
       , val_(val)
     {}
 
+    virtual void accept(ConstVisitor& v) const override { v(*this); }
+    virtual void accept(Visitor& v) override { v(*this); }
+
     const std::string& val_get() const { return val_; }
 
   protected:
