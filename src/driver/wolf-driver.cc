@@ -2,7 +2,10 @@
 #include "../misc/debug.hh"
 #include "../misc/format-helper.hh"
 
+#include "../lexer/scan-wolf.hh"
+
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 
 using namespace misc;
@@ -125,7 +128,7 @@ namespace driver
 
         if (ext == ".c" || ext == ".i")
           {
-            // do your stuff with compiler
+            compiler(filename + ".i");
           }
 
         if (!assembl)
@@ -161,5 +164,14 @@ namespace driver
             exit(1);
           }
       }
+  }
+
+  void WolfDriver::compiler(const std::string& file)
+  {
+    // Lexing doing with re/flex
+    std::ifstream in{file};
+    lexer::Lexer lexer{in};
+    lexer.set_debug(lex_trace);
+    lexer.lex(*this);
   }
 } // namespace driver

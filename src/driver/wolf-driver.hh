@@ -21,6 +21,9 @@ namespace driver
   private:
     void parse_arg(int argc, char** argv);
 
+    // Do internal compiler steps (lex, parse, bind, ...)
+    void compiler(const std::string& file);
+
     std::vector<std::string> input_files_;
 
     bool save_temps = false;
