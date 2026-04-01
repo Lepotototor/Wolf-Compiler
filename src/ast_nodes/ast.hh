@@ -16,9 +16,7 @@ namespace ast
 
     // Disable copy of a node
     Ast(const Ast&) = delete;
-    Ast(Ast&&) = delete;
     const Ast& operator=(const Ast&) = delete;
-    Ast&& operator=(Ast&&) = delete;
   };
 
 } // namespace ast
