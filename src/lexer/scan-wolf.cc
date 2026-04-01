@@ -54,7 +54,7 @@
 #include "../driver/wolf-driver.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
-// TODO #define YY_USER_ACTION td.location_ += size();
+// TODO #define YY_USER_ACTION col += size();
 
 
 #define TOKEN(Type)                             \
@@ -73,7 +73,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #define INITIAL (0)
-#define YY_NUM_RULES (1)
+#define SC_COMMENT (1)
+#define SC_NEW_LOC (2)
+#define YY_NUM_RULES (44)
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -108,8 +110,16 @@ namespace lexer {
 class Lexer : public FlexLexer {
 #line 39 "scan-wolf.ll"
 
+	std::string file;
 	unsigned line;
 	unsigned col;
+
+	// Use to got new location
+	std::string new_file;
+	int new_line;
+
+	// Use to detect subcomment
+	unsigned lvl;
 
  public:
   Lexer(
@@ -120,10 +130,16 @@ class Lexer : public FlexLexer {
     :
       FlexLexer(input, os)
   {
-#line 44 "scan-wolf.ll"
+#line 52 "scan-wolf.ll"
 
+	file = "";
 	line = 0;
 	col = 0;
+
+	new_file = "";
+	new_line = 0;
+
+	lvl = 0;
 
     set_debug(true);
   }
@@ -164,7 +180,7 @@ class Lexer : public FlexLexer {
 // Add a param of function lex() generate in Lexer class
 #line 9 "scan-wolf.ll"
 // Name of the class generate by flex
-#line 49 "scan-wolf.ll"
+#line 63 "scan-wolf.ll"
 /* Abbreviations.  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -175,8 +191,12 @@ class Lexer : public FlexLexer {
 
 int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
 {
-  static const char *REGEX_INITIAL = "(?m)(.)";
+  static const char *REGEX_INITIAL = "(?m)((?:\\Q/*\\E))|((?:\\Q# \\E))|((?:[\\x09\\x0b\\x20]))|(\\n\\r)|(\\r\\n)|(\\n)|(\\r)|((?:\\Qint\\E))|((?:\\Qvoid\\E))|((?:\\Qreturn\\E))|((?:\\Qwhile\\E))|((?:\\Qdo\\E))|((?:\\Qif\\E))|((?:\\Qelse\\E))|((?:\\Q;\\E))|((?:\\Q(\\E))|((?:\\Q)\\E))|((?:\\Q{\\E))|((?:\\Q}\\E))|((?:\\Q==\\E))|((?:\\Q||\\E))|((?:\\Q&&\\E))|((?:\\Q=\\E))|((?:\\Q<=\\E))|((?:\\Q>=\\E))|((?:\\Q<\\E))|((?:\\Q>\\E))|((?:\\Q+\\E))|((?:\\Q-\\E))|((?:\\Q*\\E))|((?:\\Q/\\E))|((?:\\Q&\\E))|((?:\\Q|\\E))|((?:[A-Z_a-z][0-9A-Z_a-z]*))|(0(?=[0-9]+))|((?:[0-9]+))|(.)";
   static const reflex::Pattern PATTERN_INITIAL(REGEX_INITIAL);
+  static const char *REGEX_SC_COMMENT = "(?m)((?:\\Q/*\\E))|((?:\\Q*/\\E))|(.|\\n)";
+  static const reflex::Pattern PATTERN_SC_COMMENT(REGEX_SC_COMMENT);
+  static const char *REGEX_SC_NEW_LOC = "(?m)((?:[0-9]+))|((?:(?:\\Q\"\\E).*(?:\\Q\"\\E)))|(\\n)";
+  static const reflex::Pattern PATTERN_SC_NEW_LOC(REGEX_SC_NEW_LOC);
   if (!has_matcher())
   {
     matcher(new Matcher(PATTERN_INITIAL, stdinit(), this));
@@ -184,6 +204,10 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
   }
   while (true)
   {
+    switch (start())
+    {
+      case INITIAL:
+        matcher().pattern(PATTERN_INITIAL);
         switch (matcher().scan())
         {
           case 0:
@@ -198,17 +222,359 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
               output(matcher().input());
             }
             YY_BREAK
-          case 1: // rule scan-wolf.ll:58: . :
-            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:58\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+          case 1: // rule scan-wolf.ll:118: "/*" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:118\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
-#line 58 "scan-wolf.ll"
+#line 118 "scan-wolf.ll"
+{ lvl = 1; start(SC_COMMENT); }
+
+            YY_BREAK
+          case 2: // rule scan-wolf.ll:120: "# " :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:120\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 120 "scan-wolf.ll"
+{
+	new_line = -1;
+	start(SC_NEW_LOC);
+	// TODO Parse new Location
+}
+
+            YY_BREAK
+          case 3: // rule scan-wolf.ll:126: {BLANK} :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:126\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 126 "scan-wolf.ll"
+{ /* DO nothing */ }
+
+            YY_BREAK
+          case 4: // rule scan-wolf.ll:128: \n\r :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:128\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 128 "scan-wolf.ll"
+{ line++; col = 0; }
+            YY_BREAK
+          case 5: // rule scan-wolf.ll:129: \r\n :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:129\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 129 "scan-wolf.ll"
+{ line++; col = 0; }
+            YY_BREAK
+          case 6: // rule scan-wolf.ll:130: \n :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:130\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 130 "scan-wolf.ll"
+{ line++; col = 0; }
+            YY_BREAK
+          case 7: // rule scan-wolf.ll:131: \r :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:131\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 131 "scan-wolf.ll"
+{ line++; col = 0; }
+
+            YY_BREAK
+          case 8: // rule scan-wolf.ll:133: "int" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:133\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 133 "scan-wolf.ll"
+{ std::cout << "Got int\n"; }
+            YY_BREAK
+          case 9: // rule scan-wolf.ll:134: "void" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:134\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 134 "scan-wolf.ll"
+{ std::cout << "Got void\n"; }
+            YY_BREAK
+          case 10: // rule scan-wolf.ll:135: "return" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:135\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 135 "scan-wolf.ll"
+{ std::cout << "Got return\n"; }
+            YY_BREAK
+          case 11: // rule scan-wolf.ll:136: "while" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:136\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 136 "scan-wolf.ll"
+{ std::cout << "Got while\n"; }
+            YY_BREAK
+          case 12: // rule scan-wolf.ll:137: "do" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:137\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 137 "scan-wolf.ll"
+{ std::cout << "Got do\n"; }
+            YY_BREAK
+          case 13: // rule scan-wolf.ll:138: "if" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:138\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 138 "scan-wolf.ll"
+{ std::cout << "Got if\n"; }
+            YY_BREAK
+          case 14: // rule scan-wolf.ll:139: "else" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:139\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 139 "scan-wolf.ll"
+{ std::cout << "Got else\n"; }
+
+            YY_BREAK
+          case 15: // rule scan-wolf.ll:141: ";" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:141\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 141 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 16: // rule scan-wolf.ll:142: "(" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:142\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 142 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 17: // rule scan-wolf.ll:143: ")" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:143\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 143 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 18: // rule scan-wolf.ll:144: "{" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:144\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 144 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 19: // rule scan-wolf.ll:145: "}" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:145\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 145 "scan-wolf.ll"
+{ }
+
+            YY_BREAK
+          case 20: // rule scan-wolf.ll:147: "==" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:147\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 147 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 21: // rule scan-wolf.ll:148: "||" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:148\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 148 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 22: // rule scan-wolf.ll:149: "&&" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:149\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 149 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 23: // rule scan-wolf.ll:150: "=" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:150\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 150 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 24: // rule scan-wolf.ll:151: "<=" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:151\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 151 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 25: // rule scan-wolf.ll:152: ">=" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:152\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 152 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 26: // rule scan-wolf.ll:153: "<" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:153\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 153 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 27: // rule scan-wolf.ll:154: ">" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:154\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 154 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 28: // rule scan-wolf.ll:155: "+" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:155\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 155 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 29: // rule scan-wolf.ll:156: "-" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:156\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 156 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 30: // rule scan-wolf.ll:157: "*" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:157\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 157 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 31: // rule scan-wolf.ll:158: "/" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:158\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 158 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 32: // rule scan-wolf.ll:159: "&" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:159\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 159 "scan-wolf.ll"
+{ }
+            YY_BREAK
+          case 33: // rule scan-wolf.ll:160: "|" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:160\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 160 "scan-wolf.ll"
+{ }
+
+            YY_BREAK
+          case 34: // rule scan-wolf.ll:162: {ID} :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:162\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 162 "scan-wolf.ll"
+{ std::cout << "Indetifier: " << text() << "\n"; }
+
+            YY_BREAK
+          case 35: // rule scan-wolf.ll:164: 0/[0-9]+ :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:164\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 164 "scan-wolf.ll"
+// no action, prevent trailing 0
+            YY_BREAK
+          case 36: // rule scan-wolf.ll:165: {int} :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:165\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 165 "scan-wolf.ll"
+{ std::cout << "nb: " << text() << "\n"; }
+
+            YY_BREAK
+          case 37: // rule scan-wolf.ll:167: . :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:167\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 167 "scan-wolf.ll"
 {
 	(void)tokens;
 	wd.error_get() << "Invalid character: " << yytext[0] << "\n";
-	std::cout << yytext[0] << "\n";
 }
 
             YY_BREAK
         }
+        break;
+      case SC_COMMENT:
+        matcher().pattern(PATTERN_SC_COMMENT);
+        switch (matcher().scan())
+        {
+          case 0:
+            if (matcher().at_end())
+            {
+              if (debug()) std::cerr << "--\033[1;35mEOF rule scan-wolf.ll:86\033[0m start(" << start() << ")\n";
+#line 86 "scan-wolf.ll"
+{
+		wd.error_get() << misc::error_type::scan
+			<< "Comment never finish at "
+			// << td.location_
+			<< "\n";
+	}
+
+            }
+            else
+            {
+              if (debug()) std::cerr << "--\033[1;31mdefault rule\033[0m\n";
+              output(matcher().input());
+            }
+            YY_BREAK
+          case 1: // rule scan-wolf.ll:74: "/*" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:74\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 74 "scan-wolf.ll"
+{
+		lvl++;
+	}
+
+            YY_BREAK
+          case 2: // rule scan-wolf.ll:78: "*/" :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:78\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 78 "scan-wolf.ll"
+{
+		lvl--;
+		if (lvl == 0)
+		{
+			start(INITIAL);
+		}
+	}
+
+            YY_BREAK
+          case 3: // rule scan-wolf.ll:93: .|\n :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:93\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 93 "scan-wolf.ll"
+{}
+
+
+            YY_BREAK
+        }
+        break;
+      case SC_NEW_LOC:
+        matcher().pattern(PATTERN_SC_NEW_LOC);
+        switch (matcher().scan())
+        {
+          case 0:
+            if (matcher().at_end())
+            {
+              if (debug()) std::cerr << "--\033[1;35mEOF\033[0m start(" << start() << ")\n";
+              yyterminate();
+            }
+            else
+            {
+              if (debug()) std::cerr << "--\033[1;31mdefault rule\033[0m\n";
+              output(matcher().input());
+            }
+            YY_BREAK
+          case 1: // rule scan-wolf.ll:96: {int} :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:96\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 96 "scan-wolf.ll"
+{
+	if (new_line  == -1)
+	{
+		new_line = std::stoi(text());
+	}
+}
+
+            YY_BREAK
+          case 2: // rule scan-wolf.ll:103: {STRING_LITERAL} :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:103\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 103 "scan-wolf.ll"
+{
+	new_file = text();
+}
+
+            YY_BREAK
+          case 3: // rule scan-wolf.ll:107: \n :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:107\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+            YY_USER_ACTION
+#line 107 "scan-wolf.ll"
+{
+	std::cout << "New Loc: " << new_file<< ":" << new_line << "\n";
+
+	file = new_file;
+	col = 0;
+	line = new_line;
+
+	start(INITIAL);
+}
+
+
+            YY_BREAK
+        }
+        break;
+      default:
+        start(0);
+    }
   }
 }

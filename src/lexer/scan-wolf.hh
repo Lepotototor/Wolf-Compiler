@@ -57,7 +57,7 @@
 #include "../driver/wolf-driver.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
-// TODO #define YY_USER_ACTION td.location_ += size();
+// TODO #define YY_USER_ACTION col += size();
 
 
 #define TOKEN(Type)                             \
@@ -102,8 +102,16 @@ namespace lexer {
 class Lexer : public FlexLexer {
 #line 39 "scan-wolf.ll"
 
+	std::string file;
 	unsigned line;
 	unsigned col;
+
+	// Use to got new location
+	std::string new_file;
+	int new_line;
+
+	// Use to detect subcomment
+	unsigned lvl;
 
  public:
   Lexer(
@@ -114,10 +122,16 @@ class Lexer : public FlexLexer {
     :
       FlexLexer(input, os)
   {
-#line 44 "scan-wolf.ll"
+#line 52 "scan-wolf.ll"
 
+	file = "";
 	line = 0;
 	col = 0;
+
+	new_file = "";
+	new_line = 0;
+
+	lvl = 0;
 
     set_debug(true);
   }
