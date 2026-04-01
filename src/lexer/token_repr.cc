@@ -174,14 +174,14 @@ namespace lexer
         return "]";
 
       default:
-        const ValueToken* value_token = dynamic_cast<const ValueToken*>(&tok);
-        if (value_token == nullptr)
+        if (tok.contain_value())
           {
-            unreachable();
+            return tok.val_get();
           }
         else
           {
-            return value_token->val_get();
+            std::cerr << tok.type() << "\n";
+            unreachable();
           }
       }
   }

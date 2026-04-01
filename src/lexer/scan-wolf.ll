@@ -21,16 +21,25 @@
 
 #include "token.hh"
 #include "../driver/wolf-driver.hh"
+#include "../misc/location.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
-// TODO #define YY_USER_ACTION col += size();
+#define YY_USER_ACTION col += size();
 
+#define GET_LOC Location{file, line, col, col + yyleng - 1}
+#define GET_TOK(Type) Type ## _TOK
 
-#define TOKEN(Type)                             \
-  lexer::make_ ## Type(td.location_)
+#define TOKEN(Type)										\
+	token_type type = Type ## _TOK;						\
+	misc::Location location{file, line, col - YYLeng() + 1, col};	\
+	Token token{type, location};						\
+	tokens.emplace(token);
 
-#define TOKEN_VAL(Type, Value)                  \
-  lexer::make_ ## Type(Value, td.location_)
+#define TOKEN_VAL(Type, Value)										\
+	token_type type = Type ## _TOK;									\
+	misc::Location location{file, line, col - YYLeng() + 1, col};	\
+	Token token{type, location, Value};						\
+	tokens.emplace(token);
 
 
 %}
@@ -61,10 +70,9 @@
 }
 
 /* Abbreviations.  */
-int             [0-9]+
+number             [0-9]+
 ID [a-zA-Z_][a-zA-Z0-9_]*
-RESERVED_ID _[a-zA-Z0-9_]*
-BLANK [ \t\v]
+BLANK [ \t\v\f]
 STRING_LITERAL "\"".*"\""
 
 %x SC_COMMENT SC_NEW_LOC
@@ -93,7 +101,7 @@ STRING_LITERAL "\"".*"\""
 <SC_COMMENT> .|\n {}
 
 
-<SC_NEW_LOC> {int} {
+<SC_NEW_LOC> {number} {
 	if (new_line  == -1)
 	{
 		new_line = std::stoi(text());
@@ -102,12 +110,14 @@ STRING_LITERAL "\"".*"\""
 
 <SC_NEW_LOC> {STRING_LITERAL} {
 	new_file = text();
+	new_file.erase(0, 1);
+	new_file.erase(new_file.size() - 1);
 }
 
-<SC_COMMENT> . {}
+<SC_NEW_LOC> . {}
 
 <SC_NEW_LOC> \n {
-	std::cout << "New Loc: " << new_file<< ":" << new_line << "\n";
+	// std::cout << "New Loc: " << new_file<< ":" << new_line << "\n";
 
 	file = new_file;
 	col = 0;
@@ -122,7 +132,6 @@ STRING_LITERAL "\"".*"\""
 "# " {
 	new_line = -1;
 	start(SC_NEW_LOC);
-	// TODO Parse new Location
 }
 
 {BLANK} { /* DO nothing */ }
@@ -132,39 +141,98 @@ STRING_LITERAL "\"".*"\""
 \n			{ line++; col = 0; }
 \r			{ line++; col = 0; }
 
-"int" { std::cout << "Got int\n"; }
-"void" { std::cout << "Got void\n"; }
-"return" { std::cout << "Got return\n"; }
-"while" { std::cout << "Got while\n"; }
-"do" { std::cout << "Got do\n"; }
-"if" { std::cout << "Got if\n"; }
-"else" { std::cout << "Got else\n"; }
+"auto" { /* keyword auto is ignored */ }
 
-";" { }
-"(" { }
-")" { }
-"{" { }
-"}" { }
+"void"			{ TOKEN(VOID); }
+"int"			{ TOKEN(INT); }
+"char"			{ TOKEN(CHAR); }
+"flot"			{ TOKEN(FLOAT); }
+"double"		{ TOKEN(DOUBLE); }
+"unsigned"		{ TOKEN(UNSIGNED); }
+"signed"		{ TOKEN(SIGNED); }
+"long"			{ TOKEN(LONG); }
+"short"			{ TOKEN(SHORT); }
+"register"		{ TOKEN(REGISTER); }
 
-"==" { }
-"||" { }
-"&&" { }
-"=" { }
-"<=" { }
-">=" { }
-"<" { }
-">" { }
-"+" { }
-"-" { }
-"*" { }
-"/" { }
-"&" { }
-"|" { }
+"struct"		{ TOKEN(STRUCT); }
+"union"			{ TOKEN(UNION); }
+"enum"			{ TOKEN(ENUM); }
 
-{ID} { std::cout << "Indetifier: " << text() << "\n"; }
+"typedef"		{ TOKEN(TYPEDEF); }
+"extern"		{ TOKEN(EXTERN); }
+"const"			{ TOKEN(CONST); }
+"static"		{ TOKEN(STATIC); }
+"inline"		{ TOKEN(INLINE); }
+"volatile"		{ TOKEN(VOLATILE); }
 
-0/[0-9]+                // no action, prevent trailing 0
-{int} { std::cout << "nb: " << text() << "\n"; }
+"while"			{ TOKEN(WHILE); }
+"for"			{ TOKEN(FOR); }
+"do"			{ TOKEN(DO); }
+"break"			{ TOKEN(BREAK); }
+"continue"		{ TOKEN(CONTINUE); }
+"if"			{ TOKEN(IF); }
+"else"			{ TOKEN(ELSE); }
+"switch"		{ TOKEN(SWITCH); }
+"case"			{ TOKEN(CASE); }
+"default"		{ TOKEN(DEFAULT); }
+"goto"			{ TOKEN(GOTO); }
+"sizeof"		{ TOKEN(SIZEOF); }
+"return"		{ TOKEN(RETURN); }
+
+"!"				{ TOKEN(NOT); }
+"=="			{ TOKEN(EQ); }
+"!="			{ TOKEN(NOT); }
+"<"				{ TOKEN(LT); }
+">"				{ TOKEN(GT); }
+"<="			{ TOKEN(LE); }
+">="			{ TOKEN(GE); }
+"&&"			{ TOKEN(AND); }
+"||"			{ TOKEN(OR); }
+"+"				{ TOKEN(PLUS); }
+"-"				{ TOKEN(MINUS); }
+"*"				{ TOKEN(STAR); }
+"/"				{ TOKEN(DIV); }
+"%"				{ TOKEN(MOD); }
+"~"				{ TOKEN(TILD); }
+"&"				{ TOKEN(AMP); }
+"|"				{ TOKEN(PIPE); }
+"^"				{ TOKEN(XOR); }
+">>"			{ TOKEN(RSHIFT); }
+"<<"			{ TOKEN(LSHIFT); }
+"?"				{ TOKEN(QUESTION); }
+
+"++"			{ TOKEN(INC); }
+"--"			{ TOKEN(DEC); }
+
+"+="			{ TOKEN(PLUS_ASSIGN); }
+"-="			{ TOKEN(MINUS_ASSIGN); }
+"*="			{ TOKEN(MULT_ASSIGN); }
+"/="			{ TOKEN(DIV_ASSIGN); }
+"%="			{ TOKEN(MOD_ASSIGN); }
+"&="			{ TOKEN(AMP_ASSIGN); }
+"|="			{ TOKEN(PIPE_ASSIGN); }
+"^="			{ TOKEN(XOR_ASSIGN); }
+">>="			{ TOKEN(RSHIFT_ASSIGN); }
+"<<="			{ TOKEN(LSHIFT_ASSIGN); }
+
+"="				{ TOKEN(ASSIGN); }
+"."				{ TOKEN(DOT); }
+"->"			{ TOKEN(ARROW); }
+","				{ TOKEN(COMMA); }
+";"				{ TOKEN(SEMICOLON); }
+":"				{ TOKEN(COLON); }
+"..."			{ TOKEN(ELLIPSIS); }
+
+"("				{ TOKEN(OPAR); }
+")"				{ TOKEN(CPAR); }
+"{"|"<%"		{ TOKEN(OCURL); }
+"}"|"%>"		{ TOKEN(CCURL); }
+"["|"<:"		{ TOKEN(OBRA); }
+"]"|":>"		{ TOKEN(CBRA); }
+
+{number}			{ TOKEN_VAL(NUM, text()); }
+{STRING_LITERAL}	{ TOKEN_VAL(STRING, text()); }
+{ID}				{ TOKEN_VAL(IDENTIFIER, text()); }
 
 . {
 	(void)tokens;

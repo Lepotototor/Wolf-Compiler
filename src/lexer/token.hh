@@ -11,6 +11,7 @@ namespace lexer
     // Tokens with value
     NUM_TOK,
     STRING_TOK,
+    IDENTIFIER_TOK,
 
     VOID_TOK,     // void
     INT_TOK,      // int
@@ -110,6 +111,15 @@ namespace lexer
       , type_(t)
     {}
 
+    Token(token_type t, misc::Location& location, const std::string& val)
+      : misc::Locable(location)
+      , type_(t)
+      , val_(val)
+      , contain_value_(true)
+    {}
+
+    friend std::ostream& operator<<(std::ostream& os, const Token& t);
+
     bool operator==(const Token&) const;
     bool operator!=(const Token&) const;
 
@@ -119,23 +129,14 @@ namespace lexer
     virtual bool operator!=(const char) const;
 
     token_type type() const;
+    const std::string& val_get() const;
+    bool contain_value() const;
 
   protected:
     token_type type_;
-  };
 
-  class ValueToken : public Token
-  {
-  public:
-    ValueToken(token_type t, misc::Location& location, const std::string& val)
-      : Token(t, location)
-      , val_(val)
-    {}
-
-    const std::string& val_get() const;
-
-  private:
     const std::string val_;
+    bool contain_value_ = false;
   };
 
   const std::string tok_repr(const Token&);

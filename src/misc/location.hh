@@ -8,6 +8,7 @@ namespace misc
 
   class Location
   {
+  public:
     Location(const std::string file,
              unsigned line,
              unsigned start,
@@ -19,7 +20,7 @@ namespace misc
              unsigned start,
              unsigned end);
 
-    std::ostream& operator<<(std::ostream& os) const;
+    friend std::ostream& operator<<(std::ostream& os, const Location& l);
 
     const std::string& file_get() const;
 
@@ -44,7 +45,7 @@ namespace misc
     Locable(const Location&);
     const Location& location_get() const;
 
-  private:
+  protected:
     Location location_;
   };
 } // namespace misc

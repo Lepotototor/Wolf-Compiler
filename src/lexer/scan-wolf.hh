@@ -55,16 +55,25 @@
 
 #include "token.hh"
 #include "../driver/wolf-driver.hh"
+#include "../misc/location.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
-// TODO #define YY_USER_ACTION col += size();
+#define YY_USER_ACTION col += size();
 
+#define GET_LOC Location{file, line, col, col + yyleng - 1}
+#define GET_TOK(Type) Type ## _TOK
 
-#define TOKEN(Type)                             \
-  lexer::make_ ## Type(td.location_)
+#define TOKEN(Type)										\
+	token_type type = Type ## _TOK;						\
+	misc::Location location{file, line, col - YYLeng() + 1, col};	\
+	Token token{type, location};						\
+	tokens.emplace(token);
 
-#define TOKEN_VAL(Type, Value)                  \
-  lexer::make_ ## Type(Value, td.location_)
+#define TOKEN_VAL(Type, Value)										\
+	token_type type = Type ## _TOK;									\
+	misc::Location location{file, line, col - YYLeng() + 1, col};	\
+	Token token{type, location, Value};						\
+	tokens.emplace(token);
 
 
 
@@ -100,7 +109,7 @@ typedef reflex::FlexLexer<reflex::Matcher> FlexLexer;
 namespace lexer {
 
 class Lexer : public FlexLexer {
-#line 39 "scan-wolf.ll"
+#line 48 "scan-wolf.ll"
 
 	std::string file;
 	unsigned line;
@@ -122,7 +131,7 @@ class Lexer : public FlexLexer {
     :
       FlexLexer(input, os)
   {
-#line 52 "scan-wolf.ll"
+#line 61 "scan-wolf.ll"
 
 	file = "";
 	line = 0;

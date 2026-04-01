@@ -170,6 +170,12 @@ namespace driver
   {
     // Lexing doing with re/flex
     std::queue<lexer::Token> tokens = lexer::lex(file, *this);
+    while (tokens.size() > 0)
+      {
+        const lexer::Token& tok = tokens.front();
+        std::cout << tok << "\n";
+        tokens.pop();
+      }
     (void)tokens;
   }
 } // namespace driver

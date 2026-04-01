@@ -27,10 +27,10 @@ namespace misc
     , end_col_(end)
   {}
 
-  std::ostream& Location::operator<<(std::ostream& os) const
+  std::ostream& operator<<(std::ostream& os, const Location& l)
   {
-    std::string txt = file_ + ":" + std::to_string(start_line_) + ":"
-      + std::to_string(start_col_);
+    std::string txt = l.file_ + ":" + std::to_string(l.start_line_) + ":"
+      + std::to_string(l.start_col_);
 
     os << bold(txt);
     return os;
