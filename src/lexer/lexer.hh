@@ -8,5 +8,5 @@
 
 namespace lexer
 {
-  std::vector<Token> lex(const std::string& file, driver::WolfDriver& wd);
+  std::queue<Token> lex(const std::string& file, driver::WolfDriver& wd);
 }

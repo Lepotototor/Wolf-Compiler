@@ -169,7 +169,7 @@ namespace driver
   void WolfDriver::compiler(const std::string& file)
   {
     // Lexing doing with re/flex
-    std::vector<lexer::Token> tokens = lexer::lex(file, *this);
+    std::queue<lexer::Token> tokens = lexer::lex(file, *this);
     (void)tokens;
   }
 } // namespace driver

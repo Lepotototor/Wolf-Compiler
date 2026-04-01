@@ -4,7 +4,7 @@
 
 %option lex=lex
 // Add a param of function lex() generate in Lexer class
-%option params="driver::WolfDriver& wd, std::vector<lexer::Token>& tokens"
+%option params="driver::WolfDriver& wd, std::queue<lexer::Token>& tokens"
 %option namespace=lexer
 // Name of the class generate by flex
 %option lexer=Lexer
@@ -13,6 +13,7 @@
 
 #define YY_EXTERN_C extern "C" // For linkage rule
 
+#include <queue>
 #include <cerrno>
 #include <climits>
 #include <regex>

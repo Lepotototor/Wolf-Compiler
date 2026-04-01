@@ -1,6 +1,8 @@
 lib_LIBRARIES = liblexer.a
 
 liblexer_a_SOURCES =  \
+  lexer.cc \
+  lexer.hh \
   scan-wolf.cc \
   scan-wolf.hh \
   token.cc \

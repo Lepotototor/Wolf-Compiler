@@ -30,7 +30,7 @@
 #define REFLEX_OPTION_namespace           lexer
 #define REFLEX_OPTION_noyywrap            true
 #define REFLEX_OPTION_outfile             "scan-wolf.cc"
-#define REFLEX_OPTION_params              driver::WolfDriver& wd, std::vector<lexer::Token>& tokens
+#define REFLEX_OPTION_params              driver::WolfDriver& wd, std::queue<lexer::Token>& tokens
 #define REFLEX_OPTION_prefix              yy
 
 // --debug option enables ASSERT:
@@ -47,6 +47,7 @@
 
 #define YY_EXTERN_C extern "C" // For linkage rule
 
+#include <queue>
 #include <cerrno>
 #include <climits>
 #include <regex>
@@ -99,7 +100,7 @@ typedef reflex::FlexLexer<reflex::Matcher> FlexLexer;
 namespace lexer {
 
 class Lexer : public FlexLexer {
-#line 38 "scan-wolf.ll"
+#line 39 "scan-wolf.ll"
 
 	unsigned line;
 	unsigned col;
@@ -113,7 +114,7 @@ class Lexer : public FlexLexer {
     :
       FlexLexer(input, os)
   {
-#line 43 "scan-wolf.ll"
+#line 44 "scan-wolf.ll"
 
 	line = 0;
 	col = 0;
@@ -126,14 +127,14 @@ class Lexer : public FlexLexer {
     yyterminate();
   }
   // the flex lexer function defined by SECTION 2
-  virtual int lex(driver::WolfDriver& wd, std::vector<lexer::Token>& tokens);
+  virtual int lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens);
   // lexer functions accepting new input to scan
-  int lex(const reflex::Input& input, driver::WolfDriver& wd, std::vector<lexer::Token>& tokens)
+  int lex(const reflex::Input& input, driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
   {
     in(input);
     return lex(wd, tokens);
   }
-  int lex(const reflex::Input& input, std::ostream *os, driver::WolfDriver& wd, std::vector<lexer::Token>& tokens)
+  int lex(const reflex::Input& input, std::ostream *os, driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
   {
     in(input);
     if (os)
