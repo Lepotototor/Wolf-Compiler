@@ -18,6 +18,9 @@ namespace driver
 
     misc::Error& error_get();
 
+    bool lex_trace = false;
+    bool parse_trace = false;
+
   private:
     void parse_arg(int argc, char** argv);
 
@@ -27,9 +30,6 @@ namespace driver
     std::vector<std::string> input_files_;
 
     bool save_temps = false;
-
-    bool lex_trace = false;
-    bool parse_trace = false;
 
     bool parse = true;
     bool code_gen = true;

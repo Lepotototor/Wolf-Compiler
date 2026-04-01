@@ -2,7 +2,7 @@
 #include "../misc/debug.hh"
 #include "../misc/format-helper.hh"
 
-#include "../lexer/scan-wolf.hh"
+#include "../lexer/lexer.hh"
 
 #include <cstdlib>
 #include <fstream>
@@ -169,9 +169,7 @@ namespace driver
   void WolfDriver::compiler(const std::string& file)
   {
     // Lexing doing with re/flex
-    std::ifstream in{file};
-    lexer::Lexer lexer{in};
-    lexer.set_debug(lex_trace);
-    lexer.lex(*this);
+    std::vector<lexer::Token> tokens = lexer::lex(file, *this);
+    (void)tokens;
   }
 } // namespace driver

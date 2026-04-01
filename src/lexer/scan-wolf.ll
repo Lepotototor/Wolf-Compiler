@@ -4,7 +4,7 @@
 
 %option lex=lex
 // Add a param of function lex() generate in Lexer class
-%option params="::driver::WolfDriver& wd"
+%option params="driver::WolfDriver& wd, std::vector<lexer::Token>& tokens"
 %option namespace=lexer
 // Name of the class generate by flex
 %option lexer=Lexer
@@ -18,6 +18,7 @@
 #include <regex>
 #include <string>
 
+#include "token.hh"
 #include "../driver/wolf-driver.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
@@ -54,6 +55,7 @@ STRING_LITERAL "\"".*"\""
 %%
 
 . {
+	(void)tokens;
 	wd.error_get() << "Invalid character: " << yytext[0] << "\n";
 	std::cout << yytext[0] << "\n";
 }

@@ -27,7 +27,7 @@
 #define REFLEX_OPTION_namespace           lexer
 #define REFLEX_OPTION_noyywrap            true
 #define REFLEX_OPTION_outfile             "scan-wolf.cc"
-#define REFLEX_OPTION_params              ::driver::WolfDriver& wd
+#define REFLEX_OPTION_params              driver::WolfDriver& wd, std::vector<lexer::Token>& tokens
 #define REFLEX_OPTION_prefix              yy
 
 // --debug option enables ASSERT:
@@ -49,6 +49,7 @@
 #include <regex>
 #include <string>
 
+#include "token.hh"
 #include "../driver/wolf-driver.hh"
 
 	/* (Define YY_USER_ACTION to update locations). */
@@ -104,7 +105,7 @@ typedef reflex::FlexLexer<reflex::Matcher> FlexLexer;
 namespace lexer {
 
 class Lexer : public FlexLexer {
-#line 37 "scan-wolf.ll"
+#line 38 "scan-wolf.ll"
 
 	unsigned line;
 	unsigned col;
@@ -118,7 +119,7 @@ class Lexer : public FlexLexer {
     :
       FlexLexer(input, os)
   {
-#line 42 "scan-wolf.ll"
+#line 43 "scan-wolf.ll"
 
 	line = 0;
 	col = 0;
@@ -131,19 +132,19 @@ class Lexer : public FlexLexer {
     yyterminate();
   }
   // the flex lexer function defined by SECTION 2
-  virtual int lex(::driver::WolfDriver& wd);
+  virtual int lex(driver::WolfDriver& wd, std::vector<lexer::Token>& tokens);
   // lexer functions accepting new input to scan
-  int lex(const reflex::Input& input, ::driver::WolfDriver& wd)
+  int lex(const reflex::Input& input, driver::WolfDriver& wd, std::vector<lexer::Token>& tokens)
   {
     in(input);
-    return lex(wd);
+    return lex(wd, tokens);
   }
-  int lex(const reflex::Input& input, std::ostream *os, ::driver::WolfDriver& wd)
+  int lex(const reflex::Input& input, std::ostream *os, driver::WolfDriver& wd, std::vector<lexer::Token>& tokens)
   {
     in(input);
     if (os)
       out(*os);
-    return lex(wd);
+    return lex(wd, tokens);
   }
 };
 
@@ -162,7 +163,7 @@ class Lexer : public FlexLexer {
 // Add a param of function lex() generate in Lexer class
 #line 9 "scan-wolf.ll"
 // Name of the class generate by flex
-#line 47 "scan-wolf.ll"
+#line 48 "scan-wolf.ll"
 /* Abbreviations.  */
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +172,7 @@ class Lexer : public FlexLexer {
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-int lexer::Lexer::lex(::driver::WolfDriver& wd)
+int lexer::Lexer::lex(driver::WolfDriver& wd, std::vector<lexer::Token>& tokens)
 {
   static const char *REGEX_INITIAL = "(?m)(.)";
   static const reflex::Pattern PATTERN_INITIAL(REGEX_INITIAL);
@@ -196,11 +197,12 @@ int lexer::Lexer::lex(::driver::WolfDriver& wd)
               output(matcher().input());
             }
             YY_BREAK
-          case 1: // rule scan-wolf.ll:56: . :
-            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:56\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+          case 1: // rule scan-wolf.ll:57: . :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:57\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
-#line 56 "scan-wolf.ll"
+#line 57 "scan-wolf.ll"
 {
+	(void)tokens;
 	wd.error_get() << "Invalid character: " << yytext[0] << "\n";
 	std::cout << yytext[0] << "\n";
 }
