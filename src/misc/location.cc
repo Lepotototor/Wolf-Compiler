@@ -8,7 +8,8 @@ namespace misc
                      unsigned line,
                      unsigned start,
                      unsigned end)
-    : start_line_(line)
+    : file_(file)
+    , start_line_(line)
     , end_line_(line)
     , start_col_(start)
     , end_col_(end)
@@ -19,7 +20,8 @@ namespace misc
                      unsigned line_end,
                      unsigned start,
                      unsigned end)
-    : start_line_(line_start)
+    : file_(file)
+    , start_line_(line_start)
     , end_line_(line_end)
     , start_col_(start)
     , end_col_(end)

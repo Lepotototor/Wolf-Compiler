@@ -110,10 +110,12 @@ namespace lexer
       , type_(t)
     {}
 
+    virtual bool operator==(const std::string&) const;
+    virtual bool operator==(const char) const;
+
     token_type type() const;
 
   protected:
-    std::string repr_;
     token_type type_;
   };
 
@@ -125,10 +127,15 @@ namespace lexer
       , val_(val)
     {}
 
+    virtual bool operator==(const std::string&) const override;
+    virtual bool operator==(const char) const override;
+
+    const std::string& val_get() const;
+
   private:
     const std::string val_;
   };
 
-  const std::string tok_repr(token_type type);
+  const std::string tok_repr(const Token&);
 
 } // namespace lexer

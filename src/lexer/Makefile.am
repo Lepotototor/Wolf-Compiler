@@ -6,6 +6,7 @@ liblexer_a_SOURCES =  \
   scan-wolf.cc \
   scan-wolf.hh \
   token.cc \
+  token_repr.cc \
   token.hh
 
 liblexer_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver
