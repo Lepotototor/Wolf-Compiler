@@ -8,7 +8,16 @@ namespace misc
 
   class Location
   {
-    Location(const std::string file);
+    Location(const std::string file,
+             unsigned line,
+             unsigned start,
+             unsigned end);
+
+    Location(const std::string file,
+             unsigned line_start,
+             unsigned line_end,
+             unsigned start,
+             unsigned end);
 
     std::ostream& operator<<(std::ostream& os) const;
 

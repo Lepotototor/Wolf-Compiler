@@ -4,6 +4,26 @@
 
 namespace misc
 {
+  Location::Location(const std::string file,
+                     unsigned line,
+                     unsigned start,
+                     unsigned end)
+    : start_line_(line)
+    , end_line_(line)
+    , start_col_(start)
+    , end_col_(end)
+  {}
+
+  Location::Location(const std::string file,
+                     unsigned line_start,
+                     unsigned line_end,
+                     unsigned start,
+                     unsigned end)
+    : start_line_(line_start)
+    , end_line_(line_end)
+    , start_col_(start)
+    , end_col_(end)
+  {}
 
   std::ostream& Location::operator<<(std::ostream& os) const
   {
