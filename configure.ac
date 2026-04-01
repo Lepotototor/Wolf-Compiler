@@ -37,5 +37,6 @@ AC_CONFIG_FILES([
                     src/misc/Makefile
                     src/driver/Makefile
                     src/lexer/Makefile
+                    src/ast_nodes/Makefile
                 ])
 AC_OUTPUT
