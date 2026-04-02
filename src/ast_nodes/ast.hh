@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../ast_visitor/visitor.hh"
 #include "../misc/location.hh"
+#include "all_nodes.hh"
 
 namespace ast
 {

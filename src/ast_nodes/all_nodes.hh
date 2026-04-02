@@ -21,4 +21,14 @@ namespace ast
   class Type;
   class TypeName;
 
+  /* Forward def of Visiotrs */
+
+  template <template <typename> class Const> class GenVisitor;
+
+  template <typename T> struct const_type;
+  template <typename T> struct non_const_type;
+
+  using ConstVisitor = GenVisitor<const_type>;
+  using Visitor = GenVisitor<non_const_type>;
+
 } // namespace ast

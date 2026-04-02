@@ -1,6 +1,8 @@
 lib_LIBRARIES = libast_visitor.a
 
 libast_visitor_a_SOURCES =  \
+  pretty-printer.cc \
+  pretty-printer.hh \
   visitor.hh \
   visitor.hxx
 

@@ -13,11 +13,7 @@ namespace ast
     FunctionDec(const misc::Location& l,
                 const std::string& name,
                 TypeName* return_type,
-                Exp* body)
-      : Declaration(l, name)
-      , return_type_(return_type)
-      , body_(body)
-    {}
+                Exp* body);
 
     ~FunctionDec() override
     {
@@ -25,8 +21,8 @@ namespace ast
       delete body_;
     }
 
-    virtual void accept(ConstVisitor& v) const override { v(*this); }
-    virtual void accept(Visitor& v) override { v(*this); }
+    virtual void accept(ConstVisitor& v) const override;
+    virtual void accept(Visitor& v) override;
 
     const TypeName& return_type_get() const { return *return_type_; }
     TypeName& return_type_get() { return *return_type_; }

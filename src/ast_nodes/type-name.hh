@@ -8,13 +8,10 @@ namespace ast
   class TypeName : public Type
   {
   public:
-    TypeName(const misc::Location& l, const std::string name)
-      : Type(l)
-      , name_(name)
-    {}
+    TypeName(const misc::Location& l, const std::string name);
 
-    virtual void accept(ConstVisitor& v) const override { v(*this); }
-    virtual void accept(Visitor& v) override { v(*this); }
+    virtual void accept(ConstVisitor& v) const override;
+    virtual void accept(Visitor& v) override;
 
     const std::string& name_get() const { return name_; }
 

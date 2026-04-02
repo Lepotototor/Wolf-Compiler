@@ -12,10 +12,7 @@ namespace ast
   public:
     DecList(const misc::Location& l,
             const std::string& name,
-            const std::vector<Declaration*>& decs)
-      : Declaration(l, name)
-      , decs_(decs)
-    {}
+            const std::vector<Declaration*>& decs);
 
     ~DecList() override
     {
@@ -23,8 +20,8 @@ namespace ast
         delete dec;
     }
 
-    virtual void accept(ConstVisitor& v) const override { v(*this); }
-    virtual void accept(Visitor& v) override { v(*this); }
+    virtual void accept(ConstVisitor& v) const override;
+    virtual void accept(Visitor& v) override;
 
     const std::vector<Declaration*>& decs_get() const { return decs_; }
     std::vector<Declaration*>& decs_get() { return decs_; }

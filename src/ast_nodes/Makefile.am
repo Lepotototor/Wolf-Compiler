@@ -5,13 +5,20 @@ libast_nodes_a_SOURCES =  \
 	ast.hh \
 	declaration.hh \
 	dec-list.hh \
+	dec-list.cc \
 	exp-list.hh \
+	exp-list.cc \
 	exp.hh \
 	function-dec.hh \
+	function-dec.cc \
 	number-exp.hh \
+	number-exp.cc \
 	return-exp.hh \
+	return-exp.cc \
 	string-exp.hh \
+	string-exp.cc \
 	type-name.hh \
+	type-name.cc \
 	type.hh
 
 

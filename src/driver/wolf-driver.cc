@@ -5,6 +5,8 @@
 #include "../lexer/lexer.hh"
 #include "../parser/parser.hh"
 
+#include "../ast_visitor/pretty-printer.hh"
+
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -191,6 +193,7 @@ namespace driver
         program = parser.program_get();
       }
 
+    std::cout << *program;
     delete program;
   }
 } // namespace driver

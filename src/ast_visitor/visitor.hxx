@@ -2,6 +2,14 @@
 
 #include "visitor.hh"
 
+#include "../ast_nodes/dec-list.hh"
+#include "../ast_nodes/exp-list.hh"
+#include "../ast_nodes/function-dec.hh"
+#include "../ast_nodes/number-exp.hh"
+#include "../ast_nodes/return-exp.hh"
+#include "../ast_nodes/string-exp.hh"
+#include "../ast_nodes/type-name.hh"
+
 namespace ast
 {
   template <template <typename> class Const>
