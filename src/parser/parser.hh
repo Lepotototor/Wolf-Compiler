@@ -20,6 +20,7 @@ namespace parser
     ast::FunctionDec* parse_function_dec();
     ast::TypeName* parse_type();
     ast::Exp* parse_statement();
+    ast::Exp* parse_return_statement();
     ast::Exp* parse_exp();
 
     const lexer::Token& peek_tok();
