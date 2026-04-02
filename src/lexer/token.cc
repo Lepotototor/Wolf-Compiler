@@ -51,7 +51,7 @@ namespace lexer
     return *this;
   }
 
-  const misc::Location Token::operator+(const Token& t)
+  const misc::Location Token::operator+(const Token& t) const
   {
     return this->location_ + t.location_;
   }
