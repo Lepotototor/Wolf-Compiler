@@ -21,7 +21,7 @@ namespace ast
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<FunctionDec>& e)
   {
-    e.return_type_get()->accept(*this);
+    e.return_type_get().accept(*this);
     e.body_get()->accept(*this);
   }
 
@@ -40,11 +40,11 @@ namespace ast
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<NumberExp>& e)
+  void GenVisitor<Const>::operator()(const_t<NumberExp>&)
   {}
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<StringExp>& e)
+  void GenVisitor<Const>::operator()(const_t<StringExp>&)
   {}
 
   template <template <typename> class Const>
@@ -54,7 +54,7 @@ namespace ast
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<TypeName>& e)
+  void GenVisitor<Const>::operator()(const_t<TypeName>&)
   {}
 
 } // namespace ast
