@@ -8,6 +8,8 @@ namespace lexer
   {
     switch (tok.type())
       {
+      case END_OF_FILE_TOK:
+        return "END_OF_FILE";
       case VOID_TOK:
         return "void";
       case INT_TOK:

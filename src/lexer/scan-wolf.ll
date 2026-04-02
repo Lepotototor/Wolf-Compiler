@@ -234,6 +234,8 @@ STRING_LITERAL "\"".*"\""
 {STRING_LITERAL}	{ TOKEN_VAL(STRING, text()); }
 {ID}				{ TOKEN_VAL(IDENTIFIER, text()); }
 
+<<EOF>>			{ TOKEN(END_OF_FILE); return 0; }
+
 . {
 	(void)tokens;
 	wd.error_get() << "Invalid character: " << yytext[0] << "\n";

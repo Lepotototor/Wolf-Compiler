@@ -84,7 +84,7 @@
 #define INITIAL (0)
 #define SC_COMMENT (1)
 #define SC_NEW_LOC (2)
-#define YY_NUM_RULES (98)
+#define YY_NUM_RULES (101)
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
@@ -222,8 +222,10 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
           case 0:
             if (matcher().at_end())
             {
-              if (debug()) std::cerr << "--\033[1;35mEOF\033[0m start(" << start() << ")\n";
-              yyterminate();
+              if (debug()) std::cerr << "--\033[1;35mEOF rule scan-wolf.ll:237\033[0m start(" << start() << ")\n";
+#line 237 "scan-wolf.ll"
+{ TOKEN(END_OF_FILE); return 0; }
+
             }
             else
             {
@@ -783,10 +785,10 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
 { TOKEN_VAL(IDENTIFIER, text()); }
 
             YY_BREAK
-          case 90: // rule scan-wolf.ll:237: . :
-            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:237\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
+          case 90: // rule scan-wolf.ll:239: . :
+            if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:239\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
-#line 237 "scan-wolf.ll"
+#line 239 "scan-wolf.ll"
 {
 	(void)tokens;
 	wd.error_get() << "Invalid character: " << yytext[0] << "\n";
@@ -857,8 +859,10 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
           case 0:
             if (matcher().at_end())
             {
-              if (debug()) std::cerr << "--\033[1;35mEOF\033[0m start(" << start() << ")\n";
-              yyterminate();
+              if (debug()) std::cerr << "--\033[1;35mEOF rule scan-wolf.ll:237\033[0m start(" << start() << ")\n";
+#line 237 "scan-wolf.ll"
+{ TOKEN(END_OF_FILE); return 0; }
+
             }
             else
             {

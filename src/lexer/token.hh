@@ -6,7 +6,7 @@ namespace lexer
 {
   enum token_type
   {
-    END_OF_FILE = 0,
+    END_OF_FILE_TOK = 0,
 
     // Tokens with value
     NUM_TOK,
