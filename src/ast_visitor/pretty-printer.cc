@@ -15,7 +15,7 @@ namespace ast
     ostr_ << "\n";
     for (unsigned i = 0; i < indent_; i++)
       {
-        ostr_ << "\t";
+        ostr_ << "   ";
       }
   }
 
@@ -26,10 +26,12 @@ namespace ast
     newline();
     ostr_ << "{";
     indent_++;
+    newline();
 
     ostr_ << e.body_get();
 
     indent_--;
+    newline();
     ostr_ << "}";
     newline();
   }
@@ -39,7 +41,7 @@ namespace ast
     for (const auto& dec : e.decs_get())
       {
         newline();
-        ostr_ << dec << ";";
+        ostr_ << dec;
       }
   }
 

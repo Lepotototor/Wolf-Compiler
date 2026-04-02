@@ -26,7 +26,7 @@ namespace parser
 
     if (wd_.parse_trace)
       {
-        std::cout << "Pop token: " << tok << "\n";
+        std::cout << "Pop  token: " << tok << "\n";
       }
 
     return tok;
