@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ast.hh"
 #include "declaration.hh"
 
 #include <vector>
@@ -8,11 +7,13 @@
 namespace ast
 {
 
-  class DecList : public Ast
+  class DecList : public Declaration
   {
   public:
-    DecList(const misc::Location& l, const std::vector<Declaration*>& decs)
-      : Ast(l)
+    DecList(const misc::Location& l,
+            const std::string& name,
+            const std::vector<Declaration*>& decs)
+      : Declaration(l, name)
       , decs_(decs)
     {}
 

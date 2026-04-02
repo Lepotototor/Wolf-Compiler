@@ -4,7 +4,9 @@ libparser_a_SOURCES =  \
   parser.cc \
   parser.hh \
   parse-type.cc \
+  parse-exp.cc \
   parse-declaration.cc \
+  parse-external-declaration.cc \
   parse-function-declaration.cc \
   parse-statement.cc
 

@@ -3,6 +3,7 @@
 #include "../misc/format-helper.hh"
 
 #include "../lexer/lexer.hh"
+#include "../parser/parser.hh"
 
 #include <cstdlib>
 #include <fstream>
@@ -173,12 +174,22 @@ namespace driver
   {
     // Lexing doing with re/flex
     std::queue<lexer::Token> tokens = lexer::lex(file, *this);
+    /*
     while (tokens.size() > 0)
       {
         const lexer::Token& tok = tokens.front();
         std::cout << tok << "\n";
         tokens.pop();
       }
-    (void)tokens;
+      */
+    ast::Ast* program = nullptr;
+    if (parse)
+      {
+        parser::Parser parser{*this, tokens};
+        parser.parse();
+        program = parser.program_get();
+      }
+
+    (void)program;
   }
 } // namespace driver
