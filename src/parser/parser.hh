@@ -16,12 +16,17 @@ namespace parser
     {}
 
     void parse();
+    ast::DecList* parser_external_declarations();
+    ast::FunctionDec* parse_function_dec();
+    ast::TypeName* parse_type();
+    ast::Exp* parse_statement();
+    ast::Exp* parse_exp();
 
     const lexer::Token& peek_tok();
     const lexer::Token& pop_tok();
 
-    void expect_tok(const std::string& str);
-    void expect_tok(char c);
+    const lexer::Token& expect_tok(const std::string& str);
+    const lexer::Token& expect_tok(char c);
 
     void mismatch_tok(const lexer::Token& tok, const std::string& exp);
     void unexpected(const lexer::Token& tok);

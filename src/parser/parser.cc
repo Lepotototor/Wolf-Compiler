@@ -32,7 +32,7 @@ namespace parser
     return tok;
   }
 
-  void Parser::expect_tok(const std::string& str)
+  const lexer::Token& Parser::expect_tok(const std::string& str)
   {
     const lexer::Token& tok = this->pop_tok();
 
@@ -40,9 +40,11 @@ namespace parser
       {
         mismatch_tok(tok, str);
       }
+
+    return tok;
   }
 
-  void Parser::expect_tok(char c)
+  const lexer::Token& Parser::expect_tok(char c)
   {
     const lexer::Token& tok = this->pop_tok();
 
@@ -50,6 +52,8 @@ namespace parser
       {
         mismatch_tok(tok, std::string(c, 1));
       }
+
+    return tok;
   }
 
   void Parser::mismatch_tok(const lexer::Token& tok, const std::string& exp)
