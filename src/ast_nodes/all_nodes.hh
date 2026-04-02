@@ -9,6 +9,7 @@ namespace ast
   class Ast;
 
   class Declaration;
+  class DecList;
   class FunctionDec;
 
   class Exp;

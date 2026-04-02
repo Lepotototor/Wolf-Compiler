@@ -4,6 +4,7 @@ libast_nodes_a_SOURCES =  \
 	all_nodes.hh \
 	ast.hh \
 	declaration.hh \
+	dec-list.hh \
 	exp-list.hh \
 	exp.hh \
 	function-dec.hh \

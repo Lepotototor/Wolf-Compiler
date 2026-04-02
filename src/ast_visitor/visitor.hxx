@@ -26,6 +26,13 @@ namespace ast
   }
 
   template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<DecList>& e)
+  {
+    for (auto dec : e.decs_get())
+      dec->accept(*this);
+  }
+
+  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<ExpList>& e)
   {
     for (auto exp : e.exps_get())
