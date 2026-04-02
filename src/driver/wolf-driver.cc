@@ -46,14 +46,17 @@ namespace driver
         else if (arg == "--lex")
           {
             parse = false;
+            assembl = false;
           }
         else if (arg == "--parse")
           {
             code_gen = false;
+            assembl = false;
           }
         else if (arg == "--codegen")
           {
             code_emit = false;
+            assembl = false;
           }
 
         else if (arg == "-E")
