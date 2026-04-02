@@ -118,7 +118,7 @@ namespace driver
         std::cout << "File: " << filename << " has extension " << ext << "\n";
         if (ext == ".c")
           {
-            std::string cmd = "cpp -P " + file + " -o " + filename + ".i";
+            std::string cmd = "cpp " + file + " -o " + filename + ".i";
             std::cout << cmd << "\n";
             int r = system(cmd.c_str());
             if (r != 0)
@@ -182,6 +182,7 @@ namespace driver
         tokens.pop();
       }
       */
+
     ast::Ast* program = nullptr;
     if (parse)
       {
@@ -190,6 +191,6 @@ namespace driver
         program = parser.program_get();
       }
 
-    (void)program;
+    delete program;
   }
 } // namespace driver

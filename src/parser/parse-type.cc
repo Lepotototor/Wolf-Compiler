@@ -9,7 +9,7 @@ namespace parser
 
   ast::TypeName* Parser::parse_type()
   {
-    const lexer::Token& tok = pop_tok();
+    const lexer::Token tok = pop_tok();
     if (tok == "void")
       {
         return new ast::TypeName(tok.location_get(), "void");

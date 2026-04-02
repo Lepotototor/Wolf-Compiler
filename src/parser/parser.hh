@@ -19,10 +19,10 @@ namespace parser
     void parse() { program_ = parser_external_declarations(); }
 
     const lexer::Token& peek_tok();
-    const lexer::Token& pop_tok();
+    const lexer::Token pop_tok();
 
-    const lexer::Token& expect_tok(const std::string& str);
-    const lexer::Token& expect_tok(char c);
+    const lexer::Token expect_tok(const std::string& str);
+    const lexer::Token expect_tok(char c);
 
     void mismatch_tok(const lexer::Token& tok, const std::string& exp);
     void unexpected(const lexer::Token& tok);

@@ -121,6 +121,7 @@ namespace lexer
     Token(const Token&) = default;
     Token(Token&&) = default;
     const Token& operator=(const Token&);
+    //Token&& operator=(Token&&) = default;
 
     const misc::Location operator+(const Token&) const;
 

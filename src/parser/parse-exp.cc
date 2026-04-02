@@ -7,7 +7,7 @@ namespace parser
 
   ast::Exp* Parser::parse_exp()
   {
-    const lexer::Token& tok = peek_tok();
+    const lexer::Token tok = peek_tok();
 
     if (tok.type() == lexer::NUM_TOK)
       {

@@ -11,7 +11,7 @@ namespace parser
     ast::TypeName* type = parse_type();
 
     // Function name
-    const lexer::Token& identifier = pop_tok();
+    const lexer::Token identifier = pop_tok();
     if (identifier.type() != lexer::IDENTIFIER_TOK)
       {
         mismatch_tok(identifier, "identifier");
@@ -20,7 +20,7 @@ namespace parser
     // Function arguments
     expect_tok('(');
 
-    const lexer::Token& args = pop_tok();
+    const lexer::Token args = pop_tok();
     if (args == "void")
       {
         expect_tok(')');
