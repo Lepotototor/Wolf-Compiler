@@ -54,9 +54,17 @@ namespace parser
 
   void Parser::mismatch_tok(const lexer::Token& tok, const std::string& exp)
   {
-    wd_.error_get() << misc::bold(wd_.program_name) << ": " << misc::err()
-                    << "Expected token \"" << misc::bold(exp) << "\" but got \""
+    wd_.error_get() << misc::error_type::parse << misc::bold(wd_.program_name)
+                    << ": " << misc::err() << "Expected token \""
+                    << misc::bold(exp) << "\" but got \""
                     << misc::bold(lexer::tok_repr(tok)) << "\"\n";
+  }
+
+  void Parser::unexpected(const lexer::Token& tok)
+  {
+    wd_.error_get() << misc::error_type::parse << misc::bold(wd_.program_name)
+                    << ": " << misc::err() << "Unexpected token \""
+                    << misc::bold(tok_repr(tok)) << "\"\n";
   }
 
 } // namespace parser

@@ -24,6 +24,7 @@ namespace parser
     void expect_tok(char c);
 
     void mismatch_tok(const lexer::Token& tok, const std::string& exp);
+    void unexpected(const lexer::Token& tok);
 
     ast::Ast* program_get() { return program_; }
 
