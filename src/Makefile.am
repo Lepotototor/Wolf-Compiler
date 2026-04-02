@@ -16,8 +16,8 @@ wolf_LDFLAGS = -lreflex
 
 wolf_LDADD =  \
 	driver/libdriver.a \
-	ast_nodes/libast_nodes.a \
-	ast_visitor/libast_visitor.a \
 	parser/libparser.a \
 	lexer/liblexer.a \
+	ast_nodes/libast_nodes.a \
+	ast_visitor/libast_visitor.a \
 	misc/libmisc.a
