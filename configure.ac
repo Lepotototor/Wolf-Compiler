@@ -37,6 +37,7 @@ AC_CONFIG_FILES([
                     src/misc/Makefile
                     src/driver/Makefile
                     src/lexer/Makefile
+                    src/parser/Makefile
                     src/ast_nodes/Makefile
                     src/ast_visitor/Makefile
                 ])
