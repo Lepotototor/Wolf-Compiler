@@ -118,6 +118,12 @@ namespace lexer
       , contain_value_(true)
     {}
 
+    Token(const Token&) = default;
+    Token(Token&&) = default;
+    const Token& operator=(const Token&);
+
+    const misc::Location operator+(const Token&) const;
+
     friend std::ostream& operator<<(std::ostream& os, const Token& t);
 
     bool operator==(const Token&) const;
@@ -135,7 +141,7 @@ namespace lexer
   protected:
     token_type type_;
 
-    const std::string val_;
+    std::string val_;
     bool contain_value_ = false;
   };
 

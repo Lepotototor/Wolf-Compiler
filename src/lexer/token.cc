@@ -41,4 +41,19 @@ namespace lexer
   }
   bool Token::operator!=(const char c) const { return !this->operator==(c); }
 
+  const Token& Token::operator=(const Token& t)
+  {
+    location_ = t.location_;
+    type_ = t.type_;
+    val_ = t.val_;
+    contain_value_ = t.contain_value_;
+
+    return *this;
+  }
+
+  const misc::Location Token::operator+(const Token& t)
+  {
+    return this->location_ + t.location_;
+  }
+
 } // namespace lexer
