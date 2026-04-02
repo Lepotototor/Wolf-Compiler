@@ -52,13 +52,12 @@ namespace misc
       return txt;
   }
 
-  std::string err()
+  std::string err(std::string txt)
   {
     Error::nb_err_inc();
 
-    std::string txt = "Error: ";
     if (is_a_tty())
-      return apply_color(bold(txt), RED);
+      return apply_color(bold(txt + ": "), RED);
     else
       return txt;
   }

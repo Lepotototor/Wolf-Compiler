@@ -12,5 +12,5 @@ namespace misc
   std::string bold(const std::string& s);
 
   std::string warn(bool compile_error = true);
-  std::string err();
+  std::string err(std::string = "Error");
 } // namespace misc
