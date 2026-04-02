@@ -22,6 +22,8 @@ namespace misc
 
     friend std::ostream& operator<<(std::ostream& os, const Location& l);
 
+    Location operator+(const Location& other) const;
+
     const std::string& file_get() const;
 
     unsigned start_line_get() const;

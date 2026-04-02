@@ -36,6 +36,12 @@ namespace misc
     return os;
   }
 
+  Location Location::operator+(const Location& other) const
+  {
+    return Location{file_, start_line_, other.end_line_, start_col_,
+                    other.end_col_};
+  }
+
   Locable::Locable(const Location& location)
     : location_(location)
   {}
