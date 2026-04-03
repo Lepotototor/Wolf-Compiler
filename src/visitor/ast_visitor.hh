@@ -21,6 +21,7 @@ namespace ast
     virtual void operator()(const_t<DecList>& e);
     virtual void operator()(const_t<ExpList>& e);
     virtual void operator()(const_t<NumberExp>& e);
+    virtual void operator()(const_t<UnaryExp>& e);
     virtual void operator()(const_t<StringExp>& e);
     virtual void operator()(const_t<ReturnExp>& e);
     virtual void operator()(const_t<TypeName>& e);

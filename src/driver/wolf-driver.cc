@@ -207,7 +207,7 @@ namespace driver
         program = parser.program_get();
       }
 
-    // std::cout << *program;
+    std::cout << *program;
 
     assembly::AsmNode* asm_pg = nullptr;
 

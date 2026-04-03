@@ -11,14 +11,16 @@ libast_nodes_a_SOURCES =  \
 	exp.hh \
 	function-dec.hh \
 	function-dec.cc \
-	number-exp.hh \
-	number-exp.cc \
-	return-exp.hh \
-	return-exp.cc \
-	string-exp.hh \
-	string-exp.cc \
-	type-name.hh \
-	type-name.cc \
+	number-exp.hh 	\
+	number-exp.cc 	\
+	return-exp.hh 	\
+	return-exp.cc 	\
+	string-exp.hh 	\
+	string-exp.cc 	\
+	unary-exp.hh 	\
+	unary-exp.cc 	\
+	type-name.hh 	\
+	type-name.cc 	\
 	type.hh
 
 

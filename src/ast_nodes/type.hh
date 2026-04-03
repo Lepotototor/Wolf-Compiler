@@ -12,9 +12,9 @@ namespace ast
       : Ast(l)
     {}
 
-    /// Accept a const visitor
+    // Accept a const visitor
     virtual void accept(ConstVisitor& v) const = 0;
-    /// Accept a non-const visitor
+    // Accept a non-const visitor
     virtual void accept(Visitor& v) = 0;
   };
 

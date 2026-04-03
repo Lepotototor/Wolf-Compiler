@@ -9,6 +9,7 @@
 #include "../ast_nodes/return-exp.hh"
 #include "../ast_nodes/string-exp.hh"
 #include "../ast_nodes/type-name.hh"
+#include "../ast_nodes/unary-exp.hh"
 
 namespace ast
 {
@@ -50,6 +51,12 @@ namespace ast
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<NumberExp>&)
   {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<UnaryExp>& e)
+  {
+    e.exp_get().accept(*this);
+  }
 
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<StringExp>&)

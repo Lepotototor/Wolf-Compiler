@@ -20,6 +20,7 @@ namespace ast
     virtual void operator()(const DecList& e) override;
     virtual void operator()(const ExpList& e) override;
     virtual void operator()(const NumberExp& e) override;
+    virtual void operator()(const UnaryExp& e) override;
     virtual void operator()(const StringExp& e) override;
     virtual void operator()(const ReturnExp& e) override;
     virtual void operator()(const TypeName& e) override;

@@ -15,6 +15,7 @@ namespace ast
   class Exp;
   class ExpList;
   class NumberExp;
+  class UnaryExp;
   class StringExp;
   class ReturnExp;
 

@@ -53,6 +53,28 @@ namespace ast
       }
   }
 
+  void PrettyPrinter::operator()(const UnaryExp& e)
+  {
+    if (e.type_get() == PLUS_U)
+      {
+        ostr_ << "+";
+      }
+    else if (e.type_get() == MINUS_U)
+      {
+        ostr_ << "-";
+      }
+    else if (e.type_get() == TILDE_U)
+      {
+        ostr_ << "~";
+      }
+    else if (e.type_get() == NEGATE_U)
+      {
+        ostr_ << "!";
+      }
+
+    ostr_ << "(" << e.exp_get() << ")";
+  }
+
   void PrettyPrinter::operator()(const NumberExp& e) { ostr_ << e.val_get(); }
 
   void PrettyPrinter::operator()(const StringExp& e) { ostr_ << e.val_get(); }
