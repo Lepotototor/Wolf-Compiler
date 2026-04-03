@@ -6,6 +6,7 @@ libassembly_a_SOURCES =  \
 	immediate.hh \
 	program.hh \
 	func_def.hh \
+	ins-list.hh \
 	instruction.hh \
 	mov.hh \
 	ret.hh \

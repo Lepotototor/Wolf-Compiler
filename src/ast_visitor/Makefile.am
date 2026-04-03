@@ -1,6 +1,9 @@
 lib_LIBRARIES = libast_visitor.a
 
 libast_visitor_a_SOURCES =  \
+  assembly-generation.cc  \
+  assembly-generation.hh  \
+  assembly-generation.hxx \
   pretty-printer.cc \
   pretty-printer.hh \
   visitor.hh \

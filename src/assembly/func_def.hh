@@ -1,35 +1,32 @@
 #pragma once
 
 #include "assembly_node.hh"
+#include "ins-list.hh"
 #include "instruction.hh"
-
-#include <vector>
 
 namespace assembly
 {
 
   class FuncDef : public AsmNode
   {
+  public:
     FuncDef(const misc::Location& loc,
             const std::string& name,
-            const std::vector<Instruction*> instructions)
+            InsList* instructions)
       : AsmNode(loc)
       , name_(name)
-      , instructions_(instructions)
+      , ins_(instructions)
     {}
 
     const std::string& name_get() const { return name_; }
 
-    std::vector<Instruction*> instructions_get() { return instructions_; }
-    const std::vector<Instruction*> instructions_get() const
-    {
-      return instructions_;
-    }
+    InsList* instructions_get() { return ins_; }
+    const InsList* instructions_get() const { return ins_; }
 
   private:
     std::string name_;
 
-    std::vector<Instruction*> instructions_;
+    InsList* ins_;
   };
 
 } // namespace assembly
