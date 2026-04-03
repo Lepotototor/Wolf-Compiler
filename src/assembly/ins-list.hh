@@ -15,6 +15,11 @@ namespace assembly
       , instructions_(instructions)
     {}
 
+    // Accept a const visitor
+    virtual void accept(ConstVisitor& v) const override;
+    // Accept a non-const visitor
+    virtual void accept(Visitor& v) override;
+
     std::vector<Instruction*> instructions_get() { return instructions_; }
     const std::vector<Instruction*> instructions_get() const
     {

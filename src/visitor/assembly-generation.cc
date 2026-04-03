@@ -71,4 +71,7 @@ namespace ast
     res_ = new Ret(e.location_get(), mov);
   }
 
+  void AsmGeneration::operator()(const StringExp&) {}
+  void AsmGeneration::operator()(const TypeName&) {}
+
 } // namespace ast

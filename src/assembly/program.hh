@@ -16,6 +16,11 @@ namespace assembly
       , funcs_(funcs)
     {}
 
+    // Accept a const visitor
+    virtual void accept(ConstVisitor& v) const override;
+    // Accept a non-const visitor
+    virtual void accept(Visitor& v) override;
+
     const std::vector<FuncDef*>& funcs_get() const { return funcs_; }
     std::vector<FuncDef*>& funcs_get() { return funcs_; }
 

@@ -5,8 +5,8 @@
 #include "../lexer/lexer.hh"
 #include "../parser/parser.hh"
 
-#include "../ast_visitor/assembly-generation.hh"
-#include "../ast_visitor/pretty-printer.hh"
+#include "../visitor/assembly-generation.hh"
+#include "../visitor/pretty-printer.hh"
 
 #include "../assembly/program.hh"
 
@@ -199,12 +199,15 @@ namespace driver
     std::cout << *program;
     delete program;
 
-    assembly::Program* asm_pg = nullptr;
+    assembly::AsmNode* asm_pg = nullptr;
 
     if (code_gen)
       {
         ast::AsmGeneration asm_gen;
-        //asm_pg = asm_gen(*program);
+        program->accept(asm_gen);
+        asm_pg = asm_gen.res_get();
       }
+
+    (void)asm_pg;
   }
 } // namespace driver

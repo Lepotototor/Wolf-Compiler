@@ -11,6 +11,11 @@ namespace assembly
     Register(const misc::Location& loc)
       : Operand(loc)
     {}
+
+    // Accept a const visitor
+    virtual void accept(ConstVisitor& v) const override;
+    // Accept a non-const visitor
+    virtual void accept(Visitor& v) override;
   };
 
 } // namespace assembly

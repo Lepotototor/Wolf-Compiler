@@ -1,6 +1,6 @@
 #include "return-exp.hh"
 
-#include "../ast_visitor/visitor.hh"
+#include "../visitor/visitor.hh"
 
 namespace ast
 {

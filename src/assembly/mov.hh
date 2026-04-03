@@ -15,6 +15,11 @@ namespace assembly
       , dst_(dst)
     {}
 
+    // Accept a const visitor
+    virtual void accept(ConstVisitor& v) const override;
+    // Accept a non-const visitor
+    virtual void accept(Visitor& v) override;
+
     const Operand& src_get() const { return *src_; }
     const Operand& dst_get() const { return *dst_; }
 

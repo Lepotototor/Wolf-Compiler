@@ -22,6 +22,6 @@ libast_nodes_a_SOURCES =  \
 	type.hh
 
 
-libast_nodes_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver -I$(top_srcdir)/src/ast_visitor
+libast_nodes_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver -I$(top_srcdir)/src/visitor
 
 noinst_LIBRARIES = libast_nodes.a

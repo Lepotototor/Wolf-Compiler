@@ -18,6 +18,11 @@ namespace assembly
       , ins_(instructions)
     {}
 
+    // Accept a const visitor
+    virtual void accept(ConstVisitor& v) const override;
+    // Accept a non-const visitor
+    virtual void accept(Visitor& v) override;
+
     const std::string& name_get() const { return name_; }
 
     InsList* instructions_get() { return ins_; }
