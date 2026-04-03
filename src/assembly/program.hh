@@ -13,6 +13,8 @@ namespace assembly
   public:
     Program(const misc::Location& loc, const std::vector<FuncDef*> funcs);
 
+    ~Program() override;
+
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor

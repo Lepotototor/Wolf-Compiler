@@ -11,6 +11,8 @@ namespace assembly
   public:
     Ret(const misc::Location& loc, Mov* mov);
 
+    ~Ret() override;
+
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor

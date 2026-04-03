@@ -14,6 +14,8 @@ namespace assembly
             const std::string& name,
             InsList* instructions);
 
+    ~FuncDef() override;
+
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor

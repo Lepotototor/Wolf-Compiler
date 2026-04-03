@@ -138,7 +138,7 @@ namespace driver
 
         if (ext == ".c" || ext == ".i")
           {
-            compiler(filename + ".i");
+            compiler(filename);
           }
 
         if (!assembl)
@@ -159,7 +159,8 @@ namespace driver
 
     if (compile && assembl && link)
       {
-        std::string cmd = "ld";
+        std::string cmd = "gcc";
+        //std::string cmd = "ld";
         for (const std::string& file : input_files_)
           {
             std::string filename = file.substr(0, file.find("."));
@@ -179,7 +180,7 @@ namespace driver
   void WolfDriver::compiler(const std::string& file)
   {
     // Lexing doing with re/flex
-    std::queue<lexer::Token> tokens = lexer::lex(file, *this);
+    std::queue<lexer::Token> tokens = lexer::lex(file + ".i", *this);
     /*
     while (tokens.size() > 0)
       {
@@ -207,7 +208,9 @@ namespace driver
         program->accept(asm_gen);
         asm_pg = asm_gen.res_get();
 
-        std::cout << asm_pg;
+        std::ofstream asm_file{file + ".s"};
+        asm_file << asm_pg;
+        asm_file.close();
       }
 
     delete program;

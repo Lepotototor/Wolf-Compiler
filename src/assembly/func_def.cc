@@ -12,6 +12,8 @@ namespace assembly
     , ins_(instructions)
   {}
 
+  FuncDef::~FuncDef() { delete ins_; }
+
   void FuncDef::accept(ConstVisitor& v) const { v(*this); }
   void FuncDef::accept(Visitor& v) { v(*this); }
 

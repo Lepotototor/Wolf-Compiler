@@ -10,6 +10,12 @@ namespace assembly
     , dst_(dst)
   {}
 
+  Mov::~Mov()
+  {
+    delete src_;
+    delete dst_;
+  }
+
   void Mov::accept(ConstVisitor& v) const { v(*this); }
   void Mov::accept(Visitor& v) { v(*this); }
 

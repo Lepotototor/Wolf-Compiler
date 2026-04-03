@@ -35,7 +35,6 @@ namespace ast
 
   void AsmGeneration::operator()(const FunctionDec& e)
   {
-    std::cout << "Try getting InsList\n";
     InsList* ins = recurse<Exp, InsList>(e.body_get());
     res_ = new FuncDef(e.location_get(), e.name_get(), ins);
   }
@@ -50,7 +49,6 @@ namespace ast
         ins.emplace_back(dec_ins);
       }
 
-    std::cout << "Got InsList\n";
     res_ = new InsList(e.location_get(), ins);
   }
 

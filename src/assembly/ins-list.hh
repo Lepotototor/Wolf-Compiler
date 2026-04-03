@@ -12,6 +12,8 @@ namespace assembly
   public:
     InsList(const misc::Location& loc, std::vector<Instruction*> instructions);
 
+    ~InsList() override;
+
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor

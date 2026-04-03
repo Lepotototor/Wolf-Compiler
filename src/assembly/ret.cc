@@ -9,6 +9,8 @@ namespace assembly
     , mov_(mov)
   {}
 
+  Ret::~Ret() { delete mov_; }
+
   void Ret::accept(ConstVisitor& v) const { v(*this); }
   void Ret::accept(Visitor& v) { v(*this); }
 

@@ -10,6 +10,12 @@ namespace assembly
     , instructions_(instructions)
   {}
 
+  InsList::~InsList()
+  {
+    for (auto ins : instructions_)
+      delete ins;
+  }
+
   void InsList::accept(ConstVisitor& v) const { v(*this); }
   void InsList::accept(Visitor& v) { v(*this); }
 

@@ -26,7 +26,6 @@ namespace ast
     newline();
     ostr_ << "{";
     indent_++;
-    newline();
 
     ostr_ << e.body_get();
 
@@ -50,7 +49,7 @@ namespace ast
     for (const auto& exp : e.exps_get())
       {
         newline();
-        ostr_ << exp << ";";
+        ostr_ << exp;
       }
   }
 
