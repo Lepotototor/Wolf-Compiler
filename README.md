@@ -3,8 +3,8 @@
 Wolf is C compiler implementation inspired from [Nora Sandler guide](https://norasandler.com/) and [LRE Tiger Compiler](https://assignments.lre.epita.fr/)
 
 ## Development Milestones
-- [ ] Compiler Driver
-- [ ] Basic Compilation
+- [x] Compiler Driver
+- [x] Basic Compilation
 - [ ] Unary Operators
 - [ ] Binary Operators
 - [ ] Logical and Relational Operators
