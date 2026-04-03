@@ -202,12 +202,15 @@ namespace driver
 
     assembly::AsmNode* asm_pg = nullptr;
 
-    if (code_gen)
+    if (code_gen && program)
       {
         ast::AsmGeneration asm_gen;
         program->accept(asm_gen);
         asm_pg = asm_gen.res_get();
+      }
 
+    if (code_emit && asm_pg)
+      {
         std::ofstream asm_file{file + ".s"};
         asm_file << asm_pg;
         asm_file.close();
