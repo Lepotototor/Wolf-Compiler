@@ -1,5 +1,7 @@
 #include "code-emission.hh"
 
+#define TAB "   "
+
 namespace assembly
 {
   void CodeEmit::operator()(const_t<InsList>& e)
@@ -14,12 +16,12 @@ namespace assembly
       {
         ostr_ << e.mov_get();
       }
-    ostr_ << "\tret\n";
+    ostr_ << TAB << "ret\n";
   }
 
   void CodeEmit::operator()(const_t<Mov>& e)
   {
-    ostr_ << "\tmov" << e.src_get() << ", " << e.dst_get() << "\n";
+    ostr_ << TAB << "mov " << e.src_get() << ", " << e.dst_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<FuncDef>& e)
@@ -34,7 +36,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Immediate>& e)
   {
-    ostr_ << "$", e.val_get();
+    ostr_ << "$" << e.val_get();
   }
 
   void CodeEmit::operator()(const_t<Program>& e)

@@ -1,12 +1,22 @@
 #include "parser.hh"
 
+#include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/return-exp.hh"
 
 using namespace lexer;
 
 namespace parser
 {
-  ast::Exp* Parser::parse_statement() { return parse_return_statement(); }
+  ast::Exp* Parser::parse_statement()
+  {
+    std::vector<ast::Exp*> exps;
+    exps.emplace_back(parse_return_statement());
+
+    misc::Location loc =
+      exps.front()->location_get() + exps.back()->location_get();
+
+    return new ast::ExpList(loc, exps);
+  }
 
   ast::Exp* Parser::parse_return_statement()
   {
