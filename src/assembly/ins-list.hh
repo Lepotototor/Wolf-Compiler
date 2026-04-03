@@ -10,10 +10,7 @@ namespace assembly
   class InsList : public Instruction
   {
   public:
-    InsList(const misc::Location& loc, std::vector<Instruction*> instructions)
-      : Instruction(loc)
-      , instructions_(instructions)
-    {}
+    InsList(const misc::Location& loc, std::vector<Instruction*> instructions);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

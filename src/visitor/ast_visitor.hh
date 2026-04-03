@@ -14,6 +14,7 @@ namespace ast
     // Use to visit node by pointer
     template <class E> void operator()(E* e);
 
+    /*      AST Visitors            */
     virtual void operator()(const_t<Ast>& e);
 
     virtual void operator()(const_t<FunctionDec>& e);
@@ -41,4 +42,4 @@ namespace ast
 
 } // namespace ast
 
-#include "visitor.hxx"
+#include "ast_visitor.hxx"

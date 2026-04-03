@@ -39,7 +39,7 @@ AC_CONFIG_FILES([
                     src/lexer/Makefile
                     src/parser/Makefile
                     src/ast_nodes/Makefile
-                    src/ast_visitor/Makefile
+                    src/visitor/Makefile
                     src/assembly/Makefile
                 ])
 AC_OUTPUT

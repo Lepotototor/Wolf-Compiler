@@ -12,11 +12,7 @@ namespace assembly
   public:
     FuncDef(const misc::Location& loc,
             const std::string& name,
-            InsList* instructions)
-      : AsmNode(loc)
-      , name_(name)
-      , ins_(instructions)
-    {}
+            InsList* instructions);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

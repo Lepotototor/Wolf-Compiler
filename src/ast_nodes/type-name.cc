@@ -1,6 +1,6 @@
 #include "type-name.hh"
 
-#include "../visitor/visitor.hh"
+#include "../visitor/ast_visitor.hh"
 
 namespace ast
 {

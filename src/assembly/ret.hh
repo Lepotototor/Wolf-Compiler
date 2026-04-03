@@ -9,17 +9,15 @@ namespace assembly
   class Ret : public Instruction
   {
   public:
-    Ret(const misc::Location& loc, Mov* mov)
-      : Instruction(loc)
-      , mov_(mov)
-    {}
+    Ret(const misc::Location& loc, Mov* mov);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
-    Mov* mov_get();
+    const Mov* mov_get() const { return mov_; }
+    Mov* mov_get() { return mov_; }
 
   private:
     Mov* mov_ = nullptr;

@@ -9,11 +9,7 @@ namespace assembly
   class Mov : public Instruction
   {
   public:
-    Mov(const misc::Location& loc, Operand* src, Operand* dst)
-      : Instruction(loc)
-      , src_(src)
-      , dst_(dst)
-    {}
+    Mov(const misc::Location& loc, Operand* src, Operand* dst);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
@@ -21,7 +17,9 @@ namespace assembly
     virtual void accept(Visitor& v) override;
 
     const Operand& src_get() const { return *src_; }
+    Operand& src_get() { return *src_; }
     const Operand& dst_get() const { return *dst_; }
+    Operand& dst_get() { return *dst_; }
 
   private:
     Operand* src_;

@@ -1,6 +1,6 @@
 #include "function-dec.hh"
 
-#include "../visitor/visitor.hh"
+#include "../visitor/ast_visitor.hh"
 
 namespace ast
 {

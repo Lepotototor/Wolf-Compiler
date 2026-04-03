@@ -11,10 +11,7 @@ namespace assembly
   class Program : public AsmNode
   {
   public:
-    Program(const misc::Location& loc, const std::vector<FuncDef*> funcs)
-      : AsmNode(loc)
-      , funcs_(funcs)
-    {}
+    Program(const misc::Location& loc, const std::vector<FuncDef*> funcs);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

@@ -1,6 +1,6 @@
 SUBDIRS =  \
-		   assembly \
 		   visitor \
+		   assembly \
 		   ast_nodes \
 		   parser \
 		   lexer \

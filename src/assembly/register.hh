@@ -8,9 +8,7 @@ namespace assembly
   class Register : public Operand
   {
   public:
-    Register(const misc::Location& loc)
-      : Operand(loc)
-    {}
+    Register(const misc::Location& loc);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
