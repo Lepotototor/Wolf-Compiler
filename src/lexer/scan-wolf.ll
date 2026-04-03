@@ -70,10 +70,10 @@
 }
 
 /* Abbreviations.  */
-number             [0-9]+
-ID [a-zA-Z_][a-zA-Z0-9_]*
+number             [0-9]+\b
+ID [a-zA-Z_][a-zA-Z0-9_]*\b
 BLANK [ \t\v\f]
-STRING_LITERAL "\"".*"\""
+STRING_LITERAL "\"".*"\""\b
 
 %x SC_COMMENT SC_NEW_LOC
 
@@ -141,43 +141,43 @@ STRING_LITERAL "\"".*"\""
 \n			{ line++; col = 0; }
 \r			{ line++; col = 0; }
 
-"auto" { /* keyword auto is ignored */ }
+"auto\b" { /* keyword auto is ignored */ }
 
-"void"			{ TOKEN(VOID); }
-"int"			{ TOKEN(INT); }
-"char"			{ TOKEN(CHAR); }
-"flot"			{ TOKEN(FLOAT); }
-"double"		{ TOKEN(DOUBLE); }
-"unsigned"		{ TOKEN(UNSIGNED); }
-"signed"		{ TOKEN(SIGNED); }
-"long"			{ TOKEN(LONG); }
-"short"			{ TOKEN(SHORT); }
-"register"		{ TOKEN(REGISTER); }
+"void\b"			{ TOKEN(VOID); }
+"int\b"			{ TOKEN(INT); }
+"char\b"			{ TOKEN(CHAR); }
+"flot\b"			{ TOKEN(FLOAT); }
+"double\b"		{ TOKEN(DOUBLE); }
+"unsigned\b"		{ TOKEN(UNSIGNED); }
+"signed\b"		{ TOKEN(SIGNED); }
+"long\b"			{ TOKEN(LONG); }
+"short\b"			{ TOKEN(SHORT); }
+"register\b"		{ TOKEN(REGISTER); }
 
-"struct"		{ TOKEN(STRUCT); }
-"union"			{ TOKEN(UNION); }
-"enum"			{ TOKEN(ENUM); }
+"struct\b"		{ TOKEN(STRUCT); }
+"union\b"			{ TOKEN(UNION); }
+"enum\b"			{ TOKEN(ENUM); }
 
-"typedef"		{ TOKEN(TYPEDEF); }
-"extern"		{ TOKEN(EXTERN); }
-"const"			{ TOKEN(CONST); }
-"static"		{ TOKEN(STATIC); }
-"inline"		{ TOKEN(INLINE); }
-"volatile"		{ TOKEN(VOLATILE); }
+"typedef\b"		{ TOKEN(TYPEDEF); }
+"extern\b"		{ TOKEN(EXTERN); }
+"const\b"			{ TOKEN(CONST); }
+"static\b"		{ TOKEN(STATIC); }
+"inline\b"		{ TOKEN(INLINE); }
+"volatile\b"		{ TOKEN(VOLATILE); }
 
-"while"			{ TOKEN(WHILE); }
-"for"			{ TOKEN(FOR); }
-"do"			{ TOKEN(DO); }
-"break"			{ TOKEN(BREAK); }
-"continue"		{ TOKEN(CONTINUE); }
-"if"			{ TOKEN(IF); }
-"else"			{ TOKEN(ELSE); }
-"switch"		{ TOKEN(SWITCH); }
-"case"			{ TOKEN(CASE); }
-"default"		{ TOKEN(DEFAULT); }
-"goto"			{ TOKEN(GOTO); }
-"sizeof"		{ TOKEN(SIZEOF); }
-"return"		{ TOKEN(RETURN); }
+"while\b"			{ TOKEN(WHILE); }
+"for\b"			{ TOKEN(FOR); }
+"do\b"			{ TOKEN(DO); }
+"break\b"			{ TOKEN(BREAK); }
+"continue\b"		{ TOKEN(CONTINUE); }
+"if\b"			{ TOKEN(IF); }
+"else\b"			{ TOKEN(ELSE); }
+"switch\b"		{ TOKEN(SWITCH); }
+"case\b"			{ TOKEN(CASE); }
+"default\b"		{ TOKEN(DEFAULT); }
+"goto\b"			{ TOKEN(GOTO); }
+"sizeof\b"		{ TOKEN(SIZEOF); }
+"return\b"		{ TOKEN(RETURN); }
 
 "!"				{ TOKEN(NOT); }
 "=="			{ TOKEN(EQ); }

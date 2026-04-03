@@ -30,6 +30,10 @@ namespace parser
         return_exp = parse_exp();
         semi_tok = expect_tok(";");
       }
+    else
+      {
+        pop_tok();
+      }
 
     return new ast::ReturnExp(ret_tok + semi_tok, return_exp);
   }

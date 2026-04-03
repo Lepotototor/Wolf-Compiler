@@ -50,7 +50,7 @@ namespace parser
 
     if (tok != c)
       {
-        mismatch_tok(tok, std::string(c, 1));
+        mismatch_tok(tok, std::string(1, c));
       }
 
     return tok;

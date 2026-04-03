@@ -121,11 +121,11 @@ namespace driver
         std::string filename = file.substr(0, dot);
         std::string ext = file.substr(dot);
 
-        std::cout << "File: " << filename << " has extension " << ext << "\n";
+        // std::cout << "File: " << filename << " has extension " << ext << "\n";
         if (ext == ".c")
           {
             std::string cmd = "cpp " + file + " -o " + filename + ".i";
-            std::cout << cmd << "\n";
+            // std::cout << cmd << "\n";
             int r = system(cmd.c_str());
             if (r != 0)
               {
@@ -148,7 +148,7 @@ namespace driver
           {
             std::string cmd = "as " + (ext == ".S" ? file : filename + ".s")
               + " -o " + filename + ".o";
-            std::cout << cmd << "\n";
+            // std::cout << cmd << "\n";
             int r = system(cmd.c_str());
             if (r != 0)
               {
@@ -166,14 +166,23 @@ namespace driver
             std::string filename = file.substr(0, file.find("."));
             cmd += " " + filename + ".o";
           }
-        cmd += " -o " + output_name;
+        cmd += " -o "
+          + (input_files_.size() == 1
+               ? input_files_.front().substr(0, input_files_.front().find("."))
+               : output_name);
 
-        std::cout << cmd << "\n";
+        // std::cout << cmd << "\n";
         int r = system(cmd.c_str());
         if (r != 0)
           {
             exit(1);
           }
+      }
+
+    for (const std::string& file : input_files_)
+      {
+        std::string cmd = "rm -f " + file + ".i " + file + ".s " + file + ".o ";
+        system(cmd.c_str());
       }
   }
 
@@ -198,7 +207,7 @@ namespace driver
         program = parser.program_get();
       }
 
-    std::cout << *program;
+    // std::cout << *program;
 
     assembly::AsmNode* asm_pg = nullptr;
 
