@@ -1,15 +1,15 @@
 #pragma once
 
-#include "assembly_node.hh"
+#include "yakir_node.hh"
 
-namespace assembly
+namespace yakir
 {
 
-  class Instruction : public AsmNode
+  class Instruction : public YakirNode
   {
   public:
     Instruction(const misc::Location& loc)
-      : AsmNode(loc)
+      : YakirNode(loc)
     {}
 
     /// Accept a const visitor
@@ -18,4 +18,4 @@ namespace assembly
     virtual void accept(Visitor& v) = 0;
   };
 
-} // namespace assembly
+} // namespace yakir

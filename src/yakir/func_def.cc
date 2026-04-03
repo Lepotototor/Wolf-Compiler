@@ -1,13 +1,13 @@
 #include "func_def.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   FuncDef::FuncDef(const misc::Location& loc,
                    const std::string& name,
                    InsList* instructions)
-    : AsmNode(loc)
+    : YakirNode(loc)
     , name_(name)
     , ins_(instructions)
   {}
@@ -17,4 +17,4 @@ namespace assembly
   void FuncDef::accept(ConstVisitor& v) const { v(*this); }
   void FuncDef::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

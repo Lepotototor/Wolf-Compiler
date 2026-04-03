@@ -5,11 +5,11 @@
 #include "../lexer/lexer.hh"
 #include "../parser/parser.hh"
 
-#include "../visitor/assembly-generation.hh"
 #include "../visitor/code-emission.hh"
 #include "../visitor/pretty-printer.hh"
+#include "../visitor/yakir-generation.hh"
 
-#include "../assembly/program.hh"
+#include "../yakir/program.hh"
 
 #include <cstdlib>
 #include <fstream>
@@ -209,11 +209,11 @@ namespace driver
 
     std::cout << *program;
 
-    assembly::AsmNode* asm_pg = nullptr;
+    yakir::YakirNode* asm_pg = nullptr;
 
     if (code_gen && program)
       {
-        ast::AsmGeneration asm_gen;
+        ast::YakirGeneration asm_gen;
         program->accept(asm_gen);
         asm_pg = asm_gen.res_get();
       }

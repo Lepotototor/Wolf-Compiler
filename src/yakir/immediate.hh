@@ -2,7 +2,7 @@
 
 #include "operand.hh"
 
-namespace assembly
+namespace yakir
 {
 
   class Immediate : public Operand
@@ -21,4 +21,4 @@ namespace assembly
     std::string val_;
   };
 
-} // namespace assembly
+} // namespace yakir

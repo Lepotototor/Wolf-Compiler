@@ -40,6 +40,6 @@ AC_CONFIG_FILES([
                     src/parser/Makefile
                     src/ast_nodes/Makefile
                     src/visitor/Makefile
-                    src/assembly/Makefile
+                    src/yakir/Makefile
                 ])
 AC_OUTPUT

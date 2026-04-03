@@ -1,8 +1,8 @@
 #include "register.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   Register::Register(const misc::Location& loc)
     : Operand(loc)
@@ -11,4 +11,4 @@ namespace assembly
   void Register::accept(ConstVisitor& v) const { v(*this); }
   void Register::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

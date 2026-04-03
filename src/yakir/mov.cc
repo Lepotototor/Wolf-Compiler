@@ -1,8 +1,8 @@
 #include "mov.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   Mov::Mov(const misc::Location& loc, Operand* src, Operand* dst)
     : Instruction(loc)
@@ -19,4 +19,4 @@ namespace assembly
   void Mov::accept(ConstVisitor& v) const { v(*this); }
   void Mov::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

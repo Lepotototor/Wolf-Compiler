@@ -1,8 +1,8 @@
 #include "immediate.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   Immediate::Immediate(const misc::Location& loc, const std::string& val)
     : Operand(loc)
@@ -12,4 +12,4 @@ namespace assembly
   void Immediate::accept(ConstVisitor& v) const { v(*this); }
   void Immediate::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

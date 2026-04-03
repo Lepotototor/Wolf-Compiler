@@ -1,4 +1,4 @@
-#include "assembly-generation.hh"
+#include "yakir-generation.hh"
 
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/exp-list.hh"
@@ -7,20 +7,20 @@
 #include "../ast_nodes/return-exp.hh"
 #include "../ast_nodes/type-name.hh"
 
-#include "../assembly/func_def.hh"
-#include "../assembly/immediate.hh"
-#include "../assembly/ins-list.hh"
-#include "../assembly/mov.hh"
-#include "../assembly/program.hh"
-#include "../assembly/register.hh"
-#include "../assembly/ret.hh"
+#include "../yakir/func_def.hh"
+#include "../yakir/immediate.hh"
+#include "../yakir/ins-list.hh"
+#include "../yakir/mov.hh"
+#include "../yakir/program.hh"
+#include "../yakir/register.hh"
+#include "../yakir/ret.hh"
 
-using namespace assembly;
+using namespace yakir;
 
 namespace ast
 {
 
-  void AsmGeneration::operator()(const DecList& e)
+  void YakirGeneration::operator()(const DecList& e)
   {
     std::vector<FuncDef*> funcs;
 
@@ -33,13 +33,13 @@ namespace ast
     res_ = new Program(e.location_get(), funcs);
   }
 
-  void AsmGeneration::operator()(const FunctionDec& e)
+  void YakirGeneration::operator()(const FunctionDec& e)
   {
     InsList* ins = recurse<Exp, InsList>(e.body_get());
     res_ = new FuncDef(e.location_get(), e.name_get(), ins);
   }
 
-  void AsmGeneration::operator()(const ExpList& e)
+  void YakirGeneration::operator()(const ExpList& e)
   {
     std::vector<Instruction*> ins;
     for (const auto& exp : e.exps_get())
@@ -52,12 +52,12 @@ namespace ast
     res_ = new InsList(e.location_get(), ins);
   }
 
-  void AsmGeneration::operator()(const NumberExp& e)
+  void YakirGeneration::operator()(const NumberExp& e)
   {
     res_ = new Immediate(e.location_get(), e.val_get());
   }
 
-  void AsmGeneration::operator()(const ReturnExp& e)
+  void YakirGeneration::operator()(const ReturnExp& e)
   {
     Operand* ope = recurse<Exp, Operand>(e.return_val_get());
 
@@ -71,7 +71,7 @@ namespace ast
     res_ = new Ret(e.location_get(), mov);
   }
 
-  void AsmGeneration::operator()(const StringExp&) {}
-  void AsmGeneration::operator()(const TypeName&) {}
+  void YakirGeneration::operator()(const StringExp&) {}
+  void YakirGeneration::operator()(const TypeName&) {}
 
 } // namespace ast

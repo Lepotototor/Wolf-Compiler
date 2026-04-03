@@ -3,7 +3,7 @@
 #include "instruction.hh"
 #include "mov.hh"
 
-namespace assembly
+namespace yakir
 {
 
   class Ret : public Instruction
@@ -25,4 +25,4 @@ namespace assembly
     Mov* mov_ = nullptr;
   };
 
-} // namespace assembly
+} // namespace yakir

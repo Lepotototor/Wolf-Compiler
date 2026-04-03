@@ -1,11 +1,11 @@
 #include "program.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   Program::Program(const misc::Location& loc, const std::vector<FuncDef*> funcs)
-    : AsmNode(loc)
+    : YakirNode(loc)
     , funcs_(funcs)
   {}
 
@@ -18,4 +18,4 @@ namespace assembly
   void Program::accept(ConstVisitor& v) const { v(*this); }
   void Program::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

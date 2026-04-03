@@ -1,8 +1,8 @@
 #include "ins-list.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   InsList::InsList(const misc::Location& loc,
                    std::vector<Instruction*> instructions)
@@ -19,4 +19,4 @@ namespace assembly
   void InsList::accept(ConstVisitor& v) const { v(*this); }
   void InsList::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

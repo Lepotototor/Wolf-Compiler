@@ -1,13 +1,13 @@
 #pragma once
 
-#include "assembly_node.hh"
 #include "ins-list.hh"
 #include "instruction.hh"
+#include "yakir_node.hh"
 
-namespace assembly
+namespace yakir
 {
 
-  class FuncDef : public AsmNode
+  class FuncDef : public YakirNode
   {
   public:
     FuncDef(const misc::Location& loc,
@@ -32,4 +32,4 @@ namespace assembly
     InsList* ins_;
   };
 
-} // namespace assembly
+} // namespace yakir

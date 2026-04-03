@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../assembly/all_nodes.hh"
+#include "../yakir/all_nodes.hh"
 
-namespace assembly
+namespace yakir
 {
   template <template <typename> class Const> class GenVisitor
   {
@@ -14,8 +14,8 @@ namespace assembly
     // Use to visit node by pointer
     template <class E> void operator()(E* e);
 
-    /*      Assembly Visitors       */
-    virtual void operator()(const_t<AsmNode>& e);
+    /*      Yakir Visitors       */
+    virtual void operator()(const_t<YakirNode>& e);
 
     virtual void operator()(const_t<InsList>& e);
     virtual void operator()(const_t<Ret>& e);
@@ -40,6 +40,6 @@ namespace assembly
 
   using Visitor = GenVisitor<non_const_type>;
 
-} // namespace assembly
+} // namespace yakir
 
-#include "asm_visitor.hxx"
+#include "yakir_visitor.hxx"

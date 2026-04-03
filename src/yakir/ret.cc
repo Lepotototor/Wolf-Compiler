@@ -1,8 +1,8 @@
 #include "ret.hh"
 
-#include "../visitor/asm_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
-namespace assembly
+namespace yakir
 {
   Ret::Ret(const misc::Location& loc, Mov* mov)
     : Instruction(loc)
@@ -14,4 +14,4 @@ namespace assembly
   void Ret::accept(ConstVisitor& v) const { v(*this); }
   void Ret::accept(Visitor& v) { v(*this); }
 
-} // namespace assembly
+} // namespace yakir

@@ -1,12 +1,12 @@
 #pragma once
 
-namespace assembly
+namespace yakir
 {
-  // Each Assembly node should have class defnition in assembly
+  // Each Yakir node should have class defnition in yakir
   // Also a default method in visitor.hh and in default_visitor.hxx
   // And implement accept methods to be visit
 
-  class AsmNode;
+  class YakirNode;
 
   class Instruction;
   class InsList;
@@ -30,4 +30,4 @@ namespace assembly
   using ConstVisitor = GenVisitor<const_type>;
   using Visitor = GenVisitor<non_const_type>;
 
-} // namespace assembly
+} // namespace yakir

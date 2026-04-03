@@ -2,17 +2,17 @@
 
 #include "ast_visitor.hh"
 
-#include "../assembly/assembly_node.hh"
+#include "../yakir/yakir_node.hh"
 
 #include <iostream>
 
 namespace ast
 {
 
-  class AsmGeneration : public ConstVisitor
+  class YakirGeneration : public ConstVisitor
   {
   public:
-    AsmGeneration() {}
+    YakirGeneration() {}
 
     virtual void operator()(const FunctionDec& e) override;
     virtual void operator()(const DecList& e) override;
@@ -22,15 +22,15 @@ namespace ast
     virtual void operator()(const ReturnExp& e) override;
     virtual void operator()(const TypeName& e) override;
 
-    template <typename AST, typename ASM> ASM* recurse(const AST& t);
-    template <typename AST, typename ASM> ASM* recurse(const AST* t);
+    template <typename AST, typename YAKIR> YAKIR* recurse(const AST& t);
+    template <typename AST, typename YAKIR> YAKIR* recurse(const AST* t);
 
-    assembly::AsmNode* res_get() { return res_; }
+    yakir::YakirNode* res_get() { return res_; }
 
   private:
-    assembly::AsmNode* res_;
+    yakir::YakirNode* res_;
   };
 
 } // namespace ast
 
-#include "assembly-generation.hxx"
+#include "yakir-generation.hxx"

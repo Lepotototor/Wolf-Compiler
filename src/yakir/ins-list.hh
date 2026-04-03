@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace assembly
+namespace yakir
 {
 
   class InsList : public Instruction
@@ -29,4 +29,4 @@ namespace assembly
     std::vector<Instruction*> instructions_;
   };
 
-} // namespace assembly
+} // namespace yakir

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "assembly_node.hh"
 #include "func_def.hh"
+#include "yakir_node.hh"
 
 #include <vector>
 
-namespace assembly
+namespace yakir
 {
 
-  class Program : public AsmNode
+  class Program : public YakirNode
   {
   public:
     Program(const misc::Location& loc, const std::vector<FuncDef*> funcs);
@@ -27,4 +27,4 @@ namespace assembly
     std::vector<FuncDef*> funcs_;
   };
 
-} // namespace assembly
+} // namespace yakir

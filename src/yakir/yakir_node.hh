@@ -3,12 +3,12 @@
 #include "../misc/location.hh"
 #include "all_nodes.hh"
 
-namespace assembly
+namespace yakir
 {
-  class AsmNode : public misc::Locable
+  class YakirNode : public misc::Locable
   {
   public:
-    AsmNode(const misc::Location& loc)
+    YakirNode(const misc::Location& loc)
       : misc::Locable(loc)
     {}
 
@@ -17,10 +17,10 @@ namespace assembly
     // Accept a non-const visitor
     virtual void accept(Visitor& v) = 0;
 
-    virtual ~AsmNode() = default;
+    virtual ~YakirNode() = default;
 
-    AsmNode(const AsmNode&) = delete;
-    const AsmNode& operator=(const AsmNode&) = delete;
+    YakirNode(const YakirNode&) = delete;
+    const YakirNode& operator=(const YakirNode&) = delete;
   };
 
-} // namespace assembly
+} // namespace yakir

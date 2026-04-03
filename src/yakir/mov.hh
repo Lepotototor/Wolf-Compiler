@@ -3,7 +3,7 @@
 #include "instruction.hh"
 #include "operand.hh"
 
-namespace assembly
+namespace yakir
 {
 
   class Mov : public Instruction
@@ -28,4 +28,4 @@ namespace assembly
     Operand* dst_;
   };
 
-} // namespace assembly
+} // namespace yakir

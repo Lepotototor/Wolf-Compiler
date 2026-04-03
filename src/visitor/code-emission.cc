@@ -2,7 +2,7 @@
 
 #define TAB "   "
 
-namespace assembly
+namespace yakir
 {
   void CodeEmit::operator()(const_t<InsList>& e)
   {
@@ -48,20 +48,20 @@ namespace assembly
 
     //TODO: Disable stack executable
   }
-} // namespace assembly
+} // namespace yakir
 
-std::ostream& operator<<(std::ostream& os, const assembly::AsmNode& e)
+std::ostream& operator<<(std::ostream& os, const yakir::YakirNode& e)
 {
-  assembly::CodeEmit printer(os);
+  yakir::CodeEmit printer(os);
   e.accept(printer);
   return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const assembly::AsmNode* e)
+std::ostream& operator<<(std::ostream& os, const yakir::YakirNode* e)
 {
   if (e == nullptr)
     return os << "nullptr";
-  assembly::CodeEmit printer(os);
+  yakir::CodeEmit printer(os);
   e->accept(printer);
   return os;
 }

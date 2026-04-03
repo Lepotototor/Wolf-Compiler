@@ -1,10 +1,10 @@
 #pragma once
 
-#include "asm_visitor.hh"
+#include "yakir_visitor.hh"
 
 #include <iostream>
 
-namespace assembly
+namespace yakir
 {
 
   class CodeEmit : public ConstVisitor
@@ -26,7 +26,7 @@ namespace assembly
     std::ostream& ostr_;
   };
 
-} // namespace assembly
+} // namespace yakir
 
-std::ostream& operator<<(std::ostream& os, const assembly::AsmNode& e);
-std::ostream& operator<<(std::ostream& os, const assembly::AsmNode* e);
+std::ostream& operator<<(std::ostream& os, const yakir::YakirNode& e);
+std::ostream& operator<<(std::ostream& os, const yakir::YakirNode* e);

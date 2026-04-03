@@ -1,15 +1,15 @@
 #pragma once
 
-#include "asm_visitor.hh"
+#include "yakir_visitor.hh"
 
-#include "../assembly/func_def.hh"
-#include "../assembly/immediate.hh"
-#include "../assembly/ins-list.hh"
-#include "../assembly/mov.hh"
-#include "../assembly/program.hh"
-#include "../assembly/ret.hh"
+#include "../yakir/func_def.hh"
+#include "../yakir/immediate.hh"
+#include "../yakir/ins-list.hh"
+#include "../yakir/mov.hh"
+#include "../yakir/program.hh"
+#include "../yakir/ret.hh"
 
-namespace assembly
+namespace yakir
 {
   template <template <typename> class Const>
   template <class E>
@@ -20,7 +20,7 @@ namespace assembly
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<AsmNode>& e)
+  void GenVisitor<Const>::operator()(const_t<YakirNode>& e)
   {
     e.accept(*this);
   }
@@ -67,4 +67,4 @@ namespace assembly
       func->accept(*this);
   }
 
-} // namespace assembly
+} // namespace yakir

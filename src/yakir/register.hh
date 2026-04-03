@@ -2,7 +2,7 @@
 
 #include "operand.hh"
 
-namespace assembly
+namespace yakir
 {
 
   class Register : public Operand
@@ -16,4 +16,4 @@ namespace assembly
     virtual void accept(Visitor& v) override;
   };
 
-} // namespace assembly
+} // namespace yakir
