@@ -6,6 +6,7 @@
 #include "../parser/parser.hh"
 
 #include "../visitor/assembly-generation.hh"
+#include "../visitor/code-emission.hh"
 #include "../visitor/pretty-printer.hh"
 
 #include "../assembly/program.hh"
@@ -197,7 +198,6 @@ namespace driver
       }
 
     std::cout << *program;
-    delete program;
 
     assembly::AsmNode* asm_pg = nullptr;
 
@@ -206,8 +206,11 @@ namespace driver
         ast::AsmGeneration asm_gen;
         program->accept(asm_gen);
         asm_pg = asm_gen.res_get();
+
+        std::cout << asm_pg;
       }
 
-    (void)asm_pg;
+    delete program;
+    delete asm_pg;
   }
 } // namespace driver

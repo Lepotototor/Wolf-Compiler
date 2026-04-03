@@ -15,15 +15,15 @@ namespace assembly
     template <class E> void operator()(E* e);
 
     /*      Assembly Visitors       */
-    virtual void operator()(const_t<assembly::AsmNode>& e);
+    virtual void operator()(const_t<AsmNode>& e);
 
-    virtual void operator()(const_t<assembly::InsList>& e);
-    virtual void operator()(const_t<assembly::Ret>& e);
-    virtual void operator()(const_t<assembly::Mov>& e);
-    virtual void operator()(const_t<assembly::FuncDef>& e);
-    virtual void operator()(const_t<assembly::Register>& e);
-    virtual void operator()(const_t<assembly::Immediate>& e);
-    virtual void operator()(const_t<assembly::Program>& e);
+    virtual void operator()(const_t<InsList>& e);
+    virtual void operator()(const_t<Ret>& e);
+    virtual void operator()(const_t<Mov>& e);
+    virtual void operator()(const_t<FuncDef>& e);
+    virtual void operator()(const_t<Register>& e);
+    virtual void operator()(const_t<Immediate>& e);
+    virtual void operator()(const_t<Program>& e);
   };
 
   template <typename T> struct const_type

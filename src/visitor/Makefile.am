@@ -4,6 +4,8 @@ libvisitor_a_SOURCES =  \
   assembly-generation.cc  \
   assembly-generation.hh  \
   assembly-generation.hxx \
+  code-emission.hh \
+  code-emission.cc \
   pretty-printer.cc \
   pretty-printer.hh \
   ast_visitor.hh  \
