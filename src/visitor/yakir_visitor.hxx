@@ -2,12 +2,13 @@
 
 #include "yakir_visitor.hh"
 
+#include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
-#include "../yakir/immediate.hh"
 #include "../yakir/ins-list.hh"
-#include "../yakir/mov.hh"
 #include "../yakir/program.hh"
 #include "../yakir/ret.hh"
+#include "../yakir/unary.hh"
+#include "../yakir/var.hh"
 
 namespace yakir
 {
@@ -35,15 +36,8 @@ namespace yakir
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Ret>& e)
   {
-    if (e.mov_get())
-      e.mov_get()->accept(*this);
-  }
-
-  template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<Mov>& e)
-  {
-    e.src_get().accept(*this);
-    e.dst_get().accept(*this);
+    if (e.val_get())
+      e.val_get()->accept(*this);
   }
 
   template <template <typename> class Const>
@@ -53,12 +47,19 @@ namespace yakir
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<Register>&)
+  void GenVisitor<Const>::operator()(const_t<Constant>&)
   {}
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<Immediate>&)
+  void GenVisitor<Const>::operator()(const_t<Var>&)
   {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Unary>& e)
+  {
+    e.src_get().accept(*this);
+    e.dst_get().accept(*this);
+  }
 
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Program>& e)

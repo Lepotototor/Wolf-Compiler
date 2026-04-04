@@ -2,22 +2,24 @@ lib_LIBRARIES = libyakir.a
 
 libyakir_a_SOURCES =  \
 	yakir_node.hh \
-	operand.hh \
-	immediate.hh \
-	immediate.cc \
+	pretty_printer.hh \
+	pretty_printer.cc \
 	program.hh \
 	program.cc \
+	val.hh \
+	constant.hh \
+	constant.cc \
+	var.hh \
+	var.cc \
 	func_def.hh \
 	func_def.cc \
 	ins-list.hh \
 	ins-list.cc \
 	instruction.hh \
-	mov.hh \
-	mov.cc \
+	unary.hh \
+	unary.cc \
 	ret.hh \
-	ret.cc \
-	register.cc \
-	register.hh
+	ret.cc
 
 
 libyakir_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver -I$(top_srcdir)/src/ast_nodes -I$(top_srcdir)/src/visitor

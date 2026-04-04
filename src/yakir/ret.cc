@@ -4,12 +4,12 @@
 
 namespace yakir
 {
-  Ret::Ret(const misc::Location& loc, Mov* mov)
+  Ret::Ret(const misc::Location& loc, Val* val)
     : Instruction(loc)
-    , mov_(mov)
+    , val_(val)
   {}
 
-  Ret::~Ret() { delete mov_; }
+  Ret::~Ret() { delete val_; }
 
   void Ret::accept(ConstVisitor& v) const { v(*this); }
   void Ret::accept(Visitor& v) { v(*this); }

@@ -6,8 +6,8 @@
 #include "../parser/parser.hh"
 
 #include "../ast_nodes/pretty-printer.hh"
-#include "../visitor/code-emission.hh"
 #include "../visitor/yakir-generation.hh"
+#include "../yakir/pretty_printer.hh"
 
 #include "../yakir/program.hh"
 
@@ -207,25 +207,24 @@ namespace driver
         program = parser.program_get();
       }
 
+    std::cout << "\t___PROGRAM___\n";
     std::cout << *program;
 
-    yakir::YakirNode* asm_pg = nullptr;
+    yakir::YakirNode* yakir_pg = nullptr;
 
     if (code_gen && program)
       {
-        ast::YakirGeneration asm_gen;
-        program->accept(asm_gen);
-        asm_pg = asm_gen.res_get();
+        ast::YakirGeneration yakir_gen;
+        program->accept(yakir_gen);
+        yakir_pg = yakir_gen.res_get();
       }
 
-    if (code_emit && asm_pg)
+    if (code_emit && yakir_pg)
       {
-        std::ofstream asm_file{file + ".s"};
-        asm_file << asm_pg;
-        asm_file.close();
+        std::cout << "\n\t___YAKIR___\n" << *yakir_pg;
       }
 
     delete program;
-    delete asm_pg;
+    delete yakir_pg;
   }
 } // namespace driver

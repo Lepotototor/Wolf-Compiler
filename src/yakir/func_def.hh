@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ins-list.hh"
-#include "instruction.hh"
 #include "yakir_node.hh"
 
 namespace yakir

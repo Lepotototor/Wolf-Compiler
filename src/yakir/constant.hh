@@ -1,28 +1,24 @@
 #pragma once
 
-#include "instruction.hh"
 #include "val.hh"
 
 namespace yakir
 {
 
-  class Ret : public Instruction
+  class Constant : public Val
   {
   public:
-    Ret(const misc::Location& loc, Val* val);
+    Constant(const misc::Location& loc, const std::string& val);
 
-    ~Ret() override;
+    const std::string& val_get() const { return val_; }
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
-    const Val* val_get() const { return val_; }
-    Val* val_get() { return val_; }
-
   private:
-    Val* val_ = nullptr;
+    std::string val_;
   };
 
 } // namespace yakir

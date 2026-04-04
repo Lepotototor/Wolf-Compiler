@@ -5,10 +5,10 @@
 namespace yakir
 {
 
-  class Operand : public YakirNode
+  class Val : public YakirNode
   {
   public:
-    Operand(const misc::Location& loc)
+    Val(const misc::Location& loc)
       : YakirNode(loc)
     {}
 

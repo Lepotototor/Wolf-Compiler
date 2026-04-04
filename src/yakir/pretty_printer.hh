@@ -1,25 +1,25 @@
 #pragma once
 
-#include "yakir_visitor.hh"
+#include "../visitor/yakir_visitor.hh"
 
 #include <iostream>
 
 namespace yakir
 {
 
-  class CodeEmit : public ConstVisitor
+  class PrettyPrinter : public ConstVisitor
   {
   public:
-    CodeEmit(std::ostream& os)
+    PrettyPrinter(std::ostream& os)
       : ostr_(os)
     {}
 
     virtual void operator()(const_t<InsList>& e) override;
     virtual void operator()(const_t<Ret>& e) override;
-    virtual void operator()(const_t<Mov>& e) override;
+    virtual void operator()(const_t<Unary>& e) override;
     virtual void operator()(const_t<FuncDef>& e) override;
-    virtual void operator()(const_t<Register>& e) override;
-    virtual void operator()(const_t<Immediate>& e) override;
+    virtual void operator()(const_t<Constant>& e) override;
+    virtual void operator()(const_t<Var>& e) override;
     virtual void operator()(const_t<Program>& e) override;
 
   private:

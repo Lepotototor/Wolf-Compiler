@@ -1,24 +1,24 @@
 #pragma once
 
-#include "operand.hh"
+#include "val.hh"
 
 namespace yakir
 {
 
-  class Immediate : public Operand
+  class Var : public Val
   {
   public:
-    Immediate(const misc::Location& loc, const std::string& val);
-
-    const std::string& val_get() const { return val_; }
+    Var(const misc::Location& loc, const std::string& val);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
+    const std::string& id_get() const { return id_; }
+
   private:
-    std::string val_;
+    std::string id_;
   };
 
 } // namespace yakir

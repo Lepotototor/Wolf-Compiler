@@ -7,12 +7,10 @@
 #include "../ast_nodes/return-exp.hh"
 #include "../ast_nodes/type-name.hh"
 
+#include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
-#include "../yakir/immediate.hh"
 #include "../yakir/ins-list.hh"
-#include "../yakir/mov.hh"
 #include "../yakir/program.hh"
-#include "../yakir/register.hh"
 #include "../yakir/ret.hh"
 
 using namespace yakir;
@@ -54,21 +52,14 @@ namespace ast
 
   void YakirGeneration::operator()(const NumberExp& e)
   {
-    res_ = new Immediate(e.location_get(), e.val_get());
+    res_ = new Constant(e.location_get(), e.val_get());
   }
 
   void YakirGeneration::operator()(const ReturnExp& e)
   {
-    Operand* ope = recurse<Exp, Operand>(e.return_val_get());
+    Val* val = recurse<Exp, Val>(e.return_val_get());
 
-    Mov* mov = nullptr;
-    if (ope)
-      {
-        Register* reg = new Register{ope->location_get()};
-        mov = new Mov(ope->location_get(), ope, reg);
-      }
-
-    res_ = new Ret(e.location_get(), mov);
+    res_ = new Ret(e.location_get(), val);
   }
 
   void YakirGeneration::operator()(const StringExp&) {}

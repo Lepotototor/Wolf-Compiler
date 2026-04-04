@@ -11,12 +11,13 @@ namespace yakir
   class Instruction;
   class InsList;
   class Ret;
-  class Mov;
 
   class FuncDef;
-  class Operand;
-  class Register;
-  class Immediate;
+  class Val;
+  class Constant;
+  class Var;
+
+  class Unary;
 
   class Program;
 
