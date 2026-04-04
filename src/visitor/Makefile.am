@@ -6,8 +6,6 @@ libvisitor_a_SOURCES =  \
   yakir-generation.hxx \
   code-emission.hh \
   code-emission.cc \
-  pretty-printer.cc \
-  pretty-printer.hh \
   ast_visitor.hh  \
   ast_visitor.hxx \
   yakir_visitor.hh  \

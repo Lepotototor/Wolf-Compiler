@@ -5,8 +5,8 @@
 #include "../lexer/lexer.hh"
 #include "../parser/parser.hh"
 
+#include "../ast_nodes/pretty-printer.hh"
 #include "../visitor/code-emission.hh"
-#include "../visitor/pretty-printer.hh"
 #include "../visitor/yakir-generation.hh"
 
 #include "../yakir/program.hh"

@@ -2,6 +2,8 @@ lib_LIBRARIES = libast_nodes.a
 
 libast_nodes_a_SOURCES =  \
 	all_nodes.hh \
+  	pretty-printer.cc \
+  	pretty-printer.hh \
 	ast.hh \
 	declaration.hh \
 	dec-list.hh \

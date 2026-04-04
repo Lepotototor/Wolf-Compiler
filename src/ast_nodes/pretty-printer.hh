@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast_visitor.hh"
+#include "../visitor/ast_visitor.hh"
 
 #include <iostream>
 
