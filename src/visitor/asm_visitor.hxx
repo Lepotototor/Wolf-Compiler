@@ -1,0 +1,70 @@
+#pragma once
+
+#include "asm_visitor.hh"
+
+#include "../assembly/func_def.hh"
+#include "../assembly/immediate.hh"
+#include "../assembly/ins-list.hh"
+#include "../assembly/mov.hh"
+#include "../assembly/program.hh"
+#include "../assembly/ret.hh"
+
+namespace assembly
+{
+  template <template <typename> class Const>
+  template <class E>
+  void GenVisitor<Const>::operator()(E* e)
+  {
+    if (e)
+      e->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<AsmNode>& e)
+  {
+    e.accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<InsList>& e)
+  {
+    for (auto& ins : e.instructions_get())
+      ins->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Ret>& e)
+  {
+    if (e.mov_get())
+      e.mov_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Mov>& e)
+  {
+    e.src_get().accept(*this);
+    e.dst_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<FuncDef>& e)
+  {
+    e.instructions_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Register>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Immediate>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Program>& e)
+  {
+    for (auto& func : e.funcs_get())
+      func->accept(*this);
+  }
+
+} // namespace assembly
