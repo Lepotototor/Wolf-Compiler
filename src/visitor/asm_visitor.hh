@@ -17,7 +17,6 @@ namespace assembly
     /*      Assembly Visitors       */
     virtual void operator()(const_t<AsmNode>& e);
 
-    virtual void operator()(const_t<InsList>& e);
     virtual void operator()(const_t<Ret>& e);
     virtual void operator()(const_t<Mov>& e);
     virtual void operator()(const_t<FuncDef>& e);

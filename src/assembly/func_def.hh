@@ -1,8 +1,9 @@
 #pragma once
 
 #include "assembly_node.hh"
-#include "ins-list.hh"
 #include "instruction.hh"
+
+#include <vector>
 
 namespace assembly
 {
@@ -12,7 +13,7 @@ namespace assembly
   public:
     FuncDef(const misc::Location& loc,
             const std::string& name,
-            InsList* instructions);
+            const std::vector<Instruction*>& instructions);
 
     ~FuncDef() override;
 
@@ -23,13 +24,13 @@ namespace assembly
 
     const std::string& name_get() const { return name_; }
 
-    InsList* instructions_get() { return ins_; }
-    const InsList* instructions_get() const { return ins_; }
+    const std::vector<Instruction*>& instructions_get() const { return ins_; }
+    std::vector<Instruction*>& instructions_get() { return ins_; }
 
   private:
     std::string name_;
 
-    InsList* ins_;
+    std::vector<Instruction*> ins_;
   };
 
 } // namespace assembly

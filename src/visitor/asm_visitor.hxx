@@ -4,7 +4,6 @@
 
 #include "../assembly/func_def.hh"
 #include "../assembly/immediate.hh"
-#include "../assembly/ins-list.hh"
 #include "../assembly/mov.hh"
 #include "../assembly/program.hh"
 #include "../assembly/ret.hh"
@@ -26,18 +25,8 @@ namespace assembly
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<InsList>& e)
-  {
-    for (auto& ins : e.instructions_get())
-      ins->accept(*this);
-  }
-
-  template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<Ret>& e)
-  {
-    if (e.mov_get())
-      e.mov_get()->accept(*this);
-  }
+  void GenVisitor<Const>::operator()(const_t<Ret>&)
+  {}
 
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Mov>& e)
@@ -49,7 +38,8 @@ namespace assembly
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<FuncDef>& e)
   {
-    e.instructions_get()->accept(*this);
+    for (Instruction* ins : e.instructions_get())
+      ins->accept(*this);
   }
 
   template <template <typename> class Const>

@@ -1,0 +1,16 @@
+#include "unary.hh"
+
+#include "../visitor/asm_visitor.hh"
+
+namespace assembly
+{
+  Unary::Unary(const misc::Location& loc, ast::unary_type type, Operand* ope)
+    : Instruction(loc)
+    , type_(type)
+    , ope_(ope)
+  {}
+
+  void Unary::accept(ConstVisitor& v) const { v(*this); }
+  void Unary::accept(Visitor& v) { v(*this); }
+
+} // namespace assembly

@@ -4,6 +4,9 @@ libvisitor_a_SOURCES =  \
   yakir-generation.cc  \
   yakir-generation.hh  \
   yakir-generation.hxx \
+  assembly-generation.cc  \
+  assembly-generation.hh  \
+  assembly-generation.hxx \
   ast_visitor.hh  \
   ast_visitor.hxx \
   yakir_visitor.hh  \

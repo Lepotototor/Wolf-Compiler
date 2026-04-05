@@ -13,8 +13,6 @@ libyakir_a_SOURCES =  \
 	var.cc \
 	func_def.hh \
 	func_def.cc \
-	ins-list.hh \
-	ins-list.cc \
 	instruction.hh \
 	unary.hh \
 	unary.cc \

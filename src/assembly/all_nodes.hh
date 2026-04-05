@@ -9,7 +9,6 @@ namespace assembly
   class AsmNode;
 
   class Instruction;
-  class InsList;
   class Ret;
   class Mov;
 

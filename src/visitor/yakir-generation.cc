@@ -9,7 +9,6 @@
 
 #include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
-#include "../yakir/ins-list.hh"
 #include "../yakir/program.hh"
 #include "../yakir/ret.hh"
 #include "../yakir/unary.hh"
@@ -66,20 +65,15 @@ namespace ast
   {
     Val* src = recurse<Exp, Val>(e.exp_get());
 
-    yakir::unary_type type = yakir::unary_type::MINUS_U;
     if (e.type_get() == PLUS_U)
       {
         res_ = src;
         return;
       }
-    if (e.type_get() == TILDE_U)
-      type = yakir::unary_type::TILDE_U;
-    if (e.type_get() == NEGATE_U)
-      type = yakir::unary_type::NEGATE_U;
 
     Var* dst = make_tmp_var(e.location_get());
 
-    Unary* ins = new Unary(e.location_get(), type, src, dst);
+    Unary* ins = new Unary(e.location_get(), e.type_get(), src, dst);
     curr_scope_.emplace_back(ins);
 
     res_ = new Var(dst->location_get(), dst->id_get());

@@ -4,7 +4,6 @@
 
 #include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
-#include "../yakir/ins-list.hh"
 #include "../yakir/program.hh"
 #include "../yakir/ret.hh"
 #include "../yakir/unary.hh"

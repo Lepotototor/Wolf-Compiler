@@ -17,9 +17,9 @@ namespace yakir
   {
     ostr_ << TAB << e.dst_get() << " = ";
 
-    if (e.type_get() == unary_type::MINUS_U)
+    if (e.type_get() == ast::unary_type::MINUS_U)
       ostr_ << "-";
-    else if (e.type_get() == unary_type::TILDE_U)
+    else if (e.type_get() == ast::unary_type::TILDE_U)
       ostr_ << "~";
     else
       ostr_ << "!";

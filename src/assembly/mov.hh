@@ -11,7 +11,7 @@ namespace assembly
   public:
     Mov(const misc::Location& loc, Operand* src, Operand* dst);
 
-    ~Mov();
+    ~Mov() override;
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

@@ -1,19 +1,17 @@
 #pragma once
 
 #include "instruction.hh"
-#include "val.hh"
+#include "operand.hh"
 
 #include "../ast_nodes/unary-exp.hh"
 
-namespace yakir
+namespace assembly
 {
 
   class Unary : public Instruction
   {
   public:
-    Unary(const misc::Location& loc, ast::unary_type type, Val* src, Val* dst);
-
-    ~Unary() override;
+    Unary(const misc::Location& loc, ast::unary_type type, Operand* ope);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
@@ -22,17 +20,13 @@ namespace yakir
 
     ast::unary_type type_get() const { return type_; }
 
-    const Val& src_get() const { return *src_; }
-    Val& src_get() { return *src_; }
-
-    const Val& dst_get() const { return *dst_; }
-    Val& dst_get() { return *dst_; }
+    const Operand* ope_get() const { return ope_; }
+    Operand* ope_get() { return ope_; }
 
   private:
     ast::unary_type type_;
 
-    Val* src_;
-    Val* dst_;
+    Operand* ope_;
   };
 
-} // namespace yakir
+} // namespace assembly

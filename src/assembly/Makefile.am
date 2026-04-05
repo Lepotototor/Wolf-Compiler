@@ -9,15 +9,21 @@ libassembly_a_SOURCES =  \
 	program.cc \
 	func_def.hh \
 	func_def.cc \
-	ins-list.hh \
-	ins-list.cc \
 	instruction.hh \
 	mov.hh \
 	mov.cc \
 	ret.hh \
 	ret.cc \
+	unary.hh \
+	unary.cc \
 	register.cc \
-	register.hh
+	register.hh \
+	pseudo.hh \
+	pseudo.cc \
+	stack.hh \
+	stack.cc \
+	allocate-stack.hh \
+	allocate-stack.cc
 
 
 libassembly_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver -I$(top_srcdir)/src/ast_nodes -I$(top_srcdir)/src/visitor
