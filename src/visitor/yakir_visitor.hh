@@ -17,7 +17,6 @@ namespace yakir
     /*      Yakir Visitors       */
     virtual void operator()(const_t<YakirNode>& e);
 
-    virtual void operator()(const_t<InsList>& e);
     virtual void operator()(const_t<Ret>& e);
     virtual void operator()(const_t<FuncDef>& e);
     virtual void operator()(const_t<Constant>& e);

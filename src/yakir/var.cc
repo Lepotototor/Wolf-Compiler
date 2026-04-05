@@ -9,7 +9,7 @@ namespace yakir
     , id_(id)
   {}
 
-  void Constant::accept(ConstVisitor& v) const { v(*this); }
-  void Constant::accept(Visitor& v) { v(*this); }
+  void Var::accept(ConstVisitor& v) const { v(*this); }
+  void Var::accept(Visitor& v) { v(*this); }
 
 } // namespace yakir

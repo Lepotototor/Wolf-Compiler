@@ -9,7 +9,6 @@ namespace yakir
   class YakirNode;
 
   class Instruction;
-  class InsList;
   class Ret;
 
   class FuncDef;

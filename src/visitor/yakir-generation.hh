@@ -14,10 +14,13 @@ namespace ast
   public:
     YakirGeneration() {}
 
+    yakir::Var* make_tmp_var(const misc::Location& loc);
+
     virtual void operator()(const FunctionDec& e) override;
     virtual void operator()(const DecList& e) override;
     virtual void operator()(const ExpList& e) override;
     virtual void operator()(const NumberExp& e) override;
+    virtual void operator()(const_t<UnaryExp>& e) override;
     virtual void operator()(const StringExp& e) override;
     virtual void operator()(const ReturnExp& e) override;
     virtual void operator()(const TypeName& e) override;
@@ -29,6 +32,10 @@ namespace ast
 
   private:
     yakir::YakirNode* res_;
+
+    std::vector<yakir::Instruction*> curr_scope_;
+
+    unsigned id_count_ = 0;
   };
 
 } // namespace ast

@@ -14,7 +14,6 @@ namespace yakir
       : ostr_(os)
     {}
 
-    virtual void operator()(const_t<InsList>& e) override;
     virtual void operator()(const_t<Ret>& e) override;
     virtual void operator()(const_t<Unary>& e) override;
     virtual void operator()(const_t<FuncDef>& e) override;

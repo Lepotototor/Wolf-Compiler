@@ -4,12 +4,6 @@
 
 namespace yakir
 {
-  void PrettyPrinter::operator()(const_t<InsList>& e)
-  {
-    for (const auto& ins : e.instructions_get())
-      ostr_ << ins;
-  }
-
   void PrettyPrinter::operator()(const_t<Ret>& e)
   {
     ostr_ << TAB << "ret ";
@@ -37,7 +31,8 @@ namespace yakir
   {
     ostr_ << e.name_get() << ":\n";
 
-    ostr_ << e.instructions_get();
+    for (const Instruction* ins : e.instructions_get())
+      ostr_ << ins;
   }
 
   void PrettyPrinter::operator()(const_t<Constant>& e) { ostr_ << e.val_get(); }

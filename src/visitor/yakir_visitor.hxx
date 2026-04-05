@@ -27,13 +27,6 @@ namespace yakir
   }
 
   template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<InsList>& e)
-  {
-    for (auto& ins : e.instructions_get())
-      ins->accept(*this);
-  }
-
-  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Ret>& e)
   {
     if (e.val_get())
@@ -43,7 +36,8 @@ namespace yakir
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<FuncDef>& e)
   {
-    e.instructions_get()->accept(*this);
+    for (Instruction* ins : e.instructions_get())
+      ins->accept(*this);
   }
 
   template <template <typename> class Const>
