@@ -7,6 +7,7 @@
 #include "../assembly/mov.hh"
 #include "../assembly/program.hh"
 #include "../assembly/ret.hh"
+#include "../assembly/unary.hh"
 
 namespace assembly
 {
@@ -36,6 +37,12 @@ namespace assembly
   }
 
   template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Unary>& e)
+  {
+    e.ope_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<FuncDef>& e)
   {
     for (Instruction* ins : e.instructions_get())
@@ -48,6 +55,10 @@ namespace assembly
 
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Immediate>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Pseudo>&)
   {}
 
   template <template <typename> class Const>

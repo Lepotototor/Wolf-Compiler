@@ -5,7 +5,9 @@
 #include "../lexer/lexer.hh"
 #include "../parser/parser.hh"
 
+#include "../assembly/code-emission.hh"
 #include "../ast_nodes/pretty-printer.hh"
+#include "../visitor/assembly-generation.hh"
 #include "../visitor/yakir-generation.hh"
 #include "../yakir/pretty_printer.hh"
 
@@ -222,6 +224,14 @@ namespace driver
     if (code_emit && yakir_pg)
       {
         std::cout << "\n\t___YAKIR___\n" << *yakir_pg;
+
+        yakir::AssemblyGeneration asm_gen;
+        yakir_pg->accept(asm_gen);
+
+        assembly::AsmNode* asm_pg = asm_gen.res_get();
+        std::cout << "\n\t___ASM___\n" << *asm_pg;
+
+        delete asm_pg;
       }
 
     delete program;

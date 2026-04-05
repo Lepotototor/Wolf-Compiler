@@ -1,6 +1,8 @@
 lib_LIBRARIES = libassembly.a
 
 libassembly_a_SOURCES =  \
+	code-emission.hh \
+	code-emission.cc \
 	assembly_node.hh \
 	operand.hh \
 	immediate.hh \

@@ -11,11 +11,13 @@ namespace assembly
   class Instruction;
   class Ret;
   class Mov;
+  class Unary;
 
   class FuncDef;
   class Operand;
   class Register;
   class Immediate;
+  class Pseudo;
 
   class Program;
 
