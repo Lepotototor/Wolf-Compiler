@@ -1,5 +1,6 @@
 #include "code-emission.hh"
 
+#include "allocate-stack.hh"
 #include "pseudo.hh"
 #include "register.hh"
 
@@ -25,6 +26,11 @@ namespace assembly
       ostr_ << "not ";
 
     ostr_ << e.ope_get() << "\n";
+  }
+
+  void CodeEmit::operator()(const_t<AllocateStack>& e)
+  {
+    ostr_ << TAB << "subq $" << e.size_get() << ", %rsp\n";
   }
 
   void CodeEmit::operator()(const_t<FuncDef>& e)

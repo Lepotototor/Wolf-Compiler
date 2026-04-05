@@ -43,6 +43,10 @@ namespace assembly
   }
 
   template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<AllocateStack>&)
+  {}
+
+  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<FuncDef>& e)
   {
     for (Instruction* ins : e.instructions_get())
