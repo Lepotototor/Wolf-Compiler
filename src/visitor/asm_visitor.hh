@@ -25,6 +25,7 @@ namespace assembly
     virtual void operator()(const_t<Register>& e);
     virtual void operator()(const_t<Immediate>& e);
     virtual void operator()(const_t<Pseudo>& e);
+    virtual void operator()(const_t<Stack>& e);
     virtual void operator()(const_t<Program>& e);
   };
 

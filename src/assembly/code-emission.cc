@@ -3,6 +3,7 @@
 #include "allocate-stack.hh"
 #include "pseudo.hh"
 #include "register.hh"
+#include "stack.hh"
 
 #define TAB "   "
 
@@ -53,6 +54,11 @@ namespace assembly
   }
 
   void CodeEmit::operator()(const_t<Pseudo>& e) { ostr_ << e.id_get(); }
+
+  void CodeEmit::operator()(const_t<Stack>& e)
+  {
+    ostr_ << e.index_get() << "(%rbp)";
+  }
 
   void CodeEmit::operator()(const_t<Program>& e)
   {

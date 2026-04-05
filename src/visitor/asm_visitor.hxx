@@ -66,6 +66,10 @@ namespace assembly
   {}
 
   template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Stack>&)
+  {}
+
+  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Program>& e)
   {
     for (auto& func : e.funcs_get())

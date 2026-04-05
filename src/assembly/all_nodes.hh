@@ -19,6 +19,7 @@ namespace assembly
   class Register;
   class Immediate;
   class Pseudo;
+  class Stack;
 
   class Program;
 
