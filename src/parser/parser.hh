@@ -7,7 +7,7 @@
 #include "../misc/defer.hh"
 
 #define ENTER_PARSE_FUNC                                                       \
-  misc::defer __end__parsing__defer__;                                         \
+  misc::defer __end__parsing__defer__{[]() {}};                                \
   if (wd_.parse_trace)                                                         \
     {                                                                          \
       std::string __func__name__ = __func__;                                   \
