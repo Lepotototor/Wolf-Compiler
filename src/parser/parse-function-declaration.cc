@@ -7,6 +7,8 @@ namespace parser
 
   ast::FunctionDec* Parser::parse_function_dec()
   {
+    ENTER_PARSE_FUNC
+
     // Function return type
     ast::TypeName* type = parse_type();
 

@@ -4,6 +4,18 @@
 #include "../ast_nodes/dec-list.hh"
 #include "../driver/wolf-driver.hh"
 #include "../lexer/lexer.hh"
+#include "../misc/defer.hh"
+
+#define ENTER_PARSE_FUNC                                                       \
+  misc::defer __end__parsing__defer__;                                         \
+  if (wd_.parse_trace)                                                         \
+    {                                                                          \
+      std::string __func__name__ = __func__;                                   \
+      std::cout << "Enter " << __func__name__ << "\n";                         \
+      __end__parsing__defer__.func_set([__func__name__]() {                    \
+        std::cout << "Exiting " << __func__name__ << "\n";                     \
+      });                                                                      \
+    }
 
 namespace parser
 {
@@ -40,6 +52,7 @@ namespace parser
     ast::Exp* parse_return_statement();
 
     ast::Exp* parse_exp();
+    ast::Exp* parse_factor();
     /*      Parse Methods  End      */
 
   private:

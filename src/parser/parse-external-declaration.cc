@@ -7,6 +7,8 @@ namespace parser
 {
   ast::DecList* Parser::parser_external_declarations()
   {
+    ENTER_PARSE_FUNC
+
     std::vector<ast::Declaration*> dec_list;
 
     for (lexer::Token tok = peek_tok(); tok != "END_OF_FILE"; tok = peek_tok())

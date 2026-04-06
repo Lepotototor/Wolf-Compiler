@@ -1,66 +1,58 @@
 #include "parser.hh"
 
-#include "../ast_nodes/number-exp.hh"
-#include "../ast_nodes/unary-exp.hh"
+#include "../ast_nodes/binary-exp.hh"
 
 namespace parser
 {
 
-  static bool is_unary(char c)
+  bool is_binary(char c)
   {
-    static const char unary_tok[] = {'+', '-', '~', '!', 0};
+    static const char unary_tok[] = {'+', '-', '*', '/', '%', 0};
     for (const char* s = unary_tok; *s; s++)
       if (*s == c)
         return true;
     return false;
   }
 
-  ast::unary_type get_unary_type(char c)
+  static ast::binary_type get_binary_type(char c)
   {
     if (c == '+')
-      return ast::unary_type::PLUS_U;
-    if (c == '-')
-      return ast::unary_type::MINUS_U;
-    if (c == '~')
-      return ast::unary_type::TILDE_U;
+      return ast::binary_type::ADD;
+    else if (c == '-')
+      return ast::binary_type::SUB;
+    else if (c == '*')
+      return ast::binary_type::MULT;
+    else if (c == '/')
+      return ast::binary_type::DIV;
     else
-      return ast::unary_type::NEGATE_U;
+      return ast::binary_type::MOD;
   }
 
   ast::Exp* Parser::parse_exp()
   {
-    const lexer::Token tok = peek_tok();
-    std::string repr = lexer::tok_repr(tok);
+    ENTER_PARSE_FUNC
 
-    if (tok.type() == lexer::NUM_TOK)
+    ast::Exp* left = parse_factor();
+
+    lexer::Token tok = peek_tok();
+
+    while (tok == "+" || tok == "-")
       {
         pop_tok();
-        return new ast::NumberExp(tok.location_get(), tok.val_get());
+
+        ast::Exp* right = parse_factor();
+        if (right == nullptr)
+          {
+            std::clog << "No right member\n";
+          }
+
+        misc::Location loc = left->location_get() + right->location_get();
+        ast::binary_type type = get_binary_type(lexer::tok_repr(tok)[0]);
+
+        left = new ast::BinaryExp(loc, type, left, right);
       }
 
-    else if (tok == "(")
-      {
-        pop_tok();
-        ast::Exp* exp = parse_exp();
-        expect_tok(")");
-
-        return exp;
-      }
-
-    else if (is_unary(repr[0]))
-      {
-        lexer::Token tok = pop_tok();
-        ast::Exp* exp = parse_exp();
-
-        misc::Location loc = tok.location_get() + exp->location_get();
-        return new ast::UnaryExp(loc, get_unary_type(repr[0]), exp);
-      }
-
-    else
-      {
-        std::clog << "Parse EXP unknow exp";
-        return nullptr;
-      }
+    return left;
   }
 
 }; // namespace parser

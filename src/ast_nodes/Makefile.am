@@ -21,6 +21,8 @@ libast_nodes_a_SOURCES =  \
 	string-exp.cc 	\
 	unary-exp.hh 	\
 	unary-exp.cc 	\
+	binary-exp.hh 	\
+	binary-exp.cc 	\
 	type-name.hh 	\
 	type-name.cc 	\
 	type.hh

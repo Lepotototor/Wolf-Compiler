@@ -9,6 +9,8 @@ namespace parser
 
   ast::TypeName* Parser::parse_type()
   {
+    ENTER_PARSE_FUNC
+
     const lexer::Token tok = pop_tok();
     if (tok == "void")
       {

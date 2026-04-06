@@ -9,6 +9,8 @@ namespace parser
 {
   ast::Exp* Parser::parse_statement()
   {
+    ENTER_PARSE_FUNC
+
     std::vector<ast::Exp*> exps;
     exps.emplace_back(parse_return_statement());
 
@@ -20,6 +22,8 @@ namespace parser
 
   ast::Exp* Parser::parse_return_statement()
   {
+    ENTER_PARSE_FUNC
+
     const Token& ret_tok = expect_tok("return");
 
     Token semi_tok = peek_tok();
