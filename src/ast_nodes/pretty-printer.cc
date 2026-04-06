@@ -75,6 +75,34 @@ namespace ast
     ostr_ << "(" << e.exp_get() << ")";
   }
 
+  void PrettyPrinter::operator()(const BinaryExp& e)
+  {
+    ostr_ << "(" << e.left_get() << " ";
+
+    if (e.type_get() == ADD)
+      {
+        ostr_ << "+";
+      }
+    else if (e.type_get() == SUB)
+      {
+        ostr_ << "-";
+      }
+    else if (e.type_get() == MULT)
+      {
+        ostr_ << "*";
+      }
+    else if (e.type_get() == DIV)
+      {
+        ostr_ << "/";
+      }
+    else
+      {
+        ostr_ << "%";
+      }
+
+    ostr_ << " " << e.right_get() << ")";
+  }
+
   void PrettyPrinter::operator()(const NumberExp& e) { ostr_ << e.val_get(); }
 
   void PrettyPrinter::operator()(const StringExp& e) { ostr_ << e.val_get(); }

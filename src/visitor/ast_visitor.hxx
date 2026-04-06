@@ -2,6 +2,7 @@
 
 #include "ast_visitor.hh"
 
+#include "../ast_nodes/binary-exp.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
@@ -56,6 +57,13 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<UnaryExp>& e)
   {
     e.exp_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<BinaryExp>& e)
+  {
+    e.left_get().accept(*this);
+    e.right_get().accept(*this);
   }
 
   template <template <typename> class Const>

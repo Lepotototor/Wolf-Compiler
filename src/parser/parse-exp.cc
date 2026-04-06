@@ -50,6 +50,8 @@ namespace parser
         ast::binary_type type = get_binary_type(lexer::tok_repr(tok)[0]);
 
         left = new ast::BinaryExp(loc, type, left, right);
+
+        tok = peek_tok();
       }
 
     return left;

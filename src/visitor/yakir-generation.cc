@@ -61,7 +61,7 @@ namespace ast
     res_ = new Constant(e.location_get(), e.val_get());
   }
 
-  void YakirGeneration::operator()(const_t<UnaryExp>& e)
+  void YakirGeneration::operator()(const UnaryExp& e)
   {
     Val* src = recurse<Exp, Val>(e.exp_get());
 
