@@ -231,6 +231,10 @@ namespace driver
         assembly::AsmNode* asm_pg = asm_gen.res_get();
         std::cout << "\n\t___ASM___\n" << *asm_pg;
 
+        std::ofstream file_out{file + ".s"};
+        file_out << *asm_pg;
+        file_out.close();
+
         delete asm_pg;
       }
 

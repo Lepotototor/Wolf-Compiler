@@ -19,7 +19,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Mov>& e)
   {
-    ostr_ << TAB << "mov " << e.src_get() << ", " << e.dst_get() << "\n";
+    ostr_ << TAB << "movl " << e.src_get() << ", " << e.dst_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<Unary>& e)
@@ -27,9 +27,9 @@ namespace assembly
     ostr_ << TAB;
 
     if (e.type_get() == ast::MINUS_U)
-      ostr_ << "neg ";
+      ostr_ << "negl ";
     else if (e.type_get() == ast::TILDE_U)
-      ostr_ << "not ";
+      ostr_ << "notl ";
 
     ostr_ << e.ope_get() << "\n";
   }
