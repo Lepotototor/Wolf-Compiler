@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Ret::Ret(const misc::Location& loc)
-    : Instruction(loc)
+  Ret::Ret()
+    : Instruction()
   {}
 
   void Ret::accept(ConstVisitor& v) const { v(*this); }

@@ -1,16 +1,13 @@
 #pragma once
 
-#include "../misc/location.hh"
 #include "all_nodes.hh"
 
 namespace assembly
 {
-  class AsmNode : public misc::Locable
+  class AsmNode
   {
   public:
-    AsmNode(const misc::Location& loc)
-      : misc::Locable(loc)
-    {}
+    AsmNode() = default;
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const = 0;

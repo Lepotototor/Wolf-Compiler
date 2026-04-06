@@ -3,6 +3,7 @@
 #include "assembly_node.hh"
 #include "instruction.hh"
 
+#include <string>
 #include <vector>
 
 namespace assembly
@@ -11,8 +12,7 @@ namespace assembly
   class FuncDef : public AsmNode
   {
   public:
-    FuncDef(const misc::Location& loc,
-            const std::string& name,
+    FuncDef(const std::string& name,
             const std::vector<Instruction*>& instructions);
 
     ~FuncDef() override;

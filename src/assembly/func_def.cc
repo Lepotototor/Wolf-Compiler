@@ -4,10 +4,9 @@
 
 namespace assembly
 {
-  FuncDef::FuncDef(const misc::Location& loc,
-                   const std::string& name,
+  FuncDef::FuncDef(const std::string& name,
                    const std::vector<Instruction*>& instructions)
-    : AsmNode(loc)
+    : AsmNode()
     , name_(name)
     , ins_(instructions)
   {}

@@ -11,10 +11,7 @@ namespace assembly
   class Binary : public Instruction
   {
   public:
-    Binary(const misc::Location& loc,
-           ast::binary_type type,
-           Operand* left,
-           Operand* right);
+    Binary(ast::binary_type type, Operand* left, Operand* right);
 
     ~Binary() override;
 

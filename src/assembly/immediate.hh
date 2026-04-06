@@ -2,13 +2,15 @@
 
 #include "operand.hh"
 
+#include <string>
+
 namespace assembly
 {
 
   class Immediate : public Operand
   {
   public:
-    Immediate(const misc::Location& loc, const std::string& val);
+    Immediate(const std::string& val);
 
     const std::string& val_get() const { return val_; }
 

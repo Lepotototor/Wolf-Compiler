@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Program::Program(const misc::Location& loc, const std::vector<FuncDef*> funcs)
-    : AsmNode(loc)
+  Program::Program(const std::vector<FuncDef*> funcs)
+    : AsmNode()
     , funcs_(funcs)
   {}
 

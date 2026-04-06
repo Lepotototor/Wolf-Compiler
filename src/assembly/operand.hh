@@ -8,9 +8,7 @@ namespace assembly
   class Operand : public AsmNode
   {
   public:
-    Operand(const misc::Location& loc)
-      : AsmNode(loc)
-    {}
+    Operand() = default;
 
     /// Accept a const visitor
     virtual void accept(ConstVisitor& v) const = 0;

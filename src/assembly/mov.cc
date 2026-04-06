@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Mov::Mov(const misc::Location& loc, Operand* src, Operand* dst)
-    : Instruction(loc)
+  Mov::Mov(Operand* src, Operand* dst)
+    : Instruction()
     , src_(src)
     , dst_(dst)
   {}

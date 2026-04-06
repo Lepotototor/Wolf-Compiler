@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Immediate::Immediate(const misc::Location& loc, const std::string& val)
-    : Operand(loc)
+  Immediate::Immediate(const std::string& val)
+    : Operand()
     , val_(val)
   {}
 

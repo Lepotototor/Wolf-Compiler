@@ -26,7 +26,7 @@ namespace yakir
         funcs.emplace_back(f);
       }
 
-    res_ = new assembly::Program(e.location_get(), funcs);
+    res_ = new assembly::Program(funcs);
   }
 
   void AssemblyGeneration::operator()(const_t<Ret>& e)
@@ -34,13 +34,12 @@ namespace yakir
     if (e.val_get())
       {
         assembly::Operand* ope = recurse<Val, assembly::Operand>(e.val_get());
-        assembly::Register* reg =
-          new assembly::Register(e.location_get(), "eax");
+        assembly::Register* reg = new assembly::Register("eax");
 
-        curr_func_.emplace_back(new assembly::Mov(e.location_get(), ope, reg));
+        curr_func_.emplace_back(new assembly::Mov(ope, reg));
       }
 
-    curr_func_.emplace_back(new assembly::Ret(e.location_get()));
+    curr_func_.emplace_back(new assembly::Ret());
   }
 
   void AssemblyGeneration::operator()(const_t<FuncDef>& e)
@@ -57,30 +56,29 @@ namespace yakir
     // Allocate the stack is done at function start
     if (stack_size_ != 0)
       {
-        assembly::AllocateStack* s =
-          new assembly::AllocateStack(e.location_get(), stack_size_);
+        assembly::AllocateStack* s = new assembly::AllocateStack(stack_size_);
         curr_func_.emplace(curr_func_.begin(), s);
       }
 
-    res_ = new assembly::FuncDef(e.location_get(), e.name_get(), curr_func_);
+    res_ = new assembly::FuncDef(e.name_get(), curr_func_);
   }
 
   void AssemblyGeneration::operator()(const_t<Constant>& e)
   {
-    res_ = new assembly::Immediate(e.location_get(), e.val_get());
+    res_ = new assembly::Immediate(e.val_get());
   }
 
   void AssemblyGeneration::operator()(const_t<Var>& e)
   {
     if (var_loc_.contains(e.id_get()))
       {
-        res_ = new assembly::Stack(e.location_get(), var_loc_[e.id_get()]);
+        res_ = new assembly::Stack(var_loc_[e.id_get()]);
       }
     else
       {
         stack_size_ += 4;
         var_loc_[e.id_get()] = -stack_size_;
-        res_ = new assembly::Stack(e.location_get(), -stack_size_);
+        res_ = new assembly::Stack(-stack_size_);
       }
   }
 
@@ -95,14 +93,12 @@ namespace yakir
     if (dynamic_cast<Stack*>(src) != nullptr
         && dynamic_cast<Stack*>(dst) != nullptr)
       {
-        curr_func_.emplace_back(new Mov(
-          e.location_get(), src, new Register(e.location_get(), "r10d")));
-        src = new Register(e.location_get(), "r10d");
+        curr_func_.emplace_back(new Mov(src, new Register("r10d")));
+        src = new Register("r10d");
       }
 
-    Mov* mov = new Mov(e.location_get(), src, dst_copy);
-    assembly::Unary* un =
-      new assembly::Unary(e.location_get(), e.type_get(), dst);
+    Mov* mov = new Mov(src, dst_copy);
+    assembly::Unary* un = new assembly::Unary(e.type_get(), dst);
 
     curr_func_.emplace_back(mov);
     curr_func_.emplace_back(un);
@@ -128,15 +124,14 @@ namespace yakir
     // imull can't use a stack adress as output
     if (e.type_get() == ast::MULT && real_dst != nullptr)
       {
-        dst = new Register(e.location_get(), "r11d");
-        dst_copy = new Register(e.location_get(), "r11d");
+        dst = new Register("r11d");
+        dst_copy = new Register("r11d");
       }
     else if (e.type_get() != ast::MULT && real_dst != nullptr
              && dynamic_cast<Stack*>(right) != nullptr)
       {
-        curr_func_.emplace_back(new Mov(
-          e.location_get(), right, new Register(e.location_get(), "r10d")));
-        right = new Register(e.location_get(), "r10d");
+        curr_func_.emplace_back(new Mov(right, new Register("r10d")));
+        right = new Register("r10d");
         dst_copy = recurse<Val, Operand>(e.dst_get());
       }
     else
@@ -144,9 +139,8 @@ namespace yakir
         dst_copy = recurse<Val, Operand>(e.dst_get());
       }
 
-    Mov* mov = new Mov(e.location_get(), left, dst);
-    assembly::Binary* bin =
-      new assembly::Binary(e.location_get(), e.type_get(), right, dst_copy);
+    Mov* mov = new Mov(left, dst);
+    assembly::Binary* bin = new assembly::Binary(e.type_get(), right, dst_copy);
 
     curr_func_.emplace_back(mov);
     curr_func_.emplace_back(bin);
@@ -154,8 +148,8 @@ namespace yakir
     if (e.type_get() == ast::MULT && real_dst != nullptr)
       {
         // If real dst is a stack addr we should move r11d into the dst
-        dst = new Register(e.location_get(), "r11d");
-        Mov* mov = new Mov(e.location_get(), dst, real_dst);
+        dst = new Register("r11d");
+        Mov* mov = new Mov(dst, real_dst);
         curr_func_.emplace_back(mov);
       }
   }

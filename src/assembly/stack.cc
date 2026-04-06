@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Stack::Stack(const misc::Location& loc, int index)
-    : Operand(loc)
+  Stack::Stack(int index)
+    : Operand()
     , index_(index)
   {}
 

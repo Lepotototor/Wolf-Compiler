@@ -8,7 +8,7 @@ namespace assembly
   class AllocateStack : public Instruction
   {
   public:
-    AllocateStack(const misc::Location& loc, unsigned size);
+    AllocateStack(unsigned size);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

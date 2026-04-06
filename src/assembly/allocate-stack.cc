@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  AllocateStack::AllocateStack(const misc::Location& loc, unsigned size)
-    : Instruction(loc)
+  AllocateStack::AllocateStack(unsigned size)
+    : Instruction()
     , size_(size)
   {}
 

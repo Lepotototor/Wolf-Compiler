@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Register::Register(const misc::Location& loc, const std::string& name)
-    : Operand(loc)
+  Register::Register(const std::string& name)
+    : Operand()
     , name_(name)
   {}
 

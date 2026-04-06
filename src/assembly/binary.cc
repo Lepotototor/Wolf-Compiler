@@ -4,11 +4,8 @@
 
 namespace assembly
 {
-  Binary::Binary(const misc::Location& loc,
-                 ast::binary_type type,
-                 Operand* left,
-                 Operand* right)
-    : Instruction(loc)
+  Binary::Binary(ast::binary_type type, Operand* left, Operand* right)
+    : Instruction()
     , type_(type)
     , left_(left)
     , right_(right)

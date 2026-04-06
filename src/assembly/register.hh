@@ -2,13 +2,15 @@
 
 #include "operand.hh"
 
+#include <string>
+
 namespace assembly
 {
 
   class Register : public Operand
   {
   public:
-    Register(const misc::Location& loc, const std::string& name);
+    Register(const std::string& name);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

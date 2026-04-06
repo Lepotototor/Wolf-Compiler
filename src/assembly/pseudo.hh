@@ -2,13 +2,15 @@
 
 #include "operand.hh"
 
+#include <string>
+
 namespace assembly
 {
 
   class Pseudo : public Operand
   {
   public:
-    Pseudo(const misc::Location& loc, const std::string& id);
+    Pseudo(const std::string& id);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

@@ -8,8 +8,8 @@ namespace assembly
   class Instruction : public AsmNode
   {
   public:
-    Instruction(const misc::Location& loc)
-      : AsmNode(loc)
+    Instruction()
+      : AsmNode()
     {}
 
     /// Accept a const visitor

@@ -11,7 +11,7 @@ namespace assembly
   class Unary : public Instruction
   {
   public:
-    Unary(const misc::Location& loc, ast::unary_type type, Operand* ope);
+    Unary(ast::unary_type type, Operand* ope);
 
     ~Unary() override;
 

@@ -9,7 +9,7 @@ namespace assembly
   class Mov : public Instruction
   {
   public:
-    Mov(const misc::Location& loc, Operand* src, Operand* dst);
+    Mov(Operand* src, Operand* dst);
 
     ~Mov() override;
 

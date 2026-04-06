@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Pseudo::Pseudo(const misc::Location& loc, const std::string& id)
-    : Operand(loc)
+  Pseudo::Pseudo(const std::string& id)
+    : Operand()
     , id_(id)
   {}
 

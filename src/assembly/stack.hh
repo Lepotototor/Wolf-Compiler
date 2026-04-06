@@ -8,7 +8,7 @@ namespace assembly
   class Stack : public Operand
   {
   public:
-    Stack(const misc::Location& loc, int index);
+    Stack(int index);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

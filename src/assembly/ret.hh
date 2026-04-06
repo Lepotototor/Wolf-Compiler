@@ -1,7 +1,6 @@
 #pragma once
 
 #include "instruction.hh"
-#include "mov.hh"
 
 namespace assembly
 {
@@ -9,7 +8,7 @@ namespace assembly
   class Ret : public Instruction
   {
   public:
-    Ret(const misc::Location& loc);
+    Ret();
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

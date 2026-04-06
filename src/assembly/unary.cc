@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Unary::Unary(const misc::Location& loc, ast::unary_type type, Operand* ope)
-    : Instruction(loc)
+  Unary::Unary(ast::unary_type type, Operand* ope)
+    : Instruction()
     , type_(type)
     , ope_(ope)
   {}
