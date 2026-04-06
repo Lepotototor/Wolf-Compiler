@@ -17,6 +17,7 @@ namespace yakir
   class Var;
 
   class Unary;
+  class Binary;
 
   class Program;
 

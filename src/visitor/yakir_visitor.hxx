@@ -2,6 +2,7 @@
 
 #include "yakir_visitor.hh"
 
+#include "../yakir/binary.hh"
 #include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
 #include "../yakir/program.hh"
@@ -51,6 +52,14 @@ namespace yakir
   void GenVisitor<Const>::operator()(const_t<Unary>& e)
   {
     e.src_get().accept(*this);
+    e.dst_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Binary>& e)
+  {
+    e.left_get().accept(*this);
+    e.right_get().accept(*this);
     e.dst_get().accept(*this);
   }
 

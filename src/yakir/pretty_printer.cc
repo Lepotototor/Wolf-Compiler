@@ -27,6 +27,24 @@ namespace yakir
     ostr_ << " " << e.src_get() << "\n";
   }
 
+  void PrettyPrinter::operator()(const_t<Binary>& e)
+  {
+    ostr_ << TAB << e.dst_get() << " = " << e.left_get() << " ";
+
+    if (e.type_get() == ast::binary_type::ADD)
+      ostr_ << "+";
+    else if (e.type_get() == ast::binary_type::SUB)
+      ostr_ << "-";
+    else if (e.type_get() == ast::binary_type::MULT)
+      ostr_ << "*";
+    else if (e.type_get() == ast::binary_type::DIV)
+      ostr_ << "/";
+    else
+      ostr_ << "%";
+
+    ostr_ << " " << e.right_get() << "\n";
+  }
+
   void PrettyPrinter::operator()(const_t<FuncDef>& e)
   {
     ostr_ << e.name_get() << ":\n";

@@ -16,6 +16,8 @@ libyakir_a_SOURCES =  \
 	instruction.hh \
 	unary.hh \
 	unary.cc \
+	binary.hh \
+	binary.cc \
 	ret.hh \
 	ret.cc
 

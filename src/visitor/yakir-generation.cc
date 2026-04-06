@@ -7,6 +7,7 @@
 #include "../ast_nodes/return-exp.hh"
 #include "../ast_nodes/type-name.hh"
 
+#include "../yakir/binary.hh"
 #include "../yakir/constant.hh"
 #include "../yakir/func_def.hh"
 #include "../yakir/program.hh"
@@ -74,6 +75,19 @@ namespace ast
     Var* dst = make_tmp_var(e.location_get());
 
     Unary* ins = new Unary(e.location_get(), e.type_get(), src, dst);
+    curr_scope_.emplace_back(ins);
+
+    res_ = new Var(dst->location_get(), dst->id_get());
+  }
+
+  void YakirGeneration::operator()(const BinaryExp& e)
+  {
+    Val* left = recurse<Exp, Val>(e.left_get());
+    Val* right = recurse<Exp, Val>(e.right_get());
+
+    Var* dst = make_tmp_var(e.location_get());
+
+    Binary* ins = new Binary(e.location_get(), e.type_get(), left, right, dst);
     curr_scope_.emplace_back(ins);
 
     res_ = new Var(dst->location_get(), dst->id_get());

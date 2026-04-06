@@ -16,6 +16,7 @@ namespace yakir
 
     virtual void operator()(const_t<Ret>& e) override;
     virtual void operator()(const_t<Unary>& e) override;
+    virtual void operator()(const_t<Binary>& e) override;
     virtual void operator()(const_t<FuncDef>& e) override;
     virtual void operator()(const_t<Constant>& e) override;
     virtual void operator()(const_t<Var>& e) override;

@@ -22,6 +22,7 @@ namespace yakir
     virtual void operator()(const_t<Constant>& e);
     virtual void operator()(const_t<Var>& e);
     virtual void operator()(const_t<Unary>& e);
+    virtual void operator()(const_t<Binary>& e);
     virtual void operator()(const_t<Program>& e);
   };
 
