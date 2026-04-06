@@ -13,6 +13,8 @@ namespace assembly
   public:
     Unary(const misc::Location& loc, ast::unary_type type, Operand* ope);
 
+    ~Unary() override;
+
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor

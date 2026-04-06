@@ -16,7 +16,7 @@ namespace assembly
     virtual void accept(Visitor& v) override;
 
     int index_get() const { return index_; }
-    void index_get(int index) { index_ = index; }
+    void index_set(int index) { index_ = index; }
 
   private:
     int index_;

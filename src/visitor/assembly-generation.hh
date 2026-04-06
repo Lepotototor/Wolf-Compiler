@@ -5,6 +5,8 @@
 #include "../assembly/assembly_node.hh"
 
 #include <iostream>
+#include <string>
+#include <unordered_map>
 
 namespace yakir
 {
@@ -31,8 +33,17 @@ namespace yakir
   private:
     assembly::AsmNode* res_;
 
+    // Use to get instructions inside function
     std::vector<assembly::Instruction*> curr_func_;
+    // Increment each time we need a new variable in the stack
+    // to know which stack size we need at func start
+    unsigned stack_size_ = 0;
 
+    // Get for each variable the stack location
+    // We dont need scoped map because YAKIR use unique identifiers
+    std::unordered_map<std::string, int> var_loc_;
+
+    // Use to make unique identifier
     unsigned id_count_ = 0;
   };
 

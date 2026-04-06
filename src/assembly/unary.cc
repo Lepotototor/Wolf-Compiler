@@ -10,6 +10,8 @@ namespace assembly
     , ope_(ope)
   {}
 
+  Unary::~Unary() { delete ope_; }
+
   void Unary::accept(ConstVisitor& v) const { v(*this); }
   void Unary::accept(Visitor& v) { v(*this); }
 
