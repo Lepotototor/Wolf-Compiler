@@ -53,50 +53,16 @@ namespace yakir
         ins->accept(*this);
       }
 
-    // TODO remove mov from stack to stack
-    std::vector<assembly::Instruction*> instructions;
-    for (assembly::Instruction* ins : curr_func_)
-      {
-        assembly::Mov* mov = dynamic_cast<assembly::Mov*>(ins);
-        if (mov == nullptr)
-          {
-            instructions.emplace_back(ins);
-            continue;
-          }
-
-        assembly::Stack* src = dynamic_cast<assembly::Stack*>(&mov->src_get());
-        assembly::Stack* dst = dynamic_cast<assembly::Stack*>(&mov->dst_get());
-        if (src == nullptr || dst == nullptr)
-          {
-            instructions.emplace_back(ins);
-            continue;
-          }
-
-        assembly::Mov* first = new assembly::Mov(
-          mov->location_get(),
-          new assembly::Stack(src->location_get(), src->index_get()),
-          new assembly::Register(e.location_get(), "r10d"));
-
-        assembly::Mov* scnd = new assembly::Mov(
-          mov->location_get(), new assembly::Register(e.location_get(), "r10d"),
-          new assembly::Stack(dst->location_get(), dst->index_get()));
-
-        delete mov;
-
-        instructions.emplace_back(first);
-        instructions.emplace_back(scnd);
-      }
-
     // Use to allocate the stack as many tmp var we need
     // Allocate the stack is done at function start
     if (stack_size_ != 0)
       {
         assembly::AllocateStack* s =
           new assembly::AllocateStack(e.location_get(), stack_size_);
-        instructions.emplace(instructions.begin(), s);
+        curr_func_.emplace(curr_func_.begin(), s);
       }
 
-    res_ = new assembly::FuncDef(e.location_get(), e.name_get(), instructions);
+    res_ = new assembly::FuncDef(e.location_get(), e.name_get(), curr_func_);
   }
 
   void AssemblyGeneration::operator()(const_t<Constant>& e)
@@ -126,9 +92,17 @@ namespace yakir
     Operand* dst = recurse<Val, Operand>(e.dst_get());
     Operand* dst_copy = recurse<Val, Operand>(e.dst_get());
 
-    Mov* mov = new Mov(e.location_get(), src, dst);
+    if (dynamic_cast<Stack*>(src) != nullptr
+        && dynamic_cast<Stack*>(dst) != nullptr)
+      {
+        curr_func_.emplace_back(new Mov(
+          e.location_get(), src, new Register(e.location_get(), "r10d")));
+        src = new Register(e.location_get(), "r10d");
+      }
+
+    Mov* mov = new Mov(e.location_get(), src, dst_copy);
     assembly::Unary* un =
-      new assembly::Unary(e.location_get(), e.type_get(), dst_copy);
+      new assembly::Unary(e.location_get(), e.type_get(), dst);
 
     curr_func_.emplace_back(mov);
     curr_func_.emplace_back(un);
@@ -156,6 +130,14 @@ namespace yakir
       {
         dst = new Register(e.location_get(), "r11d");
         dst_copy = new Register(e.location_get(), "r11d");
+      }
+    else if (e.type_get() != ast::MULT && real_dst != nullptr
+             && dynamic_cast<Stack*>(right) != nullptr)
+      {
+        curr_func_.emplace_back(new Mov(
+          e.location_get(), right, new Register(e.location_get(), "r10d")));
+        right = new Register(e.location_get(), "r10d");
+        dst_copy = recurse<Val, Operand>(e.dst_get());
       }
     else
       {
