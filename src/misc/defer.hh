@@ -8,7 +8,10 @@ namespace misc
   class defer
   {
   public:
-    defer() = default;
+    defer()
+    {
+      func_ = []() {};
+    }
 
     defer(const std::function<void(void)>& func)
       : func_(func)
