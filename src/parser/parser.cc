@@ -71,4 +71,25 @@ namespace parser
                     << misc::bold(tok_repr(tok)) << "\"\n";
   }
 
+  unsigned Parser::precedence(const lexer::Token& tok)
+  {
+    if (tok == "*" || tok == "/" || tok == "%")
+      {
+        return 420;
+      }
+    else if (tok == "+" || tok == "-")
+      {
+        return 69;
+      }
+    else if (tok == "&&" || tok == "||")
+      {
+        return 67;
+      }
+    else
+      {
+        std::cerr << misc::warn() << "No precedenece fro token " << tok << "\n";
+        return 0;
+      }
+  }
+
 } // namespace parser

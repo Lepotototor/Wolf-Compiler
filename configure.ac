@@ -41,5 +41,6 @@ AC_CONFIG_FILES([
                     src/ast_nodes/Makefile
                     src/visitor/Makefile
                     src/yakir/Makefile
+                    src/assembly/Makefile
                 ])
 AC_OUTPUT

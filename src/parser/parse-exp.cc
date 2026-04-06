@@ -5,8 +5,10 @@
 namespace parser
 {
 
-  bool is_binary(char c)
+  bool is_binary(const lexer::Token& tok)
   {
+    char c = tok_repr(tok)[0];
+
     static const char unary_tok[] = {'+', '-', '*', '/', '%', 0};
     for (const char* s = unary_tok; *s; s++)
       if (*s == c)
@@ -28,7 +30,7 @@ namespace parser
       return ast::binary_type::MOD;
   }
 
-  ast::Exp* Parser::parse_exp()
+  ast::Exp* Parser::parse_exp(unsigned min_pred)
   {
     ENTER_PARSE_FUNC
 
@@ -36,14 +38,14 @@ namespace parser
 
     lexer::Token tok = peek_tok();
 
-    while (tok == "+" || tok == "-")
+    while (is_binary(tok) && precedence(tok) >= min_pred)
       {
         pop_tok();
 
-        ast::Exp* right = parse_factor();
+        ast::Exp* right = parse_exp(precedence(tok) + 1);
         if (right == nullptr)
           {
-            std::clog << "No right member\n";
+            std::clog << "No right member for binop\n";
           }
 
         misc::Location loc = left->location_get() + right->location_get();

@@ -51,9 +51,11 @@ namespace parser
     ast::Exp* parse_statement();
     ast::Exp* parse_return_statement();
 
-    ast::Exp* parse_exp();
+    ast::Exp* parse_exp(unsigned predecence = 0);
     ast::Exp* parse_factor();
     /*      Parse Methods  End      */
+
+    unsigned precedence(const lexer::Token& tok);
 
   private:
     // Able to get errors and program options
