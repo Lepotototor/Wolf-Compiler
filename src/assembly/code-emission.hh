@@ -17,6 +17,7 @@ namespace assembly
     virtual void operator()(const_t<Ret>& e);
     virtual void operator()(const_t<Mov>& e);
     virtual void operator()(const_t<Unary>& e);
+    virtual void operator()(const_t<Binary>& e);
     virtual void operator()(const_t<AllocateStack>& e);
     virtual void operator()(const_t<FuncDef>& e);
     virtual void operator()(const_t<Register>& e);

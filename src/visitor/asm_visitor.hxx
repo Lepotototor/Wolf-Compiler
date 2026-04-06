@@ -2,6 +2,7 @@
 
 #include "asm_visitor.hh"
 
+#include "../assembly/binary.hh"
 #include "../assembly/func_def.hh"
 #include "../assembly/immediate.hh"
 #include "../assembly/mov.hh"
@@ -40,6 +41,13 @@ namespace assembly
   void GenVisitor<Const>::operator()(const_t<Unary>& e)
   {
     e.ope_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Binary>& e)
+  {
+    e.left_get()->accept(*this);
+    e.right_get()->accept(*this);
   }
 
   template <template <typename> class Const>

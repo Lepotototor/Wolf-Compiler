@@ -12,6 +12,7 @@ namespace assembly
   class Ret;
   class Mov;
   class Unary;
+  class Binary;
   class AllocateStack;
 
   class FuncDef;

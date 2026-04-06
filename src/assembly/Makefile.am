@@ -18,6 +18,8 @@ libassembly_a_SOURCES =  \
 	ret.cc \
 	unary.hh \
 	unary.cc \
+	binary.hh \
+	binary.cc \
 	register.cc \
 	register.hh \
 	pseudo.hh \

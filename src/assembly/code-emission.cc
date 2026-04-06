@@ -5,6 +5,8 @@
 #include "register.hh"
 #include "stack.hh"
 
+#include "../misc/debug.hh"
+
 #define TAB "   "
 
 namespace assembly
@@ -12,6 +14,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Ret>&)
   {
+    ostr_ << "\n";
     ostr_ << TAB << "movq %rbp, %rsp\n";
     ostr_ << TAB << "popq %rbp\n";
     ostr_ << TAB << "ret\n";
@@ -34,9 +37,25 @@ namespace assembly
     ostr_ << e.ope_get() << "\n";
   }
 
+  void CodeEmit::operator()(const_t<Binary>& e)
+  {
+    ostr_ << TAB;
+
+    if (e.type_get() == ast::ADD)
+      ostr_ << "addl ";
+    else if (e.type_get() == ast::SUB)
+      ostr_ << "subl ";
+    else if (e.type_get() == ast::MULT)
+      ostr_ << "imull ";
+    else
+      unreachable();
+
+    ostr_ << e.left_get() << ", " << e.right_get() << "\n";
+  }
+
   void CodeEmit::operator()(const_t<AllocateStack>& e)
   {
-    ostr_ << TAB << "subq $" << e.size_get() << ", %rsp\n";
+    ostr_ << TAB << "subq $" << e.size_get() << ", %rsp\n\n";
   }
 
   void CodeEmit::operator()(const_t<FuncDef>& e)
