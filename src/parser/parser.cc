@@ -81,9 +81,37 @@ namespace parser
       {
         return 69;
       }
-    else if (tok == "&&" || tok == "||")
+    else if (tok == "<<" || tok == ">>")
+      {
+        return 68;
+      }
+    else if (tok == "<" || tok == "<=" || tok == ">" || tok == ">=")
       {
         return 67;
+      }
+    else if (tok == "==" || tok == "!=")
+      {
+        return 66;
+      }
+    else if (tok == "&")
+      {
+        return 65;
+      }
+    else if (tok == "^")
+      {
+        return 64;
+      }
+    else if (tok == "|")
+      {
+        return 63;
+      }
+    else if (tok == "&&")
+      {
+        return 7;
+      }
+    else if (tok == "||")
+      {
+        return 6;
       }
     else
       {

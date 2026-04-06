@@ -2,32 +2,50 @@
 
 #include "../ast_nodes/binary-exp.hh"
 
+#include "../misc/debug.hh"
+
 namespace parser
 {
 
   bool is_binary(const lexer::Token& tok)
   {
-    char c = tok_repr(tok)[0];
+    std::string c = tok_repr(tok);
 
-    static const char unary_tok[] = {'+', '-', '*', '/', '%', 0};
-    for (const char* s = unary_tok; *s; s++)
+    static const char* unary_tok[] = {"+",  "-", "*", "/", "%", "<<",
+                                      ">>", "&", "|", "^", 0};
+    for (const char** s = unary_tok; *s; s++)
       if (*s == c)
         return true;
     return false;
   }
 
-  static ast::binary_type get_binary_type(char c)
+  static ast::binary_type get_binary_type(const std::string& s)
   {
-    if (c == '+')
+    if (s == "+")
       return ast::binary_type::ADD;
-    else if (c == '-')
+    else if (s == "-")
       return ast::binary_type::SUB;
-    else if (c == '*')
+    else if (s == "*")
       return ast::binary_type::MULT;
-    else if (c == '/')
+    else if (s == "/")
       return ast::binary_type::DIV;
-    else
+    else if (s == "%")
       return ast::binary_type::MOD;
+    else if (s == "<<")
+      return ast::binary_type::L_SHIFT;
+    else if (s == ">>")
+      return ast::binary_type::R_SHIFT;
+    else if (s == "&")
+      return ast::binary_type::AND;
+    else if (s == "|")
+      return ast::binary_type::OR;
+    else if (s == "^")
+      return ast::binary_type::XOR;
+    else
+      {
+        std::string txt = "No binary type for " + s;
+        notimplmented(txt.c_str());
+      }
   }
 
   ast::Exp* Parser::parse_exp(unsigned min_pred)
@@ -49,7 +67,7 @@ namespace parser
           }
 
         misc::Location loc = left->location_get() + right->location_get();
-        ast::binary_type type = get_binary_type(lexer::tok_repr(tok)[0]);
+        ast::binary_type type = get_binary_type(lexer::tok_repr(tok));
 
         left = new ast::BinaryExp(loc, type, left, right);
 

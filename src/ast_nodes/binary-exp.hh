@@ -12,6 +12,12 @@ namespace ast
     MULT,
     DIV,
     MOD,
+
+    L_SHIFT,
+    R_SHIFT,
+    AND,
+    OR,
+    XOR,
   };
 
   class BinaryExp : public Exp

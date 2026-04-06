@@ -80,25 +80,25 @@ namespace ast
     ostr_ << "(" << e.left_get() << " ";
 
     if (e.type_get() == ADD)
-      {
-        ostr_ << "+";
-      }
+      ostr_ << "+";
     else if (e.type_get() == SUB)
-      {
-        ostr_ << "-";
-      }
+      ostr_ << "-";
     else if (e.type_get() == MULT)
-      {
-        ostr_ << "*";
-      }
+      ostr_ << "*";
     else if (e.type_get() == DIV)
-      {
-        ostr_ << "/";
-      }
-    else
-      {
-        ostr_ << "%";
-      }
+      ostr_ << "/";
+    else if (e.type_get() == MOD)
+      ostr_ << "%";
+    else if (e.type_get() == L_SHIFT)
+      ostr_ << "<<";
+    else if (e.type_get() == R_SHIFT)
+      ostr_ << ">>";
+    else if (e.type_get() == AND)
+      ostr_ << "&";
+    else if (e.type_get() == OR)
+      ostr_ << "|";
+    else if (e.type_get() == XOR)
+      ostr_ << "^";
 
     ostr_ << " " << e.right_get() << ")";
   }
