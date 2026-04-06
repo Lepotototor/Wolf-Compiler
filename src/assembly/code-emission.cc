@@ -10,7 +10,12 @@
 namespace assembly
 {
 
-  void CodeEmit::operator()(const_t<Ret>&) { ostr_ << TAB << "ret\n"; }
+  void CodeEmit::operator()(const_t<Ret>&)
+  {
+    ostr_ << TAB << "movq %rbp, %rsp\n";
+    ostr_ << TAB << "popq %rbp\n";
+    ostr_ << TAB << "ret\n";
+  }
 
   void CodeEmit::operator()(const_t<Mov>& e)
   {
@@ -38,6 +43,9 @@ namespace assembly
   {
     ostr_ << ".global " << e.name_get() << "\n";
     ostr_ << e.name_get() << ":\n";
+
+    ostr_ << TAB << "pushq %rbp\n";
+    ostr_ << TAB << "movq %rsp, %rbp\n";
 
     for (Instruction* ins : e.instructions_get())
       ostr_ << ins;
