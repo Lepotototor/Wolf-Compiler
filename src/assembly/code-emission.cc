@@ -2,6 +2,8 @@
 
 #include "allocate-stack.hh"
 #include "comment.hh"
+#include "jumpcc.hh"
+#include "label.hh"
 #include "pseudo.hh"
 #include "register.hh"
 #include "stack.hh"
@@ -82,6 +84,65 @@ namespace assembly
   void CodeEmit::operator()(const_t<AllocateStack>& e)
   {
     ostr_ << TAB << "subq $" << e.size_get() << ", %rsp\n\n";
+  }
+
+  void CodeEmit::operator()(const_t<Cmp>& e)
+  {
+    ostr_ << TAB << "cmpl " << e.left_get() << ", " << e.right_get() << "\n";
+  }
+
+  void CodeEmit::operator()(const_t<Label>& e)
+  {
+    ostr_ << "\n" << e.name_get() << ":\n";
+  }
+
+  void CodeEmit::operator()(const_t<Jump>& e)
+  {
+    ostr_ << TAB << "jmp " << e.id_get() << "\n";
+  }
+
+  void CodeEmit::operator()(const_t<JumpCC>& e)
+  {
+    ostr_ << TAB << "j";
+
+    if (e.cond_type_get() == ast::EQ)
+      ostr_ << "e";
+    else if (e.cond_type_get() == ast::NE)
+      ostr_ << "ne";
+    else if (e.cond_type_get() == ast::LT)
+      ostr_ << "lt";
+    else if (e.cond_type_get() == ast::LE)
+      ostr_ << "le";
+    else if (e.cond_type_get() == ast::GT)
+      ostr_ << "gt";
+    else if (e.cond_type_get() == ast::GE)
+      ostr_ << "ge";
+    else
+      unreachable();
+
+    ostr_ << " " << e.id_get() << "\n";
+  }
+
+  void CodeEmit::operator()(const_t<SetCC>& e)
+  {
+    ostr_ << TAB << "j";
+
+    if (e.cond_type_get() == ast::EQ)
+      ostr_ << "e";
+    else if (e.cond_type_get() == ast::NE)
+      ostr_ << "ne";
+    else if (e.cond_type_get() == ast::LT)
+      ostr_ << "lt";
+    else if (e.cond_type_get() == ast::LE)
+      ostr_ << "le";
+    else if (e.cond_type_get() == ast::GT)
+      ostr_ << "gt";
+    else if (e.cond_type_get() == ast::GE)
+      ostr_ << "ge";
+    else
+      unreachable();
+
+    ostr_ << " " << e.ope_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<FuncDef>& e)

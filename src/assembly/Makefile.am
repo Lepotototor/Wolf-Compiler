@@ -33,7 +33,15 @@ libassembly_a_SOURCES =  \
 	stack.hh \
 	stack.cc \
 	allocate-stack.hh \
-	allocate-stack.cc
+	allocate-stack.cc \
+	setcc.hh \
+	setcc.cc \
+	jump.hh \
+	jump.cc \
+	jumpcc.hh \
+	jumpcc.cc \
+	label.hh \
+	label.cc
 
 
 libassembly_a_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/misc -I$(top_srcdir)/src/driver -I$(top_srcdir)/src/ast_nodes -I$(top_srcdir)/src/visitor

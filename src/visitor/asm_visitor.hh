@@ -25,6 +25,11 @@ namespace assembly
     virtual void operator()(const_t<Cdq>& e);
     virtual void operator()(const_t<Idiv>& e);
     virtual void operator()(const_t<AllocateStack>& e);
+    virtual void operator()(const_t<Cmp>& e);
+    virtual void operator()(const_t<Label>& e);
+    virtual void operator()(const_t<Jump>& e);
+    virtual void operator()(const_t<JumpCC>& e);
+    virtual void operator()(const_t<SetCC>& e);
     virtual void operator()(const_t<FuncDef>& e);
     virtual void operator()(const_t<Register>& e);
     virtual void operator()(const_t<Immediate>& e);

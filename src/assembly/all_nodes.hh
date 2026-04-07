@@ -18,6 +18,11 @@ namespace assembly
   class AllocateStack;
   class Idiv;
   class Cdq;
+  class Cmp;
+  class Jump;
+  class JumpCC;
+  class SetCC;
+  class Label;
 
   class FuncDef;
   class Operand;
