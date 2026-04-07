@@ -110,11 +110,11 @@ namespace assembly
     else if (e.cond_type_get() == ast::NE)
       ostr_ << "ne";
     else if (e.cond_type_get() == ast::LT)
-      ostr_ << "lt";
+      ostr_ << "l";
     else if (e.cond_type_get() == ast::LE)
       ostr_ << "le";
     else if (e.cond_type_get() == ast::GT)
-      ostr_ << "gt";
+      ostr_ << "g";
     else if (e.cond_type_get() == ast::GE)
       ostr_ << "ge";
     else
@@ -132,11 +132,11 @@ namespace assembly
     else if (e.cond_type_get() == ast::NE)
       ostr_ << "ne";
     else if (e.cond_type_get() == ast::LT)
-      ostr_ << "lt";
+      ostr_ << "l";
     else if (e.cond_type_get() == ast::LE)
       ostr_ << "le";
     else if (e.cond_type_get() == ast::GT)
-      ostr_ << "gt";
+      ostr_ << "g";
     else if (e.cond_type_get() == ast::GE)
       ostr_ << "ge";
     else
