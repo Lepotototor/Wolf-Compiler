@@ -8,6 +8,8 @@ namespace assembly
 
   class AsmNode;
 
+  class Comment;
+
   class Instruction;
   class Ret;
   class Mov;

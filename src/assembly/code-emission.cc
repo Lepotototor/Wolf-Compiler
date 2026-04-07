@@ -1,6 +1,7 @@
 #include "code-emission.hh"
 
 #include "allocate-stack.hh"
+#include "comment.hh"
 #include "pseudo.hh"
 #include "register.hh"
 #include "stack.hh"
@@ -11,6 +12,11 @@
 
 namespace assembly
 {
+
+  void CodeEmit::operator()(const_t<Comment>& e)
+  {
+    ostr_ << TAB << "# " << e.val_get() << "\n";
+  }
 
   void CodeEmit::operator()(const_t<Ret>&)
   {
@@ -47,6 +53,16 @@ namespace assembly
       ostr_ << "subl ";
     else if (e.type_get() == ast::MULT)
       ostr_ << "imull ";
+    else if (e.type_get() == ast::L_SHIFT)
+      ostr_ << "sall ";
+    else if (e.type_get() == ast::R_SHIFT)
+      ostr_ << "sarl ";
+    else if (e.type_get() == ast::AND)
+      ostr_ << "andl ";
+    else if (e.type_get() == ast::OR)
+      ostr_ << "orl ";
+    else if (e.type_get() == ast::XOR)
+      ostr_ << "xorl ";
     else
       unreachable();
 

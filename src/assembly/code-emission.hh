@@ -14,6 +14,7 @@ namespace assembly
       : ostr_(os)
     {}
 
+    virtual void operator()(const_t<Comment>& e);
     virtual void operator()(const_t<Ret>& e);
     virtual void operator()(const_t<Mov>& e);
     virtual void operator()(const_t<Unary>& e);

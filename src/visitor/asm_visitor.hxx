@@ -27,6 +27,10 @@ namespace assembly
   }
 
   template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Comment>&)
+  {}
+
+  template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Ret>&)
   {}
 

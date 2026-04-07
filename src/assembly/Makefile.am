@@ -4,6 +4,8 @@ libassembly_a_SOURCES =  \
 	code-emission.hh \
 	code-emission.cc \
 	assembly_node.hh \
+	comment.hh \
+	comment.cc \
 	operand.hh \
 	immediate.hh \
 	immediate.cc \

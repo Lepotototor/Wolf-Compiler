@@ -2,6 +2,7 @@
 
 #include "../assembly/allocate-stack.hh"
 #include "../assembly/binary.hh"
+#include "../assembly/comment.hh"
 #include "../assembly/func_def.hh"
 #include "../assembly/immediate.hh"
 #include "../assembly/mov.hh"
@@ -86,6 +87,8 @@ namespace yakir
   {
     using namespace assembly;
 
+    curr_func_.emplace_back(new Comment("Unary operator"));
+
     Operand* src = recurse<Val, Operand>(e.src_get());
     Operand* dst = recurse<Val, Operand>(e.dst_get());
     Operand* dst_copy = recurse<Val, Operand>(e.dst_get());
@@ -108,6 +111,12 @@ namespace yakir
   {
     using namespace assembly;
 
+    // TODO if right operand is negative for shift
+    // we should throw a warning and return a value
+    // It's an undefined behavior
+
+    curr_func_.emplace_back(new Comment("Binary operator"));
+
     if (e.type_get() == ast::DIV || e.type_get() == ast::MOD)
       {
         notimplmented("Implement Assembly nodes for DIV and MOD");
@@ -122,17 +131,10 @@ namespace yakir
     Operand* dst_copy = nullptr;
 
     // imull can't use a stack adress as output
-    if (e.type_get() == ast::MULT && real_dst != nullptr)
+    if (real_dst != nullptr)
       {
         dst = new Register("r11d");
         dst_copy = new Register("r11d");
-      }
-    else if (e.type_get() != ast::MULT && real_dst != nullptr
-             && dynamic_cast<Stack*>(right) != nullptr)
-      {
-        curr_func_.emplace_back(new Mov(right, new Register("r10d")));
-        right = new Register("r10d");
-        dst_copy = recurse<Val, Operand>(e.dst_get());
       }
     else
       {
@@ -145,7 +147,7 @@ namespace yakir
     curr_func_.emplace_back(mov);
     curr_func_.emplace_back(bin);
 
-    if (e.type_get() == ast::MULT && real_dst != nullptr)
+    if (real_dst != nullptr)
       {
         // If real dst is a stack addr we should move r11d into the dst
         dst = new Register("r11d");
