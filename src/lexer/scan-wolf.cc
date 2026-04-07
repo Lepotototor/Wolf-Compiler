@@ -200,7 +200,7 @@ class Lexer : public FlexLexer {
 
 int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
 {
-  static const char *REGEX_INITIAL = "(?m)((?:\\Q/*\\E))|((?:\\Q# \\E))|((?:[\\x09\\x0b\\x0c\\x20]))|(\\n\\r)|(\\r\\n)|(\\n)|(\\r)|((?:\\Qauto\\b\\E))|((?:\\Qvoid\\b\\E))|((?:\\Qint\\b\\E))|((?:\\Qchar\\b\\E))|((?:\\Qflot\\b\\E))|((?:\\Qdouble\\b\\E))|((?:\\Qunsigned\\b\\E))|((?:\\Qsigned\\b\\E))|((?:\\Qlong\\b\\E))|((?:\\Qshort\\b\\E))|((?:\\Qregister\\b\\E))|((?:\\Qstruct\\b\\E))|((?:\\Qunion\\b\\E))|((?:\\Qenum\\b\\E))|((?:\\Qtypedef\\b\\E))|((?:\\Qextern\\b\\E))|((?:\\Qconst\\b\\E))|((?:\\Qstatic\\b\\E))|((?:\\Qinline\\b\\E))|((?:\\Qvolatile\\b\\E))|((?:\\Qwhile\\b\\E))|((?:\\Qfor\\b\\E))|((?:\\Qdo\\b\\E))|((?:\\Qbreak\\b\\E))|((?:\\Qcontinue\\b\\E))|((?:\\Qif\\b\\E))|((?:\\Qelse\\b\\E))|((?:\\Qswitch\\b\\E))|((?:\\Qcase\\b\\E))|((?:\\Qdefault\\b\\E))|((?:\\Qgoto\\b\\E))|((?:\\Qsizeof\\b\\E))|((?:\\Qreturn\\b\\E))|((?:\\Q!\\E))|((?:\\Q==\\E))|((?:\\Q!=\\E))|((?:\\Q<\\E))|((?:\\Q>\\E))|((?:\\Q<=\\E))|((?:\\Q>=\\E))|((?:\\Q&&\\E))|((?:\\Q||\\E))|((?:\\Q+\\E))|((?:\\Q-\\E))|((?:\\Q*\\E))|((?:\\Q/\\E))|((?:\\Q%\\E))|((?:\\Q~\\E))|((?:\\Q&\\E))|((?:\\Q|\\E))|((?:\\Q^\\E))|((?:\\Q>>\\E))|((?:\\Q<<\\E))|((?:\\Q?\\E))|((?:\\Q++\\E))|((?:\\Q--\\E))|((?:\\Q+=\\E))|((?:\\Q-=\\E))|((?:\\Q*=\\E))|((?:\\Q/=\\E))|((?:\\Q%=\\E))|((?:\\Q&=\\E))|((?:\\Q|=\\E))|((?:\\Q^=\\E))|((?:\\Q>>=\\E))|((?:\\Q<<=\\E))|((?:\\Q=\\E))|((?:\\Q.\\E))|((?:\\Q->\\E))|((?:\\Q,\\E))|((?:\\Q;\\E))|((?:\\Q:\\E))|((?:\\Q...\\E))|((?:\\Q(\\E))|((?:\\Q)\\E))|((?:\\Q{\\E)|(?:\\Q<%\\E))|((?:\\Q}\\E)|(?:\\Q%>\\E))|((?:\\Q[\\E)|(?:\\Q<:\\E))|((?:\\Q]\\E)|(?:\\Q:>\\E))|((?:[0-9]+\\b))|((?:(?:\\Q\"\\E).*(?:\\Q\"\\E)\\b))|((?:[A-Z_a-z][0-9A-Z_a-z]*\\b))|(.)";
+  static const char *REGEX_INITIAL = "(?m)((?:\\Q/*\\E))|((?:\\Q# \\E))|((?:[\\x09\\x0b\\x0c\\x20]))|(\\n\\r)|(\\r\\n)|(\\n)|(\\r)|((?:\\Qauto\\b\\E))|((?:\\Qvoid\\b\\E))|((?:\\Qint\\b\\E))|((?:\\Qchar\\b\\E))|((?:\\Qflot\\b\\E))|((?:\\Qdouble\\b\\E))|((?:\\Qunsigned\\b\\E))|((?:\\Qsigned\\b\\E))|((?:\\Qlong\\b\\E))|((?:\\Qshort\\b\\E))|((?:\\Qregister\\b\\E))|((?:\\Qstruct\\b\\E))|((?:\\Qunion\\b\\E))|((?:\\Qenum\\b\\E))|((?:\\Qtypedef\\b\\E))|((?:\\Qextern\\b\\E))|((?:\\Qconst\\b\\E))|((?:\\Qstatic\\b\\E))|((?:\\Qinline\\b\\E))|((?:\\Qvolatile\\b\\E))|((?:\\Qwhile\\b\\E))|((?:\\Qfor\\b\\E))|((?:\\Qdo\\b\\E))|((?:\\Qbreak\\b\\E))|((?:\\Qcontinue\\b\\E))|((?:\\Qif\\b\\E))|((?:\\Qelse\\b\\E))|((?:\\Qswitch\\b\\E))|((?:\\Qcase\\b\\E))|((?:\\Qdefault\\b\\E))|((?:\\Qgoto\\b\\E))|((?:\\Qsizeof\\b\\E))|((?:\\Qreturn\\b\\E))|((?:\\Q==\\E))|((?:\\Q!=\\E))|((?:\\Q&&\\E))|((?:\\Q||\\E))|((?:\\Q>=\\E))|((?:\\Q<=\\E))|((?:\\Q>\\E))|((?:\\Q<\\E))|((?:\\Q!\\E))|((?:\\Q+\\E))|((?:\\Q-\\E))|((?:\\Q*\\E))|((?:\\Q/\\E))|((?:\\Q%\\E))|((?:\\Q~\\E))|((?:\\Q&\\E))|((?:\\Q|\\E))|((?:\\Q^\\E))|((?:\\Q>>\\E))|((?:\\Q<<\\E))|((?:\\Q?\\E))|((?:\\Q++\\E))|((?:\\Q--\\E))|((?:\\Q+=\\E))|((?:\\Q-=\\E))|((?:\\Q*=\\E))|((?:\\Q/=\\E))|((?:\\Q%=\\E))|((?:\\Q&=\\E))|((?:\\Q|=\\E))|((?:\\Q^=\\E))|((?:\\Q>>=\\E))|((?:\\Q<<=\\E))|((?:\\Q=\\E))|((?:\\Q.\\E))|((?:\\Q->\\E))|((?:\\Q,\\E))|((?:\\Q;\\E))|((?:\\Q:\\E))|((?:\\Q...\\E))|((?:\\Q(\\E))|((?:\\Q)\\E))|((?:\\Q{\\E)|(?:\\Q<%\\E))|((?:\\Q}\\E)|(?:\\Q%>\\E))|((?:\\Q[\\E)|(?:\\Q<:\\E))|((?:\\Q]\\E)|(?:\\Q:>\\E))|((?:[0-9]+\\b))|((?:(?:\\Q\"\\E).*(?:\\Q\"\\E)\\b))|((?:[A-Z_a-z][0-9A-Z_a-z]*\\b))|(.)";
   static const reflex::Pattern PATTERN_INITIAL(REGEX_INITIAL);
   static const char *REGEX_SC_COMMENT = "(?m)((?:\\Q/*\\E))|((?:\\Q*/\\E))|(.|\\n)";
   static const reflex::Pattern PATTERN_SC_COMMENT(REGEX_SC_COMMENT);
@@ -485,35 +485,35 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
 { TOKEN(RETURN); }
 
             YY_BREAK
-          case 41: // rule scan-wolf.ll:182: "!" :
+          case 41: // rule scan-wolf.ll:182: "==" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:182\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 182 "scan-wolf.ll"
-{ TOKEN(NOT); }
+{ TOKEN(EQ); }
             YY_BREAK
-          case 42: // rule scan-wolf.ll:183: "==" :
+          case 42: // rule scan-wolf.ll:183: "!=" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:183\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 183 "scan-wolf.ll"
-{ TOKEN(EQ); }
+{ TOKEN(NOT_EQ); }
             YY_BREAK
-          case 43: // rule scan-wolf.ll:184: "!=" :
+          case 43: // rule scan-wolf.ll:184: "&&" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:184\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 184 "scan-wolf.ll"
-{ TOKEN(NOT); }
+{ TOKEN(AND); }
             YY_BREAK
-          case 44: // rule scan-wolf.ll:185: "<" :
+          case 44: // rule scan-wolf.ll:185: "||" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:185\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 185 "scan-wolf.ll"
-{ TOKEN(LT); }
+{ TOKEN(OR); }
             YY_BREAK
-          case 45: // rule scan-wolf.ll:186: ">" :
+          case 45: // rule scan-wolf.ll:186: ">=" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:186\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 186 "scan-wolf.ll"
-{ TOKEN(GT); }
+{ TOKEN(GE); }
             YY_BREAK
           case 46: // rule scan-wolf.ll:187: "<=" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:187\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
@@ -521,23 +521,23 @@ int lexer::Lexer::lex(driver::WolfDriver& wd, std::queue<lexer::Token>& tokens)
 #line 187 "scan-wolf.ll"
 { TOKEN(LE); }
             YY_BREAK
-          case 47: // rule scan-wolf.ll:188: ">=" :
+          case 47: // rule scan-wolf.ll:188: ">" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:188\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 188 "scan-wolf.ll"
-{ TOKEN(GE); }
+{ TOKEN(GT); }
             YY_BREAK
-          case 48: // rule scan-wolf.ll:189: "&&" :
+          case 48: // rule scan-wolf.ll:189: "<" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:189\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 189 "scan-wolf.ll"
-{ TOKEN(AND); }
+{ TOKEN(LT); }
             YY_BREAK
-          case 49: // rule scan-wolf.ll:190: "||" :
+          case 49: // rule scan-wolf.ll:190: "!" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:190\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";
             YY_USER_ACTION
 #line 190 "scan-wolf.ll"
-{ TOKEN(OR); }
+{ TOKEN(NOT); }
             YY_BREAK
           case 50: // rule scan-wolf.ll:191: "+" :
             if (debug()) std::cerr << "--\033[1;35mrule scan-wolf.ll:191\033[0m start(" << start() << ") " << matcher().lineno() << "," << matcher().columno() << ":\"\033[1m" << matcher().text() << "\033[0m\"\n";

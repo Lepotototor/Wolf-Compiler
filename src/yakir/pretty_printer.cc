@@ -31,26 +31,7 @@ namespace yakir
   {
     ostr_ << TAB << e.dst_get() << " = " << e.left_get() << " ";
 
-    if (e.type_get() == ast::ADD)
-      ostr_ << "+";
-    else if (e.type_get() == ast::SUB)
-      ostr_ << "-";
-    else if (e.type_get() == ast::MULT)
-      ostr_ << "*";
-    else if (e.type_get() == ast::DIV)
-      ostr_ << "/";
-    else if (e.type_get() == ast::MOD)
-      ostr_ << "%";
-    else if (e.type_get() == ast::L_SHIFT)
-      ostr_ << "<<";
-    else if (e.type_get() == ast::R_SHIFT)
-      ostr_ << ">>";
-    else if (e.type_get() == ast::AND)
-      ostr_ << "&";
-    else if (e.type_get() == ast::OR)
-      ostr_ << "|";
-    else if (e.type_get() == ast::XOR)
-      ostr_ << "^";
+    ostr_ << e.type_get();
 
     ostr_ << " " << e.right_get() << "\n";
   }

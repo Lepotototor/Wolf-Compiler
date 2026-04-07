@@ -83,7 +83,7 @@ namespace lexer
         return "!";
       case EQ_TOK:
         return "==";
-      case NOT_EQ:
+      case NOT_EQ_TOK:
         return "!=";
       case LT_TOK:
         return "<";

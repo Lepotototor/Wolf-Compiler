@@ -51,7 +51,7 @@ namespace lexer
 
     NOT_TOK,      // !
     EQ_TOK,       // ==
-    NOT_EQ,       // !=
+    NOT_EQ_TOK,   // !=
     LT_TOK,       // <
     GT_TOK,       // >
     LE_TOK,       // <=

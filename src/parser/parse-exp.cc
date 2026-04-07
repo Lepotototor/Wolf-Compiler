@@ -11,8 +11,9 @@ namespace parser
   {
     std::string c = tok_repr(tok);
 
-    static const char* unary_tok[] = {"+",  "-", "*", "/", "%", "<<",
-                                      ">>", "&", "|", "^", 0};
+    static const char* unary_tok[] = {
+      "+",  "-",  "*",  "/",  "%", "<<", ">>", "&",  "|", "^",
+      "&&", "||", "==", "!=", "<", "<=", ">",  ">=", 0};
     for (const char** s = unary_tok; *s; s++)
       if (*s == c)
         return true;
@@ -36,11 +37,27 @@ namespace parser
     else if (s == ">>")
       return ast::binary_type::R_SHIFT;
     else if (s == "&")
-      return ast::binary_type::AND;
+      return ast::binary_type::B_AND;
     else if (s == "|")
-      return ast::binary_type::OR;
+      return ast::binary_type::B_OR;
     else if (s == "^")
       return ast::binary_type::XOR;
+    else if (s == "&&")
+      return ast::binary_type::L_AND;
+    else if (s == "||")
+      return ast::binary_type::L_OR;
+    else if (s == "==")
+      return ast::binary_type::EQ;
+    else if (s == "!=")
+      return ast::binary_type::NE;
+    else if (s == "<")
+      return ast::binary_type::LT;
+    else if (s == "<=")
+      return ast::binary_type::LE;
+    else if (s == ">")
+      return ast::binary_type::GT;
+    else if (s == ">=")
+      return ast::binary_type::GE;
     else
       {
         std::string txt = "No binary type for " + s;

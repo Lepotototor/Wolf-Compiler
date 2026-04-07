@@ -179,15 +179,15 @@ STRING_LITERAL "\"".*"\""\b
 "sizeof\b"		{ TOKEN(SIZEOF); }
 "return\b"		{ TOKEN(RETURN); }
 
-"!"				{ TOKEN(NOT); }
 "=="			{ TOKEN(EQ); }
-"!="			{ TOKEN(NOT); }
-"<"				{ TOKEN(LT); }
-">"				{ TOKEN(GT); }
-"<="			{ TOKEN(LE); }
-">="			{ TOKEN(GE); }
+"!="			{ TOKEN(NOT_EQ); }
 "&&"			{ TOKEN(AND); }
 "||"			{ TOKEN(OR); }
+">="			{ TOKEN(GE); }
+"<="			{ TOKEN(LE); }
+">"				{ TOKEN(GT); }
+"<"				{ TOKEN(LT); }
+"!"				{ TOKEN(NOT); }
 "+"				{ TOKEN(PLUS); }
 "-"				{ TOKEN(MINUS); }
 "*"				{ TOKEN(STAR); }

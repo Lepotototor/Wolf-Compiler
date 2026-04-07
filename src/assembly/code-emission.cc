@@ -57,14 +57,17 @@ namespace assembly
       ostr_ << "sall ";
     else if (e.type_get() == ast::R_SHIFT)
       ostr_ << "sarl ";
-    else if (e.type_get() == ast::AND)
+    else if (e.type_get() == ast::B_AND)
       ostr_ << "andl ";
-    else if (e.type_get() == ast::OR)
+    else if (e.type_get() == ast::L_OR)
       ostr_ << "orl ";
     else if (e.type_get() == ast::XOR)
       ostr_ << "xorl ";
     else
-      unreachable();
+      {
+        std::cerr << "Cant generate code for operator: " << e.type_get()
+                  << "\n";
+      }
 
     ostr_ << e.left_get() << ", " << e.right_get() << "\n";
   }

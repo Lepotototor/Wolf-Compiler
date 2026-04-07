@@ -2,6 +2,8 @@
 
 #include "binary-exp.hh"
 
+#include "../misc/debug.hh"
+
 namespace ast
 {
 
@@ -19,3 +21,47 @@ namespace ast
   void BinaryExp::accept(Visitor& v) { v(*this); }
 
 } // namespace ast
+
+std::ostream& operator<<(std::ostream& os, enum ast::binary_type type)
+{
+  if (type == ast::ADD)
+    os << "+";
+  else if (type == ast::SUB)
+    os << "-";
+  else if (type == ast::MULT)
+    os << "*";
+  else if (type == ast::DIV)
+    os << "/";
+  else if (type == ast::MOD)
+    os << "%";
+  else if (type == ast::L_SHIFT)
+    os << "<<";
+  else if (type == ast::R_SHIFT)
+    os << ">>";
+  else if (type == ast::B_AND)
+    os << "&";
+  else if (type == ast::B_OR)
+    os << "|";
+  else if (type == ast::XOR)
+    os << "^";
+  else if (type == ast::L_AND)
+    os << "&&";
+  else if (type == ast::L_OR)
+    os << "||";
+  else if (type == ast::EQ)
+    os << "==";
+  else if (type == ast::NE)
+    os << "!=";
+  else if (type == ast::LT)
+    os << "<";
+  else if (type == ast::LE)
+    os << "<=";
+  else if (type == ast::GT)
+    os << ">";
+  else if (type == ast::GE)
+    os << ">=";
+  else
+    unreachable();
+
+  return os;
+}

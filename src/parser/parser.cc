@@ -61,7 +61,8 @@ namespace parser
     wd_.error_get() << misc::error_type::parse << misc::bold(wd_.program_name)
                     << ": " << misc::err() << "Expected token \""
                     << misc::bold(exp) << "\" but got \""
-                    << misc::bold(lexer::tok_repr(tok)) << "\"\n";
+                    << misc::bold(lexer::tok_repr(tok)) << "\" "
+                    << tok.location_get() << "\n";
   }
 
   void Parser::unexpected(const lexer::Token& tok)

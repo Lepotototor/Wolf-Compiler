@@ -8,6 +8,8 @@
 #include "../ast_nodes/string-exp.hh"
 #include "../ast_nodes/type-name.hh"
 
+#include "../misc/debug.hh"
+
 namespace ast
 {
   void PrettyPrinter::newline()
@@ -79,26 +81,7 @@ namespace ast
   {
     ostr_ << "(" << e.left_get() << " ";
 
-    if (e.type_get() == ADD)
-      ostr_ << "+";
-    else if (e.type_get() == SUB)
-      ostr_ << "-";
-    else if (e.type_get() == MULT)
-      ostr_ << "*";
-    else if (e.type_get() == DIV)
-      ostr_ << "/";
-    else if (e.type_get() == MOD)
-      ostr_ << "%";
-    else if (e.type_get() == L_SHIFT)
-      ostr_ << "<<";
-    else if (e.type_get() == R_SHIFT)
-      ostr_ << ">>";
-    else if (e.type_get() == AND)
-      ostr_ << "&";
-    else if (e.type_get() == OR)
-      ostr_ << "|";
-    else if (e.type_get() == XOR)
-      ostr_ << "^";
+    ostr_ << e.type_get();
 
     ostr_ << " " << e.right_get() << ")";
   }

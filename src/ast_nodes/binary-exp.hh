@@ -2,6 +2,8 @@
 
 #include "exp.hh"
 
+#include <iostream>
+
 namespace ast
 {
 
@@ -15,9 +17,18 @@ namespace ast
 
     L_SHIFT,
     R_SHIFT,
-    AND,
-    OR,
+    B_AND,
+    B_OR,
     XOR,
+
+    L_AND,
+    L_OR,
+    EQ,
+    NE,
+    LT,
+    LE,
+    GT,
+    GE,
   };
 
   class BinaryExp : public Exp
@@ -51,3 +62,5 @@ namespace ast
   };
 
 } // namespace ast
+
+std::ostream& operator<<(std::ostream& os, enum ast::binary_type type);
