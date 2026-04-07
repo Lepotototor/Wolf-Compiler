@@ -69,6 +69,13 @@ namespace assembly
     ostr_ << e.left_get() << ", " << e.right_get() << "\n";
   }
 
+  void CodeEmit::operator()(const_t<Cdq>&) { ostr_ << TAB << "cdq\n"; }
+
+  void CodeEmit::operator()(const_t<Idiv>& e)
+  {
+    ostr_ << TAB << "idivl " << e.ope_get() << "\n";
+  }
+
   void CodeEmit::operator()(const_t<AllocateStack>& e)
   {
     ostr_ << TAB << "subq $" << e.size_get() << ", %rsp\n\n";

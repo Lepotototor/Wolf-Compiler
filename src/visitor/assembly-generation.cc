@@ -2,8 +2,10 @@
 
 #include "../assembly/allocate-stack.hh"
 #include "../assembly/binary.hh"
+#include "../assembly/cdq.hh"
 #include "../assembly/comment.hh"
 #include "../assembly/func_def.hh"
+#include "../assembly/idiv.hh"
 #include "../assembly/immediate.hh"
 #include "../assembly/mov.hh"
 #include "../assembly/program.hh"
@@ -111,6 +113,13 @@ namespace yakir
   {
     using namespace assembly;
 
+    Operand* left = recurse<Val, Operand>(e.left_get());
+    Operand* right = recurse<Val, Operand>(e.right_get());
+
+    Operand* dst = recurse<Val, Operand>(e.dst_get());
+    Operand* real_dst = dynamic_cast<Stack*>(dst);
+    Operand* dst_copy = nullptr;
+
     // TODO if right operand is negative for shift
     // we should throw a warning and return a value
     // It's an undefined behavior
@@ -119,18 +128,30 @@ namespace yakir
 
     if (e.type_get() == ast::DIV || e.type_get() == ast::MOD)
       {
-        notimplmented("Implement Assembly nodes for DIV and MOD");
+        curr_func_.emplace_back(new Mov(left, new Register("eax")));
+        curr_func_.emplace_back(new Cdq());
+
+        // idiv cant take immediate as operator
+        if (dynamic_cast<Immediate*>(right) != nullptr)
+          {
+            curr_func_.emplace_back(new Mov(right, new Register("r10d")));
+            curr_func_.emplace_back(new Idiv(new Register("r10d")));
+          }
+        else
+          {
+            curr_func_.emplace_back(new Idiv(right));
+          }
+
+        if (e.type_get() == ast::DIV)
+          curr_func_.emplace_back(new Mov(new Register("eax"), dst));
+        else
+          curr_func_.emplace_back(new Mov(new Register("edx"), dst));
+
         return;
       }
 
-    Operand* left = recurse<Val, Operand>(e.left_get());
-    Operand* right = recurse<Val, Operand>(e.right_get());
-
-    Operand* dst = recurse<Val, Operand>(e.dst_get());
-    Operand* real_dst = dynamic_cast<Stack*>(dst);
-    Operand* dst_copy = nullptr;
-
     // imull can't use a stack adress as output
+    // and prevent stack to stack mov on other operators
     if (real_dst != nullptr)
       {
         dst = new Register("r11d");

@@ -71,8 +71,6 @@ namespace yakir
   {
     for (const auto& func : e.funcs_get())
       ostr_ << func << "\n";
-
-    //TODO: Disable stack executable
   }
 } // namespace yakir
 

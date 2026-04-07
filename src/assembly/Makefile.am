@@ -22,6 +22,10 @@ libassembly_a_SOURCES =  \
 	unary.cc \
 	binary.hh \
 	binary.cc \
+	idiv.hh \
+	idiv.cc \
+	cdq.hh \
+	cdq.cc \
 	register.cc \
 	register.hh \
 	pseudo.hh \

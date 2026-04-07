@@ -16,6 +16,8 @@ namespace assembly
   class Unary;
   class Binary;
   class AllocateStack;
+  class Idiv;
+  class Cdq;
 
   class FuncDef;
   class Operand;
