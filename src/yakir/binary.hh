@@ -15,14 +15,20 @@ namespace yakir
            ast::binary_type type,
            Val* left,
            Val* right,
-           Val* dst);
+           Val* dst)
+      : Instruction(loc)
+      , type_(type)
+      , left_(left)
+      , right_(right)
+      , dst_(dst)
+    {}
 
-    ~Binary() override;
-
-    // Accept a const visitor
-    virtual void accept(ConstVisitor& v) const override;
-    // Accept a non-const visitor
-    virtual void accept(Visitor& v) override;
+    ~Binary() override
+    {
+      delete left_;
+      delete right_;
+      delete dst_;
+    }
 
     ast::binary_type type_get() const { return type_; }
 

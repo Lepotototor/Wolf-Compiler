@@ -20,6 +20,13 @@ namespace ast
   void BinaryExp::accept(ConstVisitor& v) const { v(*this); }
   void BinaryExp::accept(Visitor& v) { v(*this); }
 
+  bool is_arit(binary_type type)
+  {
+    return type == ADD || type == SUB || type == MULT || type == DIV
+      || type == MOD || type == L_SHIFT || type == R_SHIFT || type == B_AND
+      || type == B_OR || type == XOR;
+  }
+
 } // namespace ast
 
 std::ostream& operator<<(std::ostream& os, enum ast::binary_type type)

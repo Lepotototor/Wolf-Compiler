@@ -31,6 +31,8 @@ namespace ast
     GE,
   };
 
+  bool is_arit(binary_type type);
+
   class BinaryExp : public Exp
   {
   public:

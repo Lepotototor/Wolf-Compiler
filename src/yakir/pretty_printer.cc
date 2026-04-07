@@ -27,12 +27,17 @@ namespace yakir
     ostr_ << " " << e.src_get() << "\n";
   }
 
-  void PrettyPrinter::operator()(const_t<Binary>& e)
+  void PrettyPrinter::operator()(const_t<AritBinary>& e)
   {
     ostr_ << TAB << e.dst_get() << " = " << e.left_get() << " ";
-
     ostr_ << e.type_get();
+    ostr_ << " " << e.right_get() << "\n";
+  }
 
+  void PrettyPrinter::operator()(const_t<LogicalBinary>& e)
+  {
+    ostr_ << TAB << e.dst_get() << " = " << e.left_get() << " ";
+    ostr_ << e.type_get();
     ostr_ << " " << e.right_get() << "\n";
   }
 

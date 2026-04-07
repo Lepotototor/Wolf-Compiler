@@ -17,7 +17,10 @@ libyakir_a_SOURCES =  \
 	unary.hh \
 	unary.cc \
 	binary.hh \
-	binary.cc \
+	arit-binary.hh \
+	arit-binary.cc \
+	logical-binary.hh \
+	logical-binary.cc \
 	ret.hh \
 	ret.cc
 

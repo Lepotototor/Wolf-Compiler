@@ -18,6 +18,8 @@ namespace yakir
 
   class Unary;
   class Binary;
+  class AritBinary;
+  class LogicalBinary;
 
   class Program;
 

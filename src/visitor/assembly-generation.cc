@@ -109,7 +109,7 @@ namespace yakir
     curr_func_.emplace_back(un);
   }
 
-  void AssemblyGeneration::operator()(const_t<Binary>& e)
+  void AssemblyGeneration::operator()(const_t<AritBinary>& e)
   {
     using namespace assembly;
 
@@ -176,5 +176,7 @@ namespace yakir
         curr_func_.emplace_back(mov);
       }
   }
+
+  void AssemblyGeneration::operator()(const_t<LogicalBinary>&) {}
 
 } // namespace yakir
