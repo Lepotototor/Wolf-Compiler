@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Mov::Mov(Operand* src, Operand* dst)
-    : Instruction()
+  Mov::Mov(Operand* src, Operand* dst, unsigned char size)
+    : Instruction(size)
     , src_(src)
     , dst_(dst)
   {}

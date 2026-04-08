@@ -9,7 +9,7 @@ namespace assembly
   class Idiv : public Instruction
   {
   public:
-    Idiv(Operand* ope);
+    Idiv(Operand* ope, unsigned char size);
 
     ~Idiv() override;
 

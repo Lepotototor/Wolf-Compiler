@@ -5,7 +5,7 @@
 namespace assembly
 {
   Jump::Jump(const std::string& id)
-    : Instruction()
+    : Instruction(0)
     , id_(id)
   {}
 

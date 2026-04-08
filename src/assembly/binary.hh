@@ -11,7 +11,10 @@ namespace assembly
   class Binary : public Instruction
   {
   public:
-    Binary(ast::binary_type type, Operand* left, Operand* right);
+    Binary(ast::binary_type type,
+           Operand* left,
+           Operand* right,
+           unsigned char size);
 
     ~Binary() override;
 

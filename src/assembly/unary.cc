@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Unary::Unary(ast::unary_type type, Operand* ope)
-    : Instruction()
+  Unary::Unary(ast::unary_type type, Operand* ope, unsigned char size)
+    : Instruction(size)
     , type_(type)
     , ope_(ope)
   {}

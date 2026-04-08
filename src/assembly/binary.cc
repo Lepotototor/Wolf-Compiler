@@ -4,8 +4,11 @@
 
 namespace assembly
 {
-  Binary::Binary(ast::binary_type type, Operand* left, Operand* right)
-    : Instruction()
+  Binary::Binary(ast::binary_type type,
+                 Operand* left,
+                 Operand* right,
+                 unsigned char size)
+    : Instruction(size)
     , type_(type)
     , left_(left)
     , right_(right)

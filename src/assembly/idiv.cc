@@ -4,8 +4,8 @@
 
 namespace assembly
 {
-  Idiv::Idiv(Operand* ope)
-    : Instruction()
+  Idiv::Idiv(Operand* ope, unsigned char size)
+    : Instruction(size)
     , ope_(ope)
   {}
 

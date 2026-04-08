@@ -5,7 +5,7 @@
 namespace assembly
 {
   Label::Label(const std::string& name)
-    : Instruction()
+    : Instruction(0)
     , name_(name)
   {}
 

@@ -6,7 +6,7 @@ namespace assembly
 {
 
   SetCC::SetCC(Operand* ope, ast::binary_type cond_type)
-    : Instruction()
+    : Instruction(0)
     , ope_(ope)
     , cond_type_(cond_type)
   {}

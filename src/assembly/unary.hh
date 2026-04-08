@@ -11,7 +11,7 @@ namespace assembly
   class Unary : public Instruction
   {
   public:
-    Unary(ast::unary_type type, Operand* ope);
+    Unary(ast::unary_type type, Operand* ope, unsigned char size);
 
     ~Unary() override;
 

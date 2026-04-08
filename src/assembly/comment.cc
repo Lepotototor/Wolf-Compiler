@@ -5,7 +5,7 @@
 namespace assembly
 {
   Comment::Comment(const std::string& val)
-    : Instruction()
+    : Instruction(0)
     , val_(val)
   {}
 

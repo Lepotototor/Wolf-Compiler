@@ -38,11 +38,11 @@ namespace assembly
     ostr_ << TAB;
 
     if (e.type_get() == ast::MINUS_U)
-      ostr_ << "negl ";
+      ostr_ << "neg";
     else if (e.type_get() == ast::TILDE_U)
-      ostr_ << "notl ";
+      ostr_ << "not";
 
-    ostr_ << e.ope_get() << "\n";
+    ostr_ << e.mnemo_get() << " " << e.ope_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<Binary>& e)
@@ -50,27 +50,28 @@ namespace assembly
     ostr_ << TAB;
 
     if (e.type_get() == ast::ADD)
-      ostr_ << "addl ";
+      ostr_ << "add";
     else if (e.type_get() == ast::SUB)
-      ostr_ << "subl ";
+      ostr_ << "sub";
     else if (e.type_get() == ast::MULT)
-      ostr_ << "imull ";
+      ostr_ << "imul";
     else if (e.type_get() == ast::L_SHIFT)
-      ostr_ << "sall ";
+      ostr_ << "sal";
     else if (e.type_get() == ast::R_SHIFT)
-      ostr_ << "sarl ";
+      ostr_ << "sar";
     else if (e.type_get() == ast::B_AND)
-      ostr_ << "andl ";
+      ostr_ << "and";
     else if (e.type_get() == ast::L_OR)
-      ostr_ << "orl ";
+      ostr_ << "or";
     else if (e.type_get() == ast::XOR)
-      ostr_ << "xorl ";
+      ostr_ << "xor";
     else
       {
         std::cerr << "Cant generate code for operator: " << e.type_get()
                   << "\n";
       }
 
+    ostr_ << e.mnemo_get() << " ";
     ostr_ << e.left_get() << ", " << e.right_get() << "\n";
   }
 
@@ -78,7 +79,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Idiv>& e)
   {
-    ostr_ << TAB << "idivl " << e.ope_get() << "\n";
+    ostr_ << TAB << "idiv" << e.mnemo_get() << " " << e.ope_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<AllocateStack>& e)
@@ -88,8 +89,8 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Cmp>& e)
   {
-    ostr_ << TAB << "cmp" << (e.ins_size_get() == 1 ? "b " : "l ")
-          << e.left_get() << ", " << e.right_get() << "\n";
+    ostr_ << TAB << "cmp" << e.mnemo_get() << " " << e.left_get() << ", "
+          << e.right_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<Label>& e)

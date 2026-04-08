@@ -5,7 +5,7 @@
 namespace assembly
 {
   Cdq::Cdq()
-    : Instruction()
+    : Instruction(0)
   {}
 
   void Cdq::accept(ConstVisitor& v) const { v(*this); }

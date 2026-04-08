@@ -127,12 +127,12 @@ namespace ast
         curr_scope_.emplace_back(
           new JumpIfNotZero(true_label->name_get(), right));
 
-        curr_scope_.emplace_back(new Copy(new Constant("1"), dst));
+        curr_scope_.emplace_back(new Copy(new Constant("0"), dst));
         Label* end_label = make_tmp_label("end_");
         curr_scope_.emplace_back(new Jump(end_label->name_get()));
         curr_scope_.emplace_back(true_label);
         curr_scope_.emplace_back(
-          new Copy(new Constant("0"), new Var(dst->id_get())));
+          new Copy(new Constant("1"), new Var(dst->id_get())));
         curr_scope_.emplace_back(end_label);
 
         res_ = new Var(dst->id_get());

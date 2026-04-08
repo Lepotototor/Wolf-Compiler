@@ -5,12 +5,10 @@
 namespace assembly
 {
   Cmp::Cmp(Operand* left, Operand* right, unsigned char size)
-    : Instruction()
+    : Instruction(size)
     , left_(left)
     , right_(right)
-  {
-    ins_size_ = size;
-  }
+  {}
 
   Cmp::~Cmp()
   {

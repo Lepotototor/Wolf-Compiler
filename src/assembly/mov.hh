@@ -9,7 +9,7 @@ namespace assembly
   class Mov : public Instruction
   {
   public:
-    Mov(Operand* src, Operand* dst);
+    Mov(Operand* src, Operand* dst, unsigned char size);
 
     ~Mov() override;
 

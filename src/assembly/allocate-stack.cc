@@ -5,7 +5,7 @@
 namespace assembly
 {
   AllocateStack::AllocateStack(unsigned size)
-    : Instruction()
+    : Instruction(0)
     , size_(size)
   {}
 

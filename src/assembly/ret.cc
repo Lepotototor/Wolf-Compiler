@@ -5,7 +5,7 @@
 namespace assembly
 {
   Ret::Ret()
-    : Instruction()
+    : Instruction(0)
   {}
 
   void Ret::accept(ConstVisitor& v) const { v(*this); }
