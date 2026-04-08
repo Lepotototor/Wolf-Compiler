@@ -17,7 +17,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Comment>& e)
   {
-    ostr_ << TAB << "# " << e.val_get() << "\n";
+    ostr_ << "\n" << TAB << "# " << e.val_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<Ret>&)
@@ -140,7 +140,10 @@ namespace assembly
     else if (e.cond_type_get() == ast::GE)
       ostr_ << "ge";
     else
-      unreachable();
+      {
+        std::cerr << "Cant get set type for: " << e.cond_type_get() << "\n";
+        unreachable();
+      }
 
     ostr_ << " " << e.ope_get() << "\n";
   }

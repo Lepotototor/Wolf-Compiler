@@ -19,6 +19,7 @@ namespace yakir
     yakir::Var* make_tmp_var(const misc::Location& loc);
 
     virtual void operator()(const_t<Ret>& e);
+    virtual void operator()(const_t<Copy>& e);
     virtual void operator()(const_t<Label>& e);
     virtual void operator()(const_t<Jump>& e);
     virtual void operator()(const_t<JumpIfZero>& e);
@@ -51,9 +52,6 @@ namespace yakir
 
     // Use to make unique identifiers
     unsigned id_count_ = 0;
-
-    // Use to make unique labels
-    unsigned lbl_count_ = 0;
   };
 
 } // namespace yakir

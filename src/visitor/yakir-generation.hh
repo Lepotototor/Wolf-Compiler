@@ -15,7 +15,7 @@ namespace ast
     YakirGeneration() {}
 
     yakir::Var* make_tmp_var();
-    yakir::Var* make_tmp_label();
+    yakir::Label* make_tmp_label(std::string base = ".L");
 
     virtual void operator()(const FunctionDec& e) override;
     virtual void operator()(const DecList& e) override;
@@ -37,7 +37,11 @@ namespace ast
 
     std::vector<yakir::Instruction*> curr_scope_;
 
+    // Use to make unique identifiers
     unsigned id_count_ = 0;
+
+    // Use to make unique labels
+    unsigned lbl_count_ = 0;
   };
 
 } // namespace ast

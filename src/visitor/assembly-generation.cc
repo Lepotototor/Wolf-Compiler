@@ -225,6 +225,22 @@ namespace yakir
     curr_func_.emplace_back(new SetCC(dst, e.type_get()));
   }
 
+  void AssemblyGeneration::operator()(const_t<Copy>& e)
+  {
+    using namespace assembly;
+
+    Operand* src = recurse<Val, Operand>(e.src_get());
+    Operand* dst = recurse<Val, Operand>(e.dst_get());
+
+    if (dynamic_cast<Stack*>(src) && dynamic_cast<Stack*>(dst))
+      {
+        curr_func_.emplace_back(new Mov(src, new Register("r10d")));
+        src = new Register("r10d");
+      }
+
+    curr_func_.emplace_back(new Mov(src, dst));
+  }
+
   void AssemblyGeneration::operator()(const_t<Label>& e)
   {
     curr_func_.emplace_back(new assembly::Label(e.name_get()));

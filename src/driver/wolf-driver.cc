@@ -148,8 +148,9 @@ namespace driver
 
         if (ext == ".c" || ext == ".i" || ext == ".s" || ext == ".S")
           {
-            std::string cmd = "as " + (ext == ".S" ? file : filename + ".s")
-              + " -o " + filename + ".o";
+            std::string cmd = "as -g -O0 "
+              + (ext == ".S" ? file : filename + ".s") + " -o " + filename
+              + ".o";
             // std::cout << cmd << "\n";
             int r = system(cmd.c_str());
             if (r != 0)
