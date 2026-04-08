@@ -1,5 +1,8 @@
 #include "assembly-generation.hh"
 
+#include "../yakir/jump.hh"
+#include "../yakir/label.hh"
+
 #include "../assembly/allocate-stack.hh"
 #include "../assembly/binary.hh"
 #include "../assembly/cdq.hh"
@@ -220,6 +223,52 @@ namespace yakir
 
     Operand* dst = recurse<Val, Operand>(e.dst_get());
     curr_func_.emplace_back(new SetCC(dst, e.type_get()));
+  }
+
+  void AssemblyGeneration::operator()(const_t<Label>& e)
+  {
+    curr_func_.emplace_back(new assembly::Label(e.name_get()));
+  }
+
+  void AssemblyGeneration::operator()(const_t<Jump>& e)
+  {
+    curr_func_.emplace_back(new assembly::Jump(e.id_get()));
+  }
+
+  void AssemblyGeneration::operator()(const_t<JumpIfZero>& e)
+  {
+    using namespace assembly;
+
+    curr_func_.emplace_back(new Comment("Jump If Zero"));
+
+    Operand* cond = recurse<Val, Operand>(e.cond_get());
+
+    if (dynamic_cast<Immediate*>(cond))
+      {
+        curr_func_.emplace_back(new Mov(cond, new Register("r11d")));
+        cond = new Register("r11d");
+      }
+
+    curr_func_.emplace_back(new Cmp(new Immediate("0"), cond));
+    curr_func_.emplace_back(new JumpCC(e.id_get(), ast::EQ));
+  }
+
+  void AssemblyGeneration::operator()(const_t<JumpIfNotZero>& e)
+  {
+    using namespace assembly;
+
+    curr_func_.emplace_back(new Comment("Jump If Not Zero"));
+
+    Operand* cond = recurse<Val, Operand>(e.cond_get());
+
+    if (dynamic_cast<Immediate*>(cond))
+      {
+        curr_func_.emplace_back(new Mov(cond, new Register("r11d")));
+        cond = new Register("r11d");
+      }
+
+    curr_func_.emplace_back(new Cmp(new Immediate("0"), cond));
+    curr_func_.emplace_back(new JumpCC(e.id_get(), ast::NE));
   }
 
 } // namespace yakir
