@@ -18,6 +18,7 @@ namespace misc
 
   void Error::exit_on_error()
   {
+    std::cout << "Err code: " << status_;
     if (status_ != error_type::no_error)
       exit();
   }
@@ -25,6 +26,8 @@ namespace misc
   Error& Error::operator<<(error_type e)
   {
     status_ = e < status_ ? e : status_;
+    if (status_ == no_error && e != no_error)
+      status_ = e;
     return *this;
   }
 

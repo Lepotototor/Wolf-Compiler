@@ -43,7 +43,7 @@ namespace misc
     // To know if warning appear during commpilation
     bool compile_warn_ = false;
 
-    error_type status_ = error_type::failure;
+    error_type status_ = no_error;
 
     static unsigned nb_err_;
     static unsigned nb_warn_;

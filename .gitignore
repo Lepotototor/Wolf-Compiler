@@ -10,6 +10,7 @@
 *.lib
 *.s
 *.asm
+*.i
 
 # precompile headers
 *.gch

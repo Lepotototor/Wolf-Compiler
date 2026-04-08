@@ -119,7 +119,7 @@ namespace driver
   {
     for (const std::string& file : input_files_)
       {
-        int dot = file.find(".");
+        int dot = file.find_last_of(".");
         std::string filename = file.substr(0, dot);
         std::string ext = file.substr(dot);
 
@@ -151,7 +151,6 @@ namespace driver
             std::string cmd = "as -g -O0 "
               + (ext == ".S" ? file : filename + ".s") + " -o " + filename
               + ".o";
-            // std::cout << cmd << "\n";
             int r = system(cmd.c_str());
             if (r != 0)
               {
@@ -166,13 +165,10 @@ namespace driver
         //std::string cmd = "ld";
         for (const std::string& file : input_files_)
           {
-            std::string filename = file.substr(0, file.find("."));
+            std::string filename = file.substr(0, file.find_last_of("."));
             cmd += " " + filename + ".o";
           }
-        cmd += " -o "
-          + (input_files_.size() == 1
-               ? input_files_.front().substr(0, input_files_.front().find("."))
-               : output_name);
+        cmd += " -o " + output_name;
 
         // std::cout << cmd << "\n";
         int r = system(cmd.c_str());
@@ -208,6 +204,8 @@ namespace driver
         parser::Parser parser{*this, tokens};
         parser.parse();
         program = parser.program_get();
+
+        error_.exit_on_error();
       }
 
     std::cout << "\t___PROGRAM___\n";
