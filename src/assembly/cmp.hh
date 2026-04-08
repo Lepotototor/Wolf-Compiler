@@ -9,7 +9,7 @@ namespace assembly
   class Cmp : public Instruction
   {
   public:
-    Cmp(Operand* left, Operand* right);
+    Cmp(Operand* left, Operand* right, unsigned char size);
 
     ~Cmp() override;
 

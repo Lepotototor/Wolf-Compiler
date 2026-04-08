@@ -4,15 +4,16 @@
 
 namespace assembly
 {
-  Register::Register(const std::string& name)
+  Register::Register(register_type type, unsigned char size)
     : Operand()
-    , name_(name)
+    , type_(type)
+    , size_(size)
   {}
 
   void Register::accept(ConstVisitor& v) const { v(*this); }
   void Register::accept(Visitor& v) { v(*this); }
 
-  std::map<register_type, std::map<unsigned, std::string>>
+  std::map<register_type, std::map<unsigned char, std::string>>
     Register::registers_ = {
       {AX, {{1, "al"}, {2, "ax"}, {4, "eax"}, {8, "rax"}}},
       {BX, {{1, "bl"}, {2, "bx"}, {4, "ebx"}, {8, "rbx"}}},

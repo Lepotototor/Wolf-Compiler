@@ -7,7 +7,8 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [x] Basic Compilation
 - [x] Unary Operators
 - [x] Binary Operators
-- [ ] Logical and Relational Operators
+- [x] Bitwise Operators
+- [x] Logical and Relational Operators
 - [ ] Local Variables
 - [ ] Conditional Expressions
 - [ ] Compound Statements

@@ -24,6 +24,8 @@
 
 #include "../misc/debug.hh"
 
+using namespace assembly;
+
 namespace yakir
 {
 
@@ -45,7 +47,7 @@ namespace yakir
     if (e.val_get())
       {
         assembly::Operand* ope = recurse<Val, assembly::Operand>(e.val_get());
-        assembly::Register* reg = new assembly::Register("eax");
+        assembly::Register* reg = new assembly::Register(AX, 4);
 
         curr_func_.emplace_back(new assembly::Mov(ope, reg));
       }
@@ -106,10 +108,10 @@ namespace yakir
       {
         if (dynamic_cast<Immediate*>(src) != nullptr)
           {
-            curr_func_.emplace_back(new Mov(src, new Register("r11d")));
-            src = new Register("r11d");
+            curr_func_.emplace_back(new Mov(src, new Register(R11, 4)));
+            src = new Register(R11, 4);
           }
-        curr_func_.emplace_back(new Cmp(new Immediate("0"), src));
+        curr_func_.emplace_back(new Cmp(new Immediate("0"), src, 4));
         curr_func_.emplace_back(new SetCC(dst, ast::EQ));
       }
     else
@@ -119,8 +121,8 @@ namespace yakir
         if (dynamic_cast<Stack*>(src) != nullptr
             && dynamic_cast<Stack*>(dst) != nullptr)
           {
-            curr_func_.emplace_back(new Mov(src, new Register("r10d")));
-            src = new Register("r10d");
+            curr_func_.emplace_back(new Mov(src, new Register(R10, 4)));
+            src = new Register(R10, 4);
           }
 
         Mov* mov = new Mov(src, dst_copy);
@@ -150,14 +152,14 @@ namespace yakir
 
     if (e.type_get() == ast::DIV || e.type_get() == ast::MOD)
       {
-        curr_func_.emplace_back(new Mov(left, new Register("eax")));
+        curr_func_.emplace_back(new Mov(left, new Register(R10, 4)));
         curr_func_.emplace_back(new Cdq());
 
         // idiv cant take immediate as operator
         if (dynamic_cast<Immediate*>(right) != nullptr)
           {
-            curr_func_.emplace_back(new Mov(right, new Register("r10d")));
-            curr_func_.emplace_back(new Idiv(new Register("r10d")));
+            curr_func_.emplace_back(new Mov(right, new Register(R10, 4)));
+            curr_func_.emplace_back(new Idiv(new Register(R10, 4)));
           }
         else
           {
@@ -165,9 +167,9 @@ namespace yakir
           }
 
         if (e.type_get() == ast::DIV)
-          curr_func_.emplace_back(new Mov(new Register("eax"), dst));
+          curr_func_.emplace_back(new Mov(new Register(AX, 4), dst));
         else
-          curr_func_.emplace_back(new Mov(new Register("edx"), dst));
+          curr_func_.emplace_back(new Mov(new Register(DX, 4), dst));
 
         return;
       }
@@ -176,8 +178,8 @@ namespace yakir
     // and prevent stack to stack mov on other operators
     if (real_dst != nullptr)
       {
-        dst = new Register("r11d");
-        dst_copy = new Register("r11d");
+        dst = new Register(R11, 4);
+        dst_copy = new Register(R11, 4);
       }
     else
       {
@@ -193,7 +195,7 @@ namespace yakir
     if (real_dst != nullptr)
       {
         // If real dst is a stack addr we should move r11d into the dst
-        dst = new Register("r11d");
+        dst = new Register(R11, 4);
         Mov* mov = new Mov(dst, real_dst);
         curr_func_.emplace_back(mov);
       }
@@ -210,16 +212,16 @@ namespace yakir
 
     if (dynamic_cast<Immediate*>(left) != nullptr)
       {
-        curr_func_.emplace_back(new Mov(left, new Register("r11d")));
-        left = new Register("r11d");
+        curr_func_.emplace_back(new Mov(left, new Register(R11, 4)));
+        left = new Register(R11, 4);
       }
     else if (dynamic_cast<Stack*>(left) && dynamic_cast<Stack*>(right))
       {
-        curr_func_.emplace_back(new Mov(right, new Register("r10d")));
-        right = new Register("r10d");
+        curr_func_.emplace_back(new Mov(right, new Register(R10, 4)));
+        right = new Register(R10, 4);
       }
 
-    curr_func_.emplace_back(new Cmp(right, left));
+    curr_func_.emplace_back(new Cmp(right, left, 4));
 
     Operand* dst = recurse<Val, Operand>(e.dst_get());
     curr_func_.emplace_back(new SetCC(dst, e.type_get()));
@@ -234,8 +236,8 @@ namespace yakir
 
     if (dynamic_cast<Stack*>(src) && dynamic_cast<Stack*>(dst))
       {
-        curr_func_.emplace_back(new Mov(src, new Register("r10d")));
-        src = new Register("r10d");
+        curr_func_.emplace_back(new Mov(src, new Register(R10, 4)));
+        src = new Register(R10, 4);
       }
 
     curr_func_.emplace_back(new Mov(src, dst));
@@ -261,11 +263,11 @@ namespace yakir
 
     if (dynamic_cast<Immediate*>(cond))
       {
-        curr_func_.emplace_back(new Mov(cond, new Register("r11d")));
-        cond = new Register("r11d");
+        curr_func_.emplace_back(new Mov(cond, new Register(R11, 4)));
+        cond = new Register(R11, 4);
       }
 
-    curr_func_.emplace_back(new Cmp(new Immediate("0"), cond));
+    curr_func_.emplace_back(new Cmp(new Immediate("0"), cond, 1));
     curr_func_.emplace_back(new JumpCC(e.id_get(), ast::EQ));
   }
 
@@ -279,11 +281,11 @@ namespace yakir
 
     if (dynamic_cast<Immediate*>(cond))
       {
-        curr_func_.emplace_back(new Mov(cond, new Register("r11d")));
-        cond = new Register("r11d");
+        curr_func_.emplace_back(new Mov(cond, new Register(R11, 4)));
+        cond = new Register(R11, 4);
       }
 
-    curr_func_.emplace_back(new Cmp(new Immediate("0"), cond));
+    curr_func_.emplace_back(new Cmp(new Immediate("1"), cond, 1));
     curr_func_.emplace_back(new JumpCC(e.id_get(), ast::NE));
   }
 

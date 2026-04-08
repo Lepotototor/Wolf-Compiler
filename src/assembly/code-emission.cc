@@ -88,7 +88,8 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<Cmp>& e)
   {
-    ostr_ << TAB << "cmpl " << e.left_get() << ", " << e.right_get() << "\n";
+    ostr_ << TAB << "cmp" << (e.ins_size_get() == 1 ? "b " : "l ")
+          << e.left_get() << ", " << e.right_get() << "\n";
   }
 
   void CodeEmit::operator()(const_t<Label>& e)
