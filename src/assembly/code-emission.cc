@@ -125,7 +125,7 @@ namespace assembly
 
   void CodeEmit::operator()(const_t<SetCC>& e)
   {
-    ostr_ << TAB << "j";
+    ostr_ << TAB << "set";
 
     if (e.cond_type_get() == ast::EQ)
       ostr_ << "e";

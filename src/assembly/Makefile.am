@@ -34,6 +34,8 @@ libassembly_a_SOURCES =  \
 	stack.cc \
 	allocate-stack.hh \
 	allocate-stack.cc \
+	cmp.hh \
+	cmp.cc \
 	setcc.hh \
 	setcc.cc \
 	jump.hh \

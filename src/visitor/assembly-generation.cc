@@ -3,14 +3,19 @@
 #include "../assembly/allocate-stack.hh"
 #include "../assembly/binary.hh"
 #include "../assembly/cdq.hh"
+#include "../assembly/cmp.hh"
 #include "../assembly/comment.hh"
 #include "../assembly/func_def.hh"
 #include "../assembly/idiv.hh"
 #include "../assembly/immediate.hh"
+#include "../assembly/jump.hh"
+#include "../assembly/jumpcc.hh"
+#include "../assembly/label.hh"
 #include "../assembly/mov.hh"
 #include "../assembly/program.hh"
 #include "../assembly/register.hh"
 #include "../assembly/ret.hh"
+#include "../assembly/setcc.hh"
 #include "../assembly/stack.hh"
 #include "../assembly/unary.hh"
 
@@ -93,20 +98,34 @@ namespace yakir
 
     Operand* src = recurse<Val, Operand>(e.src_get());
     Operand* dst = recurse<Val, Operand>(e.dst_get());
-    Operand* dst_copy = recurse<Val, Operand>(e.dst_get());
 
-    if (dynamic_cast<Stack*>(src) != nullptr
-        && dynamic_cast<Stack*>(dst) != nullptr)
+    if (e.type_get() == ast::unary_type::NEGATE_U)
       {
-        curr_func_.emplace_back(new Mov(src, new Register("r10d")));
-        src = new Register("r10d");
+        if (dynamic_cast<Immediate*>(src) != nullptr)
+          {
+            curr_func_.emplace_back(new Mov(src, new Register("r11d")));
+            src = new Register("r11d");
+          }
+        curr_func_.emplace_back(new Cmp(new Immediate("0"), src));
+        curr_func_.emplace_back(new SetCC(dst, ast::EQ));
       }
+    else
+      {
+        Operand* dst_copy = recurse<Val, Operand>(e.dst_get());
 
-    Mov* mov = new Mov(src, dst_copy);
-    assembly::Unary* un = new assembly::Unary(e.type_get(), dst);
+        if (dynamic_cast<Stack*>(src) != nullptr
+            && dynamic_cast<Stack*>(dst) != nullptr)
+          {
+            curr_func_.emplace_back(new Mov(src, new Register("r10d")));
+            src = new Register("r10d");
+          }
 
-    curr_func_.emplace_back(mov);
-    curr_func_.emplace_back(un);
+        Mov* mov = new Mov(src, dst_copy);
+        assembly::Unary* un = new assembly::Unary(e.type_get(), dst);
+
+        curr_func_.emplace_back(mov);
+        curr_func_.emplace_back(un);
+      }
   }
 
   void AssemblyGeneration::operator()(const_t<AritBinary>& e)
@@ -177,6 +196,30 @@ namespace yakir
       }
   }
 
-  void AssemblyGeneration::operator()(const_t<LogicalBinary>&) {}
+  void AssemblyGeneration::operator()(const_t<LogicalBinary>& e)
+  {
+    using namespace assembly;
+
+    curr_func_.emplace_back(new Comment("Comparison operator"));
+
+    Operand* left = recurse<Val, Operand>(e.left_get());
+    Operand* right = recurse<Val, Operand>(e.right_get());
+
+    if (dynamic_cast<Immediate*>(left) != nullptr)
+      {
+        curr_func_.emplace_back(new Mov(left, new Register("r11d")));
+        left = new Register("r11d");
+      }
+    else if (dynamic_cast<Stack*>(left) && dynamic_cast<Stack*>(right))
+      {
+        curr_func_.emplace_back(new Mov(right, new Register("r10d")));
+        right = new Register("r10d");
+      }
+
+    curr_func_.emplace_back(new Cmp(right, left));
+
+    Operand* dst = recurse<Val, Operand>(e.dst_get());
+    curr_func_.emplace_back(new SetCC(dst, e.type_get()));
+  }
 
 } // namespace yakir
