@@ -24,6 +24,8 @@ namespace ast
     virtual void operator()(const_t<UnaryExp>& e);
     virtual void operator()(const_t<BinaryExp>& e);
     virtual void operator()(const_t<StringExp>& e);
+    virtual void operator()(const_t<Var>& e);
+    virtual void operator()(const_t<AssignExp>& e);
     virtual void operator()(const_t<ReturnExp>& e);
     virtual void operator()(const_t<TypeName>& e);
   };

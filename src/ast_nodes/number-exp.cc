@@ -5,8 +5,8 @@
 namespace ast
 {
 
-  NumberExp::NumberExp(const misc::Location& l, const std::string& val)
-    : Exp(l)
+  NumberExp::NumberExp(const misc::Location& loc, const std::string& val)
+    : Exp(loc)
     , val_(val)
   {}
 

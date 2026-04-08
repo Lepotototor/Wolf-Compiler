@@ -19,6 +19,9 @@ namespace ast
   class BinaryExp;
   class StringExp;
   class ReturnExp;
+  class AssignExp;
+
+  class Var;
 
   class Type;
   class TypeName;

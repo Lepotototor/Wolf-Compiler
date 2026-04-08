@@ -5,20 +5,20 @@
 namespace ast
 {
 
-  class NumberExp : public Exp
+  class Var : public Exp
   {
   public:
-    NumberExp(const misc::Location& loc, const std::string& val);
+    Var(const misc::Location& loc, const std::string& id);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
-    const std::string& val_get() const { return val_; }
+    const std::string& identifier_get() const { return identifier_; }
 
-  protected:
-    std::string val_;
+  private:
+    std::string identifier_;
   };
 
 } // namespace ast

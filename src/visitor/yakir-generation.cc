@@ -25,9 +25,9 @@ using namespace yakir;
 namespace ast
 {
 
-  Var* YakirGeneration::make_tmp_var()
+  yakir::Var* YakirGeneration::make_tmp_var()
   {
-    return new Var("var" + std::to_string(id_count_++));
+    return new yakir::Var("var" + std::to_string(id_count_++));
   }
 
   yakir::Label* YakirGeneration::make_tmp_label(std::string base)
@@ -82,19 +82,19 @@ namespace ast
         return;
       }
 
-    Var* dst = make_tmp_var();
+    yakir::Var* dst = make_tmp_var();
 
     Unary* ins = new Unary(e.type_get(), src, dst);
     curr_scope_.emplace_back(ins);
 
-    res_ = new Var(dst->id_get());
+    res_ = new yakir::Var(dst->id_get());
   }
 
   void YakirGeneration::operator()(const BinaryExp& e)
   {
     Val* left = recurse<Exp, Val>(e.left_get());
 
-    Var* dst = make_tmp_var();
+    yakir::Var* dst = make_tmp_var();
 
     Binary* ins = nullptr;
     if (e.type_get() == L_AND)
@@ -111,10 +111,10 @@ namespace ast
         curr_scope_.emplace_back(new Jump(end_label->name_get()));
         curr_scope_.emplace_back(false_label);
         curr_scope_.emplace_back(
-          new Copy(new Constant("0"), new Var(dst->id_get())));
+          new Copy(new Constant("0"), new yakir::Var(dst->id_get())));
         curr_scope_.emplace_back(end_label);
 
-        res_ = new Var(dst->id_get());
+        res_ = new yakir::Var(dst->id_get());
         return;
       }
     else if (e.type_get() == L_OR)
@@ -132,10 +132,10 @@ namespace ast
         curr_scope_.emplace_back(new Jump(end_label->name_get()));
         curr_scope_.emplace_back(true_label);
         curr_scope_.emplace_back(
-          new Copy(new Constant("1"), new Var(dst->id_get())));
+          new Copy(new Constant("1"), new yakir::Var(dst->id_get())));
         curr_scope_.emplace_back(end_label);
 
-        res_ = new Var(dst->id_get());
+        res_ = new yakir::Var(dst->id_get());
         return;
       }
 
@@ -151,7 +151,7 @@ namespace ast
       }
 
     curr_scope_.emplace_back(ins);
-    res_ = new Var(dst->id_get());
+    res_ = new yakir::Var(dst->id_get());
   }
 
   void YakirGeneration::operator()(const ReturnExp& e)

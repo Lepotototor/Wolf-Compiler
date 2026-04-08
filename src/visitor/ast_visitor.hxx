@@ -2,6 +2,7 @@
 
 #include "ast_visitor.hh"
 
+#include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/exp-list.hh"
@@ -69,6 +70,17 @@ namespace ast
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<StringExp>&)
   {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Var>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<AssignExp>& e)
+  {
+    e.lvalue_get().accept(*this);
+    e.rvalue_get().accept(*this);
+  }
 
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<ReturnExp>& e)
