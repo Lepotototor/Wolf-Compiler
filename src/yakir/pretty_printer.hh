@@ -15,6 +15,11 @@ namespace yakir
     {}
 
     virtual void operator()(const_t<Ret>& e) override;
+    virtual void operator()(const_t<Copy>& e) override;
+    virtual void operator()(const_t<Label>& e) override;
+    virtual void operator()(const_t<Jump>& e) override;
+    virtual void operator()(const_t<JumpIfZero>& e) override;
+    virtual void operator()(const_t<JumpIfNotZero>& e) override;
     virtual void operator()(const_t<Unary>& e) override;
     virtual void operator()(const_t<AritBinary>& e) override;
     virtual void operator()(const_t<LogicalBinary>& e) override;

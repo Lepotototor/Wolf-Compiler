@@ -4,7 +4,10 @@
 
 #include "../yakir/arit-binary.hh"
 #include "../yakir/constant.hh"
+#include "../yakir/copy.hh"
 #include "../yakir/func_def.hh"
+#include "../yakir/jump-if-not-zero.hh"
+#include "../yakir/jump-if-zero.hh"
 #include "../yakir/logical-binary.hh"
 #include "../yakir/program.hh"
 #include "../yakir/ret.hh"
@@ -32,6 +35,33 @@ namespace yakir
   {
     if (e.val_get())
       e.val_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Copy>& e)
+  {
+    e.src_get().accept(*this);
+    e.dst_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Label>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Jump>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<JumpIfZero>& e)
+  {
+    e.cond_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<JumpIfNotZero>& e)
+  {
+    e.cond_get().accept(*this);
   }
 
   template <template <typename> class Const>

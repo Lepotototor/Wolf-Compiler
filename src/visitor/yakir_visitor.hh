@@ -18,6 +18,11 @@ namespace yakir
     virtual void operator()(const_t<YakirNode>& e);
 
     virtual void operator()(const_t<Ret>& e);
+    virtual void operator()(const_t<Copy>& e);
+    virtual void operator()(const_t<Label>& e);
+    virtual void operator()(const_t<Jump>& e);
+    virtual void operator()(const_t<JumpIfZero>& e);
+    virtual void operator()(const_t<JumpIfNotZero>& e);
     virtual void operator()(const_t<FuncDef>& e);
     virtual void operator()(const_t<Constant>& e);
     virtual void operator()(const_t<Var>& e);

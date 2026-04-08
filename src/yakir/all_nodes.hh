@@ -9,6 +9,11 @@ namespace yakir
   class YakirNode;
 
   class Instruction;
+  class Copy;
+  class Jump;
+  class JumpIfZero;
+  class JumpIfNotZero;
+  class Label;
   class Ret;
 
   class FuncDef;

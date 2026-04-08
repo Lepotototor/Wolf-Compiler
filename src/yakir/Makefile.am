@@ -21,6 +21,16 @@ libyakir_a_SOURCES =  \
 	arit-binary.cc \
 	logical-binary.hh \
 	logical-binary.cc \
+	label.hh \
+	label.cc \
+	copy.hh \
+	copy.cc \
+	jump.hh \
+	jump.cc \
+	jump-if-zero.hh \
+	jump-if-zero.cc \
+	jump-if-not-zero.cc \
+	jump-if-not-zero.hh \
 	ret.hh \
 	ret.cc
 

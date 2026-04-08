@@ -1,5 +1,8 @@
 #include "pretty_printer.hh"
 
+#include "../yakir/jump.hh"
+#include "../yakir/label.hh"
+
 #define TAB "   "
 
 namespace yakir
@@ -11,6 +14,33 @@ namespace yakir
       {
         ostr_ << e.val_get() << "\n";
       }
+  }
+
+  void PrettyPrinter::operator()(const_t<Copy>& e)
+  {
+    ostr_ << TAB << e.dst_get() << " = " << e.src_get() << "\n";
+  }
+
+  void PrettyPrinter::operator()(const_t<Label>& e)
+  {
+    ostr_ << e.name_get() << ":\n";
+  }
+
+  void PrettyPrinter::operator()(const_t<Jump>& e)
+  {
+    ostr_ << TAB << "jump " << e.id_get() << "\n";
+  }
+
+  void PrettyPrinter::operator()(const_t<JumpIfZero>& e)
+  {
+    ostr_ << TAB << "jump " << e.id_get() << " if " << e.cond_get()
+          << "== 0 \n";
+  }
+
+  void PrettyPrinter::operator()(const_t<JumpIfNotZero>& e)
+  {
+    ostr_ << TAB << "jump " << e.id_get() << " if " << e.cond_get()
+          << "!= 0 \n";
   }
 
   void PrettyPrinter::operator()(const_t<Unary>& e)
