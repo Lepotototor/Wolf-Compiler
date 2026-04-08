@@ -11,12 +11,8 @@ namespace yakir
   class Binary : public Instruction
   {
   public:
-    Binary(const misc::Location& loc,
-           ast::binary_type type,
-           Val* left,
-           Val* right,
-           Val* dst)
-      : Instruction(loc)
+    Binary(ast::binary_type type, Val* left, Val* right, Val* dst)
+      : Instruction()
       , type_(type)
       , left_(left)
       , right_(right)

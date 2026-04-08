@@ -9,7 +9,7 @@ namespace yakir
   class Ret : public Instruction
   {
   public:
-    Ret(const misc::Location& loc, Val* val);
+    Ret(Val* val);
 
     ~Ret() override;
 

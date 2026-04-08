@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Constant::Constant(const misc::Location& loc, const std::string& val)
-    : Val(loc)
+  Constant::Constant(const std::string& val)
+    : Val()
     , val_(val)
   {}
 

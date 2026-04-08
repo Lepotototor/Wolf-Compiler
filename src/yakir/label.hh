@@ -2,13 +2,15 @@
 
 #include "instruction.hh"
 
+#include <string>
+
 namespace yakir
 {
 
   class Label : public Instruction
   {
   public:
-    Label(const misc::Location& loc, const std::string& name);
+    Label(const std::string& name);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

@@ -2,13 +2,15 @@
 
 #include "instruction.hh"
 
+#include <string>
+
 namespace yakir
 {
 
   class Jump : public Instruction
   {
   public:
-    Jump(const misc::Location& loc, const std::string& id);
+    Jump(const std::string& id);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

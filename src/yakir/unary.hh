@@ -11,7 +11,7 @@ namespace yakir
   class Unary : public Instruction
   {
   public:
-    Unary(const misc::Location& loc, ast::unary_type type, Val* src, Val* dst);
+    Unary(ast::unary_type type, Val* src, Val* dst);
 
     ~Unary() override;
 

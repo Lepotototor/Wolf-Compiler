@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Jump::Jump(const misc::Location& loc, const std::string& id)
-    : Instruction(loc)
+  Jump::Jump(const std::string& id)
+    : Instruction()
     , id_(id)
   {}
 

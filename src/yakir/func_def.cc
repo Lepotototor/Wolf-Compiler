@@ -4,10 +4,9 @@
 
 namespace yakir
 {
-  FuncDef::FuncDef(const misc::Location& loc,
-                   const std::string& name,
+  FuncDef::FuncDef(const std::string& name,
                    const std::vector<Instruction*>& instructions)
-    : YakirNode(loc)
+    : YakirNode()
     , name_(name)
     , ins_(instructions)
   {}

@@ -11,7 +11,7 @@ namespace yakir
   class Program : public YakirNode
   {
   public:
-    Program(const misc::Location& loc, const std::vector<FuncDef*> funcs);
+    Program(const std::vector<FuncDef*> funcs);
 
     ~Program() override;
 

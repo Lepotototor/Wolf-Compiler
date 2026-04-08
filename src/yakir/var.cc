@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Var::Var(const misc::Location& loc, const std::string& id)
-    : Val(loc)
+  Var::Var(const std::string& id)
+    : Val()
     , id_(id)
   {}
 

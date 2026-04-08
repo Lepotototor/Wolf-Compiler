@@ -1,16 +1,13 @@
 #pragma once
 
-#include "../misc/location.hh"
 #include "all_nodes.hh"
 
 namespace yakir
 {
-  class YakirNode : public misc::Locable
+  class YakirNode
   {
   public:
-    YakirNode(const misc::Location& loc)
-      : misc::Locable(loc)
-    {}
+    YakirNode() {}
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const = 0;

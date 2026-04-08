@@ -11,11 +11,7 @@ namespace yakir
   class AritBinary : public Binary
   {
   public:
-    AritBinary(const misc::Location& loc,
-               ast::binary_type type,
-               Val* left,
-               Val* right,
-               Val* dst);
+    AritBinary(ast::binary_type type, Val* left, Val* right, Val* dst);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

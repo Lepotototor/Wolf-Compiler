@@ -8,8 +8,8 @@ namespace yakir
   class Instruction : public YakirNode
   {
   public:
-    Instruction(const misc::Location& loc)
-      : YakirNode(loc)
+    Instruction()
+      : YakirNode()
     {}
 
     /// Accept a const visitor

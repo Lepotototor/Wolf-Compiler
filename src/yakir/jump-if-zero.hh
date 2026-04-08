@@ -9,7 +9,7 @@ namespace yakir
   class JumpIfZero : public Jump
   {
   public:
-    JumpIfZero(const misc::Location& loc, const std::string& id, Val* cond);
+    JumpIfZero(const std::string& id, Val* cond);
 
     ~JumpIfZero() override;
 

@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Copy::Copy(const misc::Location& loc, Val* src, Val* dst)
-    : Instruction(loc)
+  Copy::Copy(Val* src, Val* dst)
+    : Instruction()
     , src_(src)
     , dst_(dst)
   {}

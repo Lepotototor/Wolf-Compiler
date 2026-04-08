@@ -49,8 +49,11 @@ namespace yakir
     // We dont need scoped map because YAKIR use unique identifiers
     std::unordered_map<std::string, int> var_loc_;
 
-    // Use to make unique identifier
+    // Use to make unique identifiers
     unsigned id_count_ = 0;
+
+    // Use to make unique labels
+    unsigned lbl_count_ = 0;
   };
 
 } // namespace yakir

@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Label::Label(const misc::Location& loc, const std::string& name)
-    : Instruction(loc)
+  Label::Label(const std::string& name)
+    : Instruction()
     , name_(name)
   {}
 

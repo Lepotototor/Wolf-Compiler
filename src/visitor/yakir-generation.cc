@@ -21,9 +21,9 @@ using namespace yakir;
 namespace ast
 {
 
-  Var* YakirGeneration::make_tmp_var(const misc::Location& loc)
+  Var* YakirGeneration::make_tmp_var()
   {
-    return new Var(loc, "var" + std::to_string(id_count_++));
+    return new Var("var" + std::to_string(id_count_++));
   }
 
   void YakirGeneration::operator()(const DecList& e)
@@ -36,14 +36,14 @@ namespace ast
         funcs.emplace_back(func);
       }
 
-    res_ = new Program(e.location_get(), funcs);
+    res_ = new Program(funcs);
   }
 
   void YakirGeneration::operator()(const FunctionDec& e)
   {
     curr_scope_.clear();
     e.body_get()->accept(*this);
-    res_ = new FuncDef(e.location_get(), e.name_get(), curr_scope_);
+    res_ = new FuncDef(e.name_get(), curr_scope_);
   }
 
   void YakirGeneration::operator()(const ExpList& e)
@@ -55,12 +55,12 @@ namespace ast
         curr_scope_.emplace_back(dec_ins);
       }
 
-    // res_ = new InsList(e.location_get(), ins);
+    // res_ = new InsList(ins);
   }
 
   void YakirGeneration::operator()(const NumberExp& e)
   {
-    res_ = new Constant(e.location_get(), e.val_get());
+    res_ = new Constant(e.val_get());
   }
 
   void YakirGeneration::operator()(const UnaryExp& e)
@@ -73,12 +73,12 @@ namespace ast
         return;
       }
 
-    Var* dst = make_tmp_var(e.location_get());
+    Var* dst = make_tmp_var();
 
-    Unary* ins = new Unary(e.location_get(), e.type_get(), src, dst);
+    Unary* ins = new Unary(e.type_get(), src, dst);
     curr_scope_.emplace_back(ins);
 
-    res_ = new Var(dst->location_get(), dst->id_get());
+    res_ = new Var(dst->id_get());
   }
 
   void YakirGeneration::operator()(const BinaryExp& e)
@@ -86,16 +86,16 @@ namespace ast
     Val* left = recurse<Exp, Val>(e.left_get());
     Val* right = recurse<Exp, Val>(e.right_get());
 
-    Var* dst = make_tmp_var(e.location_get());
+    Var* dst = make_tmp_var();
 
     Binary* ins = nullptr;
     if (is_arit(e.type_get()))
-      ins = new AritBinary(e.location_get(), e.type_get(), left, right, dst);
+      ins = new AritBinary(e.type_get(), left, right, dst);
     else
-      ins = new LogicalBinary(e.location_get(), e.type_get(), left, right, dst);
+      ins = new LogicalBinary(e.type_get(), left, right, dst);
 
     curr_scope_.emplace_back(ins);
-    res_ = new Var(dst->location_get(), dst->id_get());
+    res_ = new Var(dst->id_get());
   }
 
   void YakirGeneration::operator()(const ReturnExp& e)
@@ -105,7 +105,7 @@ namespace ast
     if (val == nullptr)
       std::cout << "RetVal is null\n";
 
-    res_ = new Ret(e.location_get(), val);
+    res_ = new Ret(val);
   }
 
   void YakirGeneration::operator()(const StringExp&) {}

@@ -9,7 +9,7 @@ namespace yakir
   class Copy : public Instruction
   {
   public:
-    Copy(const misc::Location& loc, Val* src, Val* dst);
+    Copy(Val* src, Val* dst);
 
     ~Copy() override;
 

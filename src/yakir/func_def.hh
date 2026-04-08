@@ -2,6 +2,7 @@
 
 #include "yakir_node.hh"
 
+#include <string>
 #include <vector>
 
 namespace yakir
@@ -10,8 +11,7 @@ namespace yakir
   class FuncDef : public YakirNode
   {
   public:
-    FuncDef(const misc::Location& loc,
-            const std::string& name,
+    FuncDef(const std::string& name,
             const std::vector<Instruction*>& instructions);
 
     ~FuncDef() override;

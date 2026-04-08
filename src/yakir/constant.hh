@@ -2,13 +2,15 @@
 
 #include "val.hh"
 
+#include <string>
+
 namespace yakir
 {
 
   class Constant : public Val
   {
   public:
-    Constant(const misc::Location& loc, const std::string& val);
+    Constant(const std::string& val);
 
     const std::string& val_get() const { return val_; }
 

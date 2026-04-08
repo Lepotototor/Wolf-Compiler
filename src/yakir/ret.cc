@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Ret::Ret(const misc::Location& loc, Val* val)
-    : Instruction(loc)
+  Ret::Ret(Val* val)
+    : Instruction()
     , val_(val)
   {}
 

@@ -5,12 +5,8 @@
 namespace yakir
 {
 
-  AritBinary::AritBinary(const misc::Location& loc,
-                         ast::binary_type type,
-                         Val* left,
-                         Val* right,
-                         Val* dst)
-    : Binary(loc, type, left, right, dst)
+  AritBinary::AritBinary(ast::binary_type type, Val* left, Val* right, Val* dst)
+    : Binary(type, left, right, dst)
   {}
 
   void AritBinary::accept(ConstVisitor& v) const { v(*this); }

@@ -14,7 +14,8 @@ namespace ast
   public:
     YakirGeneration() {}
 
-    yakir::Var* make_tmp_var(const misc::Location& loc);
+    yakir::Var* make_tmp_var();
+    yakir::Var* make_tmp_label();
 
     virtual void operator()(const FunctionDec& e) override;
     virtual void operator()(const DecList& e) override;

@@ -8,8 +8,8 @@ namespace yakir
   class Val : public YakirNode
   {
   public:
-    Val(const misc::Location& loc)
-      : YakirNode(loc)
+    Val()
+      : YakirNode()
     {}
 
     /// Accept a const visitor

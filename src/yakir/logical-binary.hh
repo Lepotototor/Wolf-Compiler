@@ -11,11 +11,7 @@ namespace yakir
   class LogicalBinary : public Binary
   {
   public:
-    LogicalBinary(const misc::Location& loc,
-                  ast::binary_type type,
-                  Val* left,
-                  Val* right,
-                  Val* dst);
+    LogicalBinary(ast::binary_type type, Val* left, Val* right, Val* dst);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

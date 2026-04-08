@@ -5,11 +5,8 @@
 namespace yakir
 {
 
-  Unary::Unary(const misc::Location& loc,
-               ast::unary_type type,
-               Val* src,
-               Val* dst)
-    : Instruction(loc)
+  Unary::Unary(ast::unary_type type, Val* src, Val* dst)
+    : Instruction()
     , type_(type)
     , src_(src)
     , dst_(dst)

@@ -2,13 +2,15 @@
 
 #include "val.hh"
 
+#include <string>
+
 namespace yakir
 {
 
   class Var : public Val
   {
   public:
-    Var(const misc::Location& loc, const std::string& val);
+    Var(const std::string& val);
 
     // Accept a const visitor
     virtual void accept(ConstVisitor& v) const override;

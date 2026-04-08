@@ -4,10 +4,8 @@
 
 namespace yakir
 {
-  JumpIfNotZero::JumpIfNotZero(const misc::Location& loc,
-                               const std::string& id,
-                               Val* cond)
-    : Jump(loc, id)
+  JumpIfNotZero::JumpIfNotZero(const std::string& id, Val* cond)
+    : Jump(id)
     , cond_(cond)
   {}
 

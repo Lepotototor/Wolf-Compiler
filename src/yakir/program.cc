@@ -4,8 +4,8 @@
 
 namespace yakir
 {
-  Program::Program(const misc::Location& loc, const std::vector<FuncDef*> funcs)
-    : YakirNode(loc)
+  Program::Program(const std::vector<FuncDef*> funcs)
+    : YakirNode()
     , funcs_(funcs)
   {}
 
