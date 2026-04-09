@@ -1,5 +1,6 @@
 #include "parser.hh"
 
+#include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
 
 #include "../misc/debug.hh"
@@ -13,7 +14,7 @@ namespace parser
 
     static const char* unary_tok[] = {
       "+",  "-",  "*",  "/",  "%", "<<", ">>", "&",  "|", "^",
-      "&&", "||", "==", "!=", "<", "<=", ">",  ">=", 0};
+      "&&", "||", "==", "!=", "<", "<=", ">",  ">=", "=", 0};
     for (const char** s = unary_tok; *s; s++)
       if (*s == c)
         return true;
@@ -77,16 +78,32 @@ namespace parser
       {
         pop_tok();
 
-        ast::Exp* right = parse_exp(precedence(tok) + 1);
-        if (right == nullptr)
+        if (tok == "=")
           {
-            std::clog << "No right member for binop\n";
+            // No precedence climbing because '=' is right assoc
+            ast::Exp* right = parse_exp(precedence(tok));
+            if (right == nullptr)
+              {
+                std::clog << "No right member for assignment\n";
+              }
+
+            misc::Location loc = left->location_get() + right->location_get();
+
+            left = new ast::AssignExp(loc, left, right);
           }
+        else
+          {
+            ast::Exp* right = parse_exp(precedence(tok) + 1);
+            if (right == nullptr)
+              {
+                std::clog << "No right member for binop\n";
+              }
 
-        misc::Location loc = left->location_get() + right->location_get();
-        ast::binary_type type = get_binary_type(lexer::tok_repr(tok));
+            misc::Location loc = left->location_get() + right->location_get();
+            ast::binary_type type = get_binary_type(lexer::tok_repr(tok));
 
-        left = new ast::BinaryExp(loc, type, left, right);
+            left = new ast::BinaryExp(loc, type, left, right);
+          }
 
         tok = peek_tok();
       }

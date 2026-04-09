@@ -11,9 +11,11 @@
   if (wd_.parse_trace)                                                         \
     {                                                                          \
       std::string __func__name__ = __func__;                                   \
-      std::cout << "Enter " << __func__name__ << "\n";                         \
-      __end__parsing__defer__.func_set([__func__name__]() {                    \
+      deep_++;                                                                 \
+      std::cout << "Enter " << __func__name__ << "\tdeep: " << deep_ << "\n";  \
+      __end__parsing__defer__.func_set([&, __func__name__]() {                 \
         std::cout << "Exiting " << __func__name__ << "\n";                     \
+        deep_--;                                                               \
       });                                                                      \
     }
 
@@ -64,6 +66,9 @@ namespace parser
   private:
     // Able to get errors and program options
     driver::WolfDriver& wd_;
+
+    // Use to debug informations
+    unsigned deep_;
 
     std::queue<lexer::Token>& tokens_;
 

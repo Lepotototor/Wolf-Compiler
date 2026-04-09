@@ -25,10 +25,11 @@ namespace parser
       }
     else
       {
-        return new ast::ExpressionStatement(parse_exp());
+        ast::ExpressionStatement* exp_stmt =
+          new ast::ExpressionStatement{parse_exp()};
+        expect_tok(";");
+        return exp_stmt;
       }
-
-    return parse_return_statement();
   }
 
   ast::Statement* Parser::parse_return_statement()

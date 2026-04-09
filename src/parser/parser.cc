@@ -114,6 +114,10 @@ namespace parser
       {
         return 6;
       }
+    else if (tok == "=")
+      {
+        return 1;
+      }
     else
       {
         std::cerr << misc::warn() << "No precedenece fro token " << tok << "\n";
