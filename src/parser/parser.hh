@@ -53,6 +53,8 @@ namespace parser
 
     ast::Exp* parse_exp(unsigned predecence = 0);
     ast::Exp* parse_factor();
+
+    ast::Declaration* parse_var_dec();
     /*      Parse Methods  End      */
 
     unsigned precedence(const lexer::Token& tok);
