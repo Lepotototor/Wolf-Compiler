@@ -9,7 +9,7 @@ namespace ast
   class ExpressionStatement : public Statement
   {
   public:
-    ExpressionStatement(const misc::Location& loc, Exp* exp);
+    ExpressionStatement(Exp* exp);
 
     ~ExpressionStatement();
 

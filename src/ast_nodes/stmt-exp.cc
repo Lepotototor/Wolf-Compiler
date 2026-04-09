@@ -5,10 +5,12 @@
 namespace ast
 {
 
-  ExpressionStatement::ExpressionStatement(const misc::Location& loc, Exp* exp)
-    : Statement(loc)
+  ExpressionStatement::ExpressionStatement(Exp* exp)
+    : Statement(exp->location_get())
     , exp_(exp)
   {}
+
+  ExpressionStatement::~ExpressionStatement() { delete exp_; }
 
   void ExpressionStatement::accept(ConstVisitor& v) const { v(*this); }
   void ExpressionStatement::accept(Visitor& v) { v(*this); }

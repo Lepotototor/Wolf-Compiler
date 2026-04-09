@@ -8,6 +8,7 @@ libast_nodes_a_SOURCES =  \
 	block-item.hh \
 	stmt.hh \
 	null.hh \
+	null.cc \
 	stmt-exp.hh \
 	stmt-exp.cc \
 	declaration.hh \

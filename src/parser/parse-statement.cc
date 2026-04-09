@@ -1,6 +1,8 @@
 #include "parser.hh"
 
+#include "../ast_nodes/null.hh"
 #include "../ast_nodes/return.hh"
+#include "../ast_nodes/stmt-exp.hh"
 
 using namespace lexer;
 
@@ -9,6 +11,21 @@ namespace parser
   ast::Statement* Parser::parse_statement()
   {
     ENTER_PARSE_FUNC
+
+    const lexer::Token& tok = peek_tok();
+
+    if (tok == ";")
+      {
+        return new ast::Null(tok.location_get());
+      }
+    else if (tok == "return")
+      {
+        return parse_return_statement();
+      }
+    else
+      {
+        return new ast::ExpressionStatement(parse_exp());
+      }
 
     return parse_return_statement();
   }
