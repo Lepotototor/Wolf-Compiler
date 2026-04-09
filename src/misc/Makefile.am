@@ -2,6 +2,8 @@ lib_LIBRARIES = libmisc.a
 
 libmisc_a_SOURCES =  \
   defer.hh \
+  scoped-map.hh \
+  scoped-map.hxx \
   location.cc \
   location.hh \
   location.hxx \
