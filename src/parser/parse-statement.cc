@@ -16,6 +16,7 @@ namespace parser
 
     if (tok == ";")
       {
+        pop_tok();
         return new ast::Null(tok.location_get());
       }
     else if (tok == "return")

@@ -38,7 +38,7 @@ namespace parser
     misc::Location loc = type->location_get()
       + (init_exp ? init_exp->location_get() : identifier.location_get());
 
-    return new ast::VarDec(loc, identifier.val_get(), init_exp);
+    return new ast::VarDec(loc, identifier.val_get(), type, init_exp);
   }
 
 } // namespace parser

@@ -61,6 +61,7 @@ namespace parser
 
     else if (tok.type() == lexer::IDENTIFIER_TOK)
       {
+        pop_tok();
         return new ast::Var(tok.location_get(), tok.val_get());
       }
 

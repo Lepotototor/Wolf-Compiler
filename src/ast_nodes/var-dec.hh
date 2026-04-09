@@ -1,6 +1,7 @@
 #pragma once
 
 #include "declaration.hh"
+#include "type-name.hh"
 
 namespace ast
 {
@@ -8,7 +9,10 @@ namespace ast
   class VarDec : public Declaration
   {
   public:
-    VarDec(const misc::Location& loc, const std::string& name, Exp* init);
+    VarDec(const misc::Location& loc,
+           const std::string& name,
+           TypeName* type,
+           Exp* init);
 
     ~VarDec() override;
 
@@ -20,7 +24,12 @@ namespace ast
     const Exp* init_get() const { return init_; }
     Exp* init_get() { return init_; }
 
+    const TypeName& type_get() const { return *type_; }
+    TypeName& type_get() { return *type_; }
+
   private:
+    TypeName* type_;
+
     Exp* init_;
     ;
   };

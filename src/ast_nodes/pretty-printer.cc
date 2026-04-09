@@ -89,7 +89,7 @@ namespace ast
 
   void PrettyPrinter::operator()(const VarDec& e)
   {
-    ostr_ << e.name_get();
+    ostr_ << e.type_get() << " " << e.name_get();
     if (e.init_get())
       ostr_ << " = " << *e.init_get();
     ostr_ << ";";

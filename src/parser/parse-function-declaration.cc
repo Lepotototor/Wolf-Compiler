@@ -42,7 +42,7 @@ namespace parser
     lexer::Token tok = peek_tok();
     while (tok != "}")
       {
-        ast::BlockItem* bi = parse_statement();
+        ast::BlockItem* bi = parse_block_item();
         body.emplace_back(bi);
 
         tok = peek_tok();

@@ -5,8 +5,12 @@
 namespace ast
 {
 
-  VarDec::VarDec(const misc::Location& loc, const std::string& name, Exp* init)
+  VarDec::VarDec(const misc::Location& loc,
+                 const std::string& name,
+                 TypeName* type,
+                 Exp* init)
     : Declaration(loc, name)
+    , type_(type)
     , init_(init)
   {}
 
