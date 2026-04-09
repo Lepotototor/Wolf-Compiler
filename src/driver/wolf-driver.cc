@@ -6,7 +6,9 @@
 #include "../parser/parser.hh"
 
 #include "../assembly/code-emission.hh"
+#include "../ast_nodes/binder.hh"
 #include "../ast_nodes/pretty-printer.hh"
+#include "../ast_nodes/renamer.hh"
 #include "../visitor/assembly-generation.hh"
 #include "../visitor/yakir-generation.hh"
 #include "../yakir/pretty_printer.hh"
@@ -209,6 +211,17 @@ namespace driver
       }
 
     std::cout << "\t___PROGRAM___\n";
+    std::cout << *program;
+
+    ast::Binder binder{error_};
+    program->accept(binder);
+
+    error_.exit_on_error();
+
+    ast::Renamer renamer;
+    program->accept(renamer);
+
+    std::cout << "\n\t___PROGRAM___\n";
     std::cout << *program;
 
     yakir::YakirNode* yakir_pg = nullptr;

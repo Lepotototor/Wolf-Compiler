@@ -90,9 +90,10 @@ namespace ast
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<VarDec>& e)
   {
-    e.type_get().accept(*this);
     if (e.init_get())
       e.init_get()->accept(*this);
+
+    e.type_get().accept(*this);
   }
 
   template <template <typename> class Const>

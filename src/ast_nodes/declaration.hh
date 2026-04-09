@@ -19,9 +19,10 @@ namespace ast
     virtual void accept(Visitor& v) = 0;
 
     const std::string& name_get() const { return name_; }
+    void name_set(const std::string& name) { name_ = name; }
 
   protected:
-    const std::string name_;
+    std::string name_;
   };
 
 } // namespace ast

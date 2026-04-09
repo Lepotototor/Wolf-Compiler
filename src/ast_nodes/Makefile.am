@@ -4,8 +4,13 @@ libast_nodes_a_SOURCES =  \
 	all_nodes.hh \
   	pretty-printer.cc \
   	pretty-printer.hh \
+  	binder.hh \
+  	binder.cc \
+  	renamer.cc \
+  	renamer.hh \
 	ast.hh \
 	block-item.hh \
+	bindable.hh \
 	stmt.hh \
 	null.hh \
 	null.cc \
