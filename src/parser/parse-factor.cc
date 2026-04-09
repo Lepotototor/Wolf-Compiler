@@ -2,6 +2,7 @@
 
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/unary-exp.hh"
+#include "../ast_nodes/var.hh"
 
 namespace parser
 {
@@ -56,6 +57,11 @@ namespace parser
 
         misc::Location loc = tok.location_get() + exp->location_get();
         return new ast::UnaryExp(loc, get_unary_type(repr[0]), exp);
+      }
+
+    else if (tok.type() == lexer::IDENTIFIER_TOK)
+      {
+        return new ast::Var(tok.location_get(), tok.val_get());
       }
 
     else

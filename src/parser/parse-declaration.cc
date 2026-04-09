@@ -28,6 +28,7 @@ namespace parser
     if (tok == "=")
       {
         init_exp = parse_exp();
+        expect_tok(";");
       }
     else if (tok != ";")
       {
