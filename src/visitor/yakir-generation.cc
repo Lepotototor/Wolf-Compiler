@@ -59,6 +59,12 @@ namespace ast
           curr_scope_.emplace_back(dec_ins);
       }
 
+    // In case of no return at end of function
+    if (dynamic_cast<yakir::Ret*>(curr_scope_.back()) == nullptr)
+      {
+        curr_scope_.emplace_back(new Ret(new Constant("67")));
+      }
+
     res_ = new FuncDef(e.name_get(), curr_scope_);
   }
 
