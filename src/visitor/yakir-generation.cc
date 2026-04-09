@@ -5,6 +5,7 @@
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/type-name.hh"
+#include "../ast_nodes/var.hh"
 
 #include "../yakir/arit-binary.hh"
 #include "../yakir/constant.hh"
@@ -54,10 +55,38 @@ namespace ast
     for (const BlockItem* bi : e.body_get())
       {
         Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
-        curr_scope_.emplace_back(dec_ins);
+        if (dec_ins)
+          curr_scope_.emplace_back(dec_ins);
       }
 
     res_ = new FuncDef(e.name_get(), curr_scope_);
+  }
+
+  void YakirGeneration::operator()(const Var& e)
+  {
+    res_ = new yakir::Var(e.identifier_get());
+  }
+
+  void YakirGeneration::operator()(const VarDec& e)
+  {
+    if (e.init_get() == nullptr)
+      return;
+
+    yakir::Var* dst = new yakir::Var(e.name_get());
+    yakir::Val* src = recurse<Exp, yakir::Val>(*e.init_get());
+
+    if (src == nullptr)
+      std::cerr << "init var is null for " << e.name_get() << "\n";
+
+    res_ = new Copy(src, dst);
+  }
+
+  void YakirGeneration::operator()(const AssignExp& e)
+  {
+    yakir::Val* src = recurse<Exp, Val>(e.rvalue_get());
+    yakir::Val* dst = recurse<Exp, Val>(e.lvalue_get());
+
+    res_ = new Copy(src, dst);
   }
 
   void YakirGeneration::operator()(const NumberExp& e)

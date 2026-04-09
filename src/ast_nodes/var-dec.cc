@@ -14,7 +14,11 @@ namespace ast
     , init_(init)
   {}
 
-  VarDec::~VarDec() { delete init_; }
+  VarDec::~VarDec()
+  {
+    delete type_;
+    delete init_;
+  }
 
   void VarDec::accept(ConstVisitor& v) const { v(*this); }
   void VarDec::accept(Visitor& v) { v(*this); }

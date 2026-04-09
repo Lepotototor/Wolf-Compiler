@@ -76,7 +76,7 @@ namespace yakir
     ostr_ << e.name_get() << ":\n";
 
     for (const Instruction* ins : e.instructions_get())
-      ostr_ << ins;
+      ostr_ << *ins;
   }
 
   void PrettyPrinter::operator()(const_t<Constant>& e) { ostr_ << e.val_get(); }
