@@ -18,7 +18,6 @@ namespace misc
 
   void Error::exit_on_error()
   {
-    std::cout << "Err code: " << status_;
     if (status_ != error_type::no_error)
       exit();
   }

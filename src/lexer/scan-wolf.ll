@@ -73,7 +73,7 @@
 number             [0-9]+\b
 ID [a-zA-Z_][a-zA-Z0-9_]*\b
 BLANK [ \t\v\f]
-STRING_LITERAL "\"".*"\""\b
+STRING_LITERAL "\"".*"\""
 
 %x SC_COMMENT SC_NEW_LOC
 
