@@ -48,8 +48,8 @@ namespace parser
 
     ast::TypeName* parse_type();
 
-    ast::Exp* parse_statement();
-    ast::Exp* parse_return_statement();
+    ast::Statement* parse_statement();
+    ast::Statement* parse_return_statement();
 
     ast::Exp* parse_exp(unsigned predecence = 0);
     ast::Exp* parse_factor();

@@ -4,7 +4,7 @@
 #include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
-#include "../ast_nodes/return-exp.hh"
+#include "../ast_nodes/return.hh"
 #include "../ast_nodes/type-name.hh"
 
 #include "../yakir/arit-binary.hh"

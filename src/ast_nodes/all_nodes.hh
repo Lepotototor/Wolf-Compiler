@@ -8,9 +8,12 @@ namespace ast
 
   class Ast;
 
+  class BlockItem;
+
   class Declaration;
   class DecList;
   class FunctionDec;
+  class VarDec;
 
   class Exp;
   class ExpList;
@@ -18,8 +21,12 @@ namespace ast
   class UnaryExp;
   class BinaryExp;
   class StringExp;
-  class ReturnExp;
   class AssignExp;
+
+  class Statement;
+  class ExpressionStatement;
+  class ReturnExp;
+  class Null;
 
   class Var;
 

@@ -8,10 +8,12 @@
 #include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
-#include "../ast_nodes/return-exp.hh"
+#include "../ast_nodes/return.hh"
+#include "../ast_nodes/stmt-exp.hh"
 #include "../ast_nodes/string-exp.hh"
 #include "../ast_nodes/type-name.hh"
 #include "../ast_nodes/unary-exp.hh"
+#include "../ast_nodes/var-dec.hh"
 
 namespace ast
 {
@@ -86,6 +88,23 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<ReturnExp>& e)
   {
     e.return_val_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Null>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<VarDec>& e)
+  {
+    if (e.init_get())
+      e.init_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<ExpressionStatement>& e)
+  {
+    e.exp_get().accept(*this);
   }
 
   template <template <typename> class Const>

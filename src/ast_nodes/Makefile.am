@@ -5,6 +5,11 @@ libast_nodes_a_SOURCES =  \
   	pretty-printer.cc \
   	pretty-printer.hh \
 	ast.hh \
+	block-item.hh \
+	stmt.hh \
+	null.hh \
+	stmt-exp.hh \
+	stmt-exp.cc \
 	declaration.hh \
 	dec-list.hh \
 	dec-list.cc \
@@ -15,8 +20,8 @@ libast_nodes_a_SOURCES =  \
 	function-dec.cc \
 	number-exp.hh 	\
 	number-exp.cc 	\
-	return-exp.hh 	\
-	return-exp.cc 	\
+	return.hh 	\
+	return.cc 	\
 	string-exp.hh 	\
 	string-exp.cc 	\
 	unary-exp.hh 	\
@@ -27,6 +32,8 @@ libast_nodes_a_SOURCES =  \
 	var.hh \
 	assign.cc \
 	assign.hh \
+	var-dec.hh \
+	var-dec.cc \
 	type-name.hh 	\
 	type-name.cc 	\
 	type.hh

@@ -4,7 +4,7 @@
 #include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
-#include "../ast_nodes/return-exp.hh"
+#include "../ast_nodes/return.hh"
 #include "../ast_nodes/string-exp.hh"
 #include "../ast_nodes/type-name.hh"
 #include "../ast_nodes/var.hh"
@@ -92,6 +92,16 @@ namespace ast
   void PrettyPrinter::operator()(const StringExp& e) { ostr_ << e.val_get(); }
 
   void PrettyPrinter::operator()(const Var& e) { ostr_ << e.identifier_get(); }
+
+  void PrettyPrinter::operator()(const VarDec& e)
+  {
+    ostr_ << e.name_get();
+    if (e.init_get())
+      ostr_ << " = " << *e.init_get();
+    ostr_ << ";";
+  }
+
+  void PrettyPrinter::operator()(const Null&) { ostr_ << ";"; }
 
   void PrettyPrinter::operator()(const AssignExp& e)
   {

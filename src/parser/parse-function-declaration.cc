@@ -1,6 +1,8 @@
 #include "parser.hh"
 
 #include "../ast_nodes/function-dec.hh"
+#include "../ast_nodes/stmt.hh"
+#include "../ast_nodes/var-dec.hh"
 
 namespace parser
 {
