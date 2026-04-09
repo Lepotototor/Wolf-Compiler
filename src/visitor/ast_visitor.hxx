@@ -5,7 +5,6 @@
 #include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
 #include "../ast_nodes/dec-list.hh"
-#include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
@@ -35,7 +34,8 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<FunctionDec>& e)
   {
     e.return_type_get().accept(*this);
-    e.body_get()->accept(*this);
+    for (auto& bi : e.body_get())
+      bi->accept(*this);
   }
 
   template <template <typename> class Const>
@@ -43,13 +43,6 @@ namespace ast
   {
     for (auto& dec : e.decs_get())
       dec->accept(*this);
-  }
-
-  template <template <typename> class Const>
-  void GenVisitor<Const>::operator()(const_t<ExpList>& e)
-  {
-    for (auto& exp : e.exps_get())
-      exp->accept(*this);
   }
 
   template <template <typename> class Const>

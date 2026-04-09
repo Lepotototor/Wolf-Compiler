@@ -16,7 +16,6 @@ namespace ast
   class VarDec;
 
   class Exp;
-  class ExpList;
   class NumberExp;
   class UnaryExp;
   class BinaryExp;

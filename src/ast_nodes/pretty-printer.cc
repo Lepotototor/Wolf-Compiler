@@ -1,7 +1,6 @@
 #include "pretty-printer.hh"
 
 #include "../ast_nodes/dec-list.hh"
-#include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
@@ -30,7 +29,11 @@ namespace ast
     ostr_ << "{";
     indent_++;
 
-    ostr_ << e.body_get();
+    for (const BlockItem* bi : e.body_get())
+      {
+        newline();
+        ostr_ << *bi;
+      }
 
     indent_--;
     newline();
@@ -44,15 +47,6 @@ namespace ast
       {
         newline();
         ostr_ << dec;
-      }
-  }
-
-  void PrettyPrinter::operator()(const ExpList& e)
-  {
-    for (const auto& exp : e.exps_get())
-      {
-        newline();
-        ostr_ << exp;
       }
   }
 

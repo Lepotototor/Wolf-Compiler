@@ -18,7 +18,6 @@ namespace ast
 
     virtual void operator()(const FunctionDec& e) override;
     virtual void operator()(const DecList& e) override;
-    virtual void operator()(const ExpList& e) override;
     virtual void operator()(const NumberExp& e) override;
     virtual void operator()(const UnaryExp& e) override;
     virtual void operator()(const BinaryExp& e) override;

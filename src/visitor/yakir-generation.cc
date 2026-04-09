@@ -1,7 +1,6 @@
 #include "yakir-generation.hh"
 
 #include "../ast_nodes/dec-list.hh"
-#include "../ast_nodes/exp-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
@@ -51,20 +50,14 @@ namespace ast
   void YakirGeneration::operator()(const FunctionDec& e)
   {
     curr_scope_.clear();
-    e.body_get()->accept(*this);
-    res_ = new FuncDef(e.name_get(), curr_scope_);
-  }
 
-  void YakirGeneration::operator()(const ExpList& e)
-  {
-    for (const auto& exp : e.exps_get())
+    for (const BlockItem* bi : e.body_get())
       {
-        Instruction* dec_ins = recurse<Exp, Instruction>(exp);
-
+        Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
         curr_scope_.emplace_back(dec_ins);
       }
 
-    // res_ = new InsList(ins);
+    res_ = new FuncDef(e.name_get(), curr_scope_);
   }
 
   void YakirGeneration::operator()(const NumberExp& e)

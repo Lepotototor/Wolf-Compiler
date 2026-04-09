@@ -7,7 +7,7 @@ namespace ast
   FunctionDec::FunctionDec(const misc::Location& l,
                            const std::string& name,
                            TypeName* return_type,
-                           Exp* body)
+                           const std::vector<BlockItem*>& body)
     : Declaration(l, name)
     , return_type_(return_type)
     , body_(body)

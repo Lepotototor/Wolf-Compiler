@@ -22,7 +22,6 @@ namespace ast
     virtual void operator()(const_t<VarDec>& e);
     virtual void operator()(const_t<ExpressionStatement>& e);
     virtual void operator()(const_t<Null>& e);
-    virtual void operator()(const_t<ExpList>& e);
     virtual void operator()(const_t<NumberExp>& e);
     virtual void operator()(const_t<UnaryExp>& e);
     virtual void operator()(const_t<BinaryExp>& e);

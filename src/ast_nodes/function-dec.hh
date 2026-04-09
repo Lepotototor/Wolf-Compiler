@@ -1,8 +1,10 @@
 #pragma once
 
+#include "block-item.hh"
 #include "declaration.hh"
-#include "exp.hh"
 #include "type-name.hh"
+
+#include <vector>
 
 namespace ast
 {
@@ -13,12 +15,13 @@ namespace ast
     FunctionDec(const misc::Location& l,
                 const std::string& name,
                 TypeName* return_type,
-                Exp* body);
+                const std::vector<BlockItem*>& body);
 
     ~FunctionDec() override
     {
       delete return_type_;
-      delete body_;
+      for (auto& bi : body_)
+        delete bi;
     }
 
     virtual void accept(ConstVisitor& v) const override;
@@ -27,12 +30,11 @@ namespace ast
     const TypeName& return_type_get() const { return *return_type_; }
     TypeName& return_type_get() { return *return_type_; }
 
-    const Exp* body_get() const { return body_; }
-    Exp* body_get() { return body_; }
+    const std::vector<BlockItem*>& body_get() const { return body_; }
 
   protected:
     TypeName* return_type_;
-    Exp* body_;
+    std::vector<BlockItem*> body_;
   };
 
 } // namespace ast

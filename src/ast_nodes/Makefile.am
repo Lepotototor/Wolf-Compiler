@@ -13,8 +13,6 @@ libast_nodes_a_SOURCES =  \
 	declaration.hh \
 	dec-list.hh \
 	dec-list.cc \
-	exp-list.hh \
-	exp-list.cc \
 	exp.hh \
 	function-dec.hh \
 	function-dec.cc \
