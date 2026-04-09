@@ -27,7 +27,8 @@ namespace parser
       {
         pop_tok();
 
-        if (tok == "=")
+        // Only assignements operathors have precedemce of 1
+        if (precedence(tok) == 1)
           {
             // No precedence climbing because '=' is right assoc
             ast::Exp* right = parse_exp(precedence(tok));
@@ -35,7 +36,9 @@ namespace parser
               {
                 std::clog << "No right member for assignment\n";
               }
-            else if (dynamic_cast<ast::Var*>(left) == nullptr)
+
+            ast::Var* lvalue = dynamic_cast<ast::Var*>(left);
+            if (lvalue == nullptr)
               {
                 wd_.error_get()
                   << misc::error_type::parse << left->location_get()
@@ -45,7 +48,21 @@ namespace parser
 
             misc::Location loc = left->location_get() + right->location_get();
 
-            left = new ast::AssignExp(loc, left, right);
+            // For assignement with binary operation
+            if (tok != "=")
+              {
+                std::string repr = lexer::tok_repr(tok);
+                std::cout << "Repr: " << repr;
+                repr = repr.substr(0, repr.size() - 1);
+                std::cout << "    newRepr: " << repr << "\n";
+                ast::binary_type type = get_binary_type(repr);
+
+                right = new ast::BinaryExp(loc, type, left, right);
+                lvalue = new ast::Var(lvalue->location_get(),
+                                      lvalue->identifier_get());
+              }
+
+            left = new ast::AssignExp(loc, lvalue, right);
           }
         else
           {
@@ -72,8 +89,9 @@ namespace parser
     std::string c = tok_repr(tok);
 
     static const char* unary_tok[] = {
-      "+",  "-",  "*",  "/",  "%", "<<", ">>", "&",  "|", "^",
-      "&&", "||", "==", "!=", "<", "<=", ">",  ">=", "=", 0};
+      "+",  "-",  "*",  "/",  "%",  "<<", ">>", "&",   "|",   "^",
+      "&&", "||", "==", "!=", "<",  "<=", ">",  ">=",  "=",   "+=",
+      "-=", "*=", "/=", "%=", "&=", "|=", "^=", ">>=", "<<=", 0};
     for (const char** s = unary_tok; *s; s++)
       if (*s == c)
         return true;

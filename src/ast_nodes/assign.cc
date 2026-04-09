@@ -5,7 +5,7 @@
 namespace ast
 {
 
-  AssignExp::AssignExp(const misc::Location& loc, Exp* lvalue, Exp* rvalue)
+  AssignExp::AssignExp(const misc::Location& loc, Var* lvalue, Exp* rvalue)
     : Exp(loc)
     , lvalue_(lvalue)
     , rvalue_(rvalue)

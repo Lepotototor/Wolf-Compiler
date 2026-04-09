@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exp.hh"
+#include "var.hh"
 
 namespace ast
 {
@@ -8,7 +9,7 @@ namespace ast
   class AssignExp : public Exp
   {
   public:
-    AssignExp(const misc::Location& loc, Exp* lvalue, Exp* rvalue);
+    AssignExp(const misc::Location& loc, Var* lvalue, Exp* rvalue);
 
     ~AssignExp() override;
 
@@ -17,13 +18,13 @@ namespace ast
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
-    const Exp& lvalue_get() const { return *lvalue_; }
-    Exp& lvalue_get() { return *lvalue_; }
+    const Var& lvalue_get() const { return *lvalue_; }
+    Var& lvalue_get() { return *lvalue_; }
     const Exp& rvalue_get() const { return *rvalue_; }
     Exp& rvalue_get() { return *rvalue_; }
 
   private:
-    Exp* lvalue_;
+    Var* lvalue_;
     Exp* rvalue_;
     ;
   };
