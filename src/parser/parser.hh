@@ -48,6 +48,7 @@ namespace parser
     ast::DecList* parser_external_declarations();
     ast::FunctionDec* parse_function_dec();
 
+    ast::BlockStatement* parse_block_statement();
     ast::BlockItem* parse_block_item();
 
     ast::TypeName* parse_type();

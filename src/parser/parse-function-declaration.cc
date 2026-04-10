@@ -35,20 +35,7 @@ namespace parser
       }
 
     // Function body
-    expect_tok('{');
-
-    std::vector<ast::BlockItem*> body;
-
-    lexer::Token tok = peek_tok();
-    while (tok != "}")
-      {
-        ast::BlockItem* bi = parse_block_item();
-        body.emplace_back(bi);
-
-        tok = peek_tok();
-      }
-
-    expect_tok('}');
+    ast::BlockStatement* body = parse_block_statement();
 
     return new ast::FunctionDec(type->location_get() + args.location_get(),
                                 identifier.val_get(), type, body);

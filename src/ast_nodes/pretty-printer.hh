@@ -17,6 +17,7 @@ namespace ast
     void newline();
 
     virtual void operator()(const FunctionDec& e) override;
+    virtual void operator()(const BlockStatement& e) override;
     virtual void operator()(const DecList& e) override;
     virtual void operator()(const NumberExp& e) override;
     virtual void operator()(const UnaryExp& e) override;

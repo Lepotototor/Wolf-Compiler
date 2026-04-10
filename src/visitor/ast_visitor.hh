@@ -18,6 +18,7 @@ namespace ast
     virtual void operator()(const_t<Ast>& e);
 
     virtual void operator()(const_t<FunctionDec>& e);
+    virtual void operator()(const_t<BlockStatement>& e);
     virtual void operator()(const_t<DecList>& e);
     virtual void operator()(const_t<VarDec>& e);
     virtual void operator()(const_t<ExpressionStatement>& e);

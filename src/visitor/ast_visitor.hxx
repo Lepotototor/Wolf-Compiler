@@ -4,6 +4,7 @@
 
 #include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
+#include "../ast_nodes/block.hh"
 #include "../ast_nodes/conditional.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
@@ -36,8 +37,16 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<FunctionDec>& e)
   {
     e.return_type_get().accept(*this);
-    for (auto& bi : e.body_get())
-      bi->accept(*this);
+    e.body_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<BlockStatement>& e)
+  {
+    for (auto* bi : e.items_get())
+      {
+        bi->accept(*this);
+      }
   }
 
   template <template <typename> class Const>

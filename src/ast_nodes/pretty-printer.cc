@@ -25,11 +25,16 @@ namespace ast
   {
     ostr_ << e.return_type_get() << " " << e.name_get() << "()";
 
+    ostr_ << e.body_get();
+  }
+
+  void PrettyPrinter::operator()(const BlockStatement& e)
+  {
     newline();
     ostr_ << "{";
     indent_++;
 
-    for (const BlockItem* bi : e.body_get())
+    for (const BlockItem* bi : e.items_get())
       {
         newline();
         ostr_ << *bi;

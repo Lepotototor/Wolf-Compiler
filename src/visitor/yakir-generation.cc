@@ -54,14 +54,7 @@ namespace ast
   {
     curr_scope_.clear();
 
-    for (const BlockItem* bi : e.body_get())
-      {
-        Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
-        if (dec_ins)
-          {
-            curr_scope_.emplace_back(dec_ins);
-          }
-      }
+    e.body_get().accept(*this);
 
     // In case of no return at end of function
     if (dynamic_cast<yakir::Ret*>(curr_scope_.back()) == nullptr)
@@ -70,6 +63,18 @@ namespace ast
       }
 
     res_ = new FuncDef(e.name_get(), curr_scope_);
+  }
+
+  void YakirGeneration::operator()(const BlockStatement& e)
+  {
+    for (const BlockItem* bi : e.items_get())
+      {
+        Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
+        if (dec_ins)
+          {
+            curr_scope_.emplace_back(dec_ins);
+          }
+      }
   }
 
   void YakirGeneration::operator()(const Var& e)

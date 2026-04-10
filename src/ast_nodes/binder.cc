@@ -16,9 +16,7 @@ namespace ast
     var_map_.scope_begin();
 
     e.return_type_get().accept(*this);
-
-    for (BlockItem* bi : e.body_get())
-      bi->accept(*this);
+    e.body_get().accept(*this);
 
     var_map_.scope_end();
   }

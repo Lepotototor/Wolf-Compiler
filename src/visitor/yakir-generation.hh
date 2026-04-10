@@ -18,6 +18,7 @@ namespace ast
     yakir::Label* make_tmp_label(std::string base = ".L");
 
     virtual void operator()(const FunctionDec& e) override;
+    virtual void operator()(const BlockStatement& e) override;
     virtual void operator()(const Var& e) override;
     virtual void operator()(const VarDec& e) override;
     virtual void operator()(const AssignExp& e) override;

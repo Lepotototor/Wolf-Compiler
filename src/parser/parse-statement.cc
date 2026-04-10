@@ -1,5 +1,6 @@
 #include "parser.hh"
 
+#include "../ast_nodes/block.hh"
 #include "../ast_nodes/if.hh"
 #include "../ast_nodes/null.hh"
 #include "../ast_nodes/return.hh"
@@ -19,6 +20,10 @@ namespace parser
       {
         pop_tok();
         return new ast::Null(tok.location_get());
+      }
+    else if (tok == "{")
+      {
+        return parse_block_statement();
       }
     else if (tok == "return")
       {

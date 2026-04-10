@@ -32,6 +32,8 @@ libast_nodes_a_SOURCES =  \
 	unary-exp.cc 	\
 	binary-exp.hh 	\
 	binary-exp.cc 	\
+	block.hh \
+	block.cc \
 	var.cc \
 	var.hh \
 	assign.cc \

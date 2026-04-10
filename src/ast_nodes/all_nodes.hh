@@ -32,6 +32,8 @@ namespace ast
   class IfStatement;
   class ConditionalExp;
 
+  class BlockStatement;
+
   class Type;
   class TypeName;
 
