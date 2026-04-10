@@ -8,10 +8,11 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [x] Unary Operators
 - [x] Binary Operators
 - [x] Bitwise Operators
+- [ ] Pre/Post Increment and Decrement
 - [x] Logical and Relational Operators
-- [ ] Local Variables
-- [ ] Conditional Expressions
-- [ ] Compound Statements
+- [x] Local Variables
+- [x] Conditional Expressions
+- [x] Compound Statements
 - [ ] Loops
 - [ ] Functions
 - [ ] File Scope Variable
