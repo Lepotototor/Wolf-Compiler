@@ -112,6 +112,27 @@ namespace ast
     ostr_ << ";";
   }
 
+  void PrettyPrinter::operator()(const IfStatement& e)
+  {
+    ostr_ << "if " << e.cond_get();
+
+    indent_++;
+    indent_++;
+    newline();
+    ostr_ << e.then_get();
+    indent_--;
+
+    if (e.else_get())
+      {
+        newline();
+        ostr_ << "else";
+        indent_++;
+        newline();
+        ostr_ << *e.else_get();
+        indent_--;
+      }
+  }
+
   void PrettyPrinter::operator()(const TypeName& e) { ostr_ << e.name_get(); }
 } // namespace ast
 

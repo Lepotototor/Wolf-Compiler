@@ -196,6 +196,29 @@ namespace ast
     res_ = new Ret(val);
   }
 
+  void YakirGeneration::operator()(const IfStatement& e)
+  {
+    Val* cond = recurse<Exp, Val>(e.cond_get());
+    Label* end = make_tmp_label("if_end");
+    Label* els = e.else_get() ? make_tmp_label("else") : end;
+
+    curr_scope_.emplace_back(new JumpIfZero(els->name_get(), cond));
+
+    Instruction* dec_ins = recurse<BlockItem, Instruction>(e.then_get());
+    curr_scope_.emplace_back(dec_ins);
+
+    if (e.else_get())
+      {
+        curr_scope_.emplace_back(new yakir::Jump(els->name_get()));
+        curr_scope_.emplace_back(els);
+
+        dec_ins = recurse<BlockItem, Instruction>(*e.else_get());
+        curr_scope_.emplace_back(dec_ins);
+      }
+
+    res_ = end;
+  }
+
   void YakirGeneration::operator()(const StringExp&) {}
   void YakirGeneration::operator()(const TypeName&) {}
 

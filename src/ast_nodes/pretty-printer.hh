@@ -27,6 +27,7 @@ namespace ast
     virtual void operator()(const Null& e) override;
     virtual void operator()(const AssignExp& e) override;
     virtual void operator()(const ReturnExp& e) override;
+    virtual void operator()(const IfStatement& e) override;
     virtual void operator()(const TypeName& e) override;
 
   private:

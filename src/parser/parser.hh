@@ -53,6 +53,7 @@ namespace parser
     ast::TypeName* parse_type();
 
     ast::Statement* parse_statement();
+    ast::Statement* parse_if_statement();
     ast::Statement* parse_return_statement();
 
     ast::Exp* parse_exp(unsigned predecence = 0);
