@@ -3,6 +3,7 @@
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/number-exp.hh"
+#include "../ast_nodes/pretty-printer.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/type-name.hh"
 #include "../ast_nodes/var.hh"
@@ -15,6 +16,7 @@
 #include "../yakir/jump-if-zero.hh"
 #include "../yakir/label.hh"
 #include "../yakir/logical-binary.hh"
+#include "../yakir/pretty_printer.hh"
 #include "../yakir/program.hh"
 #include "../yakir/ret.hh"
 #include "../yakir/unary.hh"
@@ -56,7 +58,9 @@ namespace ast
       {
         Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
         if (dec_ins)
-          curr_scope_.emplace_back(dec_ins);
+          {
+            curr_scope_.emplace_back(dec_ins);
+          }
       }
 
     // In case of no return at end of function
@@ -76,13 +80,13 @@ namespace ast
   void YakirGeneration::operator()(const VarDec& e)
   {
     if (e.init_get() == nullptr)
-      return;
+      {
+        res_ = nullptr;
+        return;
+      }
 
     yakir::Var* dst = new yakir::Var(e.name_get());
     yakir::Val* src = recurse<Exp, yakir::Val>(*e.init_get());
-
-    if (src == nullptr)
-      std::cerr << "init var is null for " << e.name_get() << "\n";
 
     res_ = new Copy(src, dst);
   }

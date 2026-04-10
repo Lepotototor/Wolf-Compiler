@@ -6,6 +6,7 @@
 #include "../ast_nodes/binary-exp.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
+#include "../ast_nodes/if.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/stmt-exp.hh"
@@ -99,6 +100,15 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<ExpressionStatement>& e)
   {
     e.exp_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<IfStatement>& e)
+  {
+    e.cond_get().accept(*this);
+    e.then_get().accept(*this);
+    if (e.else_get())
+      e.else_get()->accept(*this);
   }
 
   template <template <typename> class Const>

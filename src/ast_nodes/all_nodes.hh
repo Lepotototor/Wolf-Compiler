@@ -29,6 +29,8 @@ namespace ast
 
   class Var;
 
+  class IfStatement;
+
   class Type;
   class TypeName;
 

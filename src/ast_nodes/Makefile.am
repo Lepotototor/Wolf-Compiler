@@ -38,6 +38,8 @@ libast_nodes_a_SOURCES =  \
 	assign.hh \
 	var-dec.hh \
 	var-dec.cc \
+	if.hh \
+	if.cc \
 	type-name.hh 	\
 	type-name.cc 	\
 	type.hh
