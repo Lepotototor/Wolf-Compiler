@@ -114,6 +114,10 @@ namespace parser
       {
         return 6;
       }
+    else if (tok == "?")
+      {
+        return 3;
+      }
     else if (tok == "=" || tok == "+=" || tok == "-=" || tok == "*="
              || tok == "/=" || tok == "%=" || tok == "&=" || tok == "^="
              || tok == "|=" || tok == ">>=" || tok == "<<=")

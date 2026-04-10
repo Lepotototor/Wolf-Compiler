@@ -2,6 +2,8 @@
 
 #include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
+#include "../ast_nodes/conditional.hh"
+#include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/pretty-printer.hh"
 #include "../ast_nodes/var.hh"
 
@@ -64,6 +66,30 @@ namespace parser
 
             left = new ast::AssignExp(loc, lvalue, right);
           }
+
+        else if (tok == "?")
+          {
+            tok = peek_tok();
+
+            ast::Exp* then = nullptr;
+            std::cout << "Peek tok: " << tok << "\n";
+            if (tok == ":")
+              {
+                then = new ast::NumberExp(tok.location_get(), "1");
+              }
+            else
+              {
+                then = parse_exp();
+              }
+
+            expect_tok(":");
+
+            ast::Exp* els = parse_exp();
+
+            misc::Location loc = left->location_get() + els->location_get();
+            left = new ast::ConditionalExp(loc, left, then, els);
+          }
+
         else
           {
             ast::Exp* right = parse_exp(precedence(tok) + 1);
@@ -89,9 +115,9 @@ namespace parser
     std::string c = tok_repr(tok);
 
     static const char* unary_tok[] = {
-      "+",  "-",  "*",  "/",  "%",  "<<", ">>", "&",   "|",   "^",
-      "&&", "||", "==", "!=", "<",  "<=", ">",  ">=",  "=",   "+=",
-      "-=", "*=", "/=", "%=", "&=", "|=", "^=", ">>=", "<<=", 0};
+      "+",  "-",  "*",  "/",  "%",  "<<",  ">>",  "&", "|",  "^",  "&&",
+      "||", "==", "!=", "<",  "<=", ">",   ">=",  "=", "+=", "-=", "*=",
+      "/=", "%=", "&=", "|=", "^=", ">>=", "<<=", "?", 0};
     for (const char** s = unary_tok; *s; s++)
       if (*s == c)
         return true;

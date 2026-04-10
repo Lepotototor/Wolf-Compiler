@@ -30,6 +30,7 @@ namespace ast
     virtual void operator()(const_t<AssignExp>& e);
     virtual void operator()(const_t<ReturnExp>& e);
     virtual void operator()(const_t<IfStatement>& e);
+    virtual void operator()(const_t<ConditionalExp>& e);
     virtual void operator()(const_t<TypeName>& e);
   };
 

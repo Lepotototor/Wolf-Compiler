@@ -133,6 +133,12 @@ namespace ast
       }
   }
 
+  void PrettyPrinter::operator()(const ConditionalExp& e)
+  {
+    ostr_ << "(" << e.cond_get() << " ? " << e.then_get() << " : "
+          << e.else_get() << ")";
+  }
+
   void PrettyPrinter::operator()(const TypeName& e) { ostr_ << e.name_get(); }
 } // namespace ast
 

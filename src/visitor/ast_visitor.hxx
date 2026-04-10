@@ -4,6 +4,7 @@
 
 #include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
+#include "../ast_nodes/conditional.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/if.hh"
@@ -109,6 +110,14 @@ namespace ast
     e.then_get().accept(*this);
     if (e.else_get())
       e.else_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<ConditionalExp>& e)
+  {
+    e.cond_get().accept(*this);
+    e.then_get().accept(*this);
+    e.else_get().accept(*this);
   }
 
   template <template <typename> class Const>

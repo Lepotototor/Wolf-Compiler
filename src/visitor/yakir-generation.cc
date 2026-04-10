@@ -179,6 +179,7 @@ namespace ast
       }
     else
       {
+        std::cout << "Locgical bin\n";
         ins = new LogicalBinary(e.type_get(), left, right, dst);
       }
 
@@ -217,6 +218,30 @@ namespace ast
       }
 
     res_ = end;
+  }
+
+  void YakirGeneration::operator()(const ConditionalExp& e)
+  {
+    yakir::Var* res = make_tmp_var();
+
+    Val* cond = recurse<Exp, Val>(e.cond_get());
+
+    Label* cond_false = make_tmp_label("cond_false");
+    Label* end = make_tmp_label("cond_end");
+
+    curr_scope_.emplace_back(new JumpIfZero(cond_false->name_get(), cond));
+
+    Val* then = recurse<Exp, Val>(e.then_get());
+    curr_scope_.emplace_back(new Copy(then, new yakir::Var(res->id_get())));
+    curr_scope_.emplace_back(new Jump(end->name_get()));
+
+    curr_scope_.emplace_back(cond_false);
+    Val* els = recurse<Exp, Val>(e.else_get());
+    curr_scope_.emplace_back(new Copy(els, new yakir::Var(res->id_get())));
+
+    curr_scope_.emplace_back(end);
+
+    res_ = res;
   }
 
   void YakirGeneration::operator()(const StringExp&) {}

@@ -30,6 +30,7 @@ namespace ast
   class Var;
 
   class IfStatement;
+  class ConditionalExp;
 
   class Type;
   class TypeName;
