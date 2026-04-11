@@ -2,6 +2,8 @@
 
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
+#include "../ast_nodes/goto.hh"
+#include "../ast_nodes/label.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/string-exp.hh"
@@ -160,6 +162,16 @@ namespace ast
   {
     ostr_ << "(" << e.cond_get() << " ? " << e.then_get() << " : "
           << e.else_get() << ")";
+  }
+
+  void PrettyPrinter::operator()(const Goto& e)
+  {
+    ostr_ << "goto " << e.id_get();
+  }
+
+  void PrettyPrinter::operator()(const Label& e)
+  {
+    ostr_ << e.name_get() << ":";
   }
 
   void PrettyPrinter::operator()(const TypeName& e) { ostr_ << e.name_get(); }

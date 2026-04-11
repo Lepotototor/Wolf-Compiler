@@ -1,7 +1,9 @@
 #include "parser.hh"
 
 #include "../ast_nodes/block.hh"
+#include "../ast_nodes/goto.hh"
 #include "../ast_nodes/if.hh"
+#include "../ast_nodes/label.hh"
 #include "../ast_nodes/null.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/stmt-exp.hh"
@@ -14,7 +16,7 @@ namespace parser
   {
     ENTER_PARSE_FUNC
 
-    const lexer::Token& tok = peek_tok();
+    lexer::Token tok = peek_tok();
 
     if (tok == ";")
       {
@@ -33,6 +35,24 @@ namespace parser
       {
         return parse_if_statement();
       }
+
+    else if (tok == "goto")
+      {
+        pop_tok();
+        const lexer::Token id = pop_tok();
+        expect_tok(";");
+
+        return new ast::Goto(tok.location_get() + id.location_get(),
+                             id.val_get());
+      }
+    else if (tok.type() == lexer::IDENTIFIER_TOK)
+      {
+        pop_tok();
+        expect_tok(":");
+
+        return new ast::Label(tok.location_get(), tok.val_get());
+      }
+
     else
       {
         ast::ExpressionStatement* exp_stmt =

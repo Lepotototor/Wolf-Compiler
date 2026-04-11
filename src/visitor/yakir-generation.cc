@@ -2,6 +2,8 @@
 
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/function-dec.hh"
+#include "../ast_nodes/goto.hh"
+#include "../ast_nodes/label.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/pretty-printer.hh"
 #include "../ast_nodes/return.hh"
@@ -36,7 +38,7 @@ namespace ast
 
   yakir::Label* YakirGeneration::make_tmp_label(std::string base)
   {
-    return new Label(base + std::to_string(lbl_count_++));
+    return new yakir::Label(base + std::to_string(lbl_count_++));
   }
 
   void YakirGeneration::operator()(const DecList& e)
@@ -138,7 +140,7 @@ namespace ast
     Binary* ins = nullptr;
     if (e.type_get() == L_AND)
       {
-        Label* false_label = make_tmp_label("and_false_");
+        yakir::Label* false_label = make_tmp_label("and_false_");
         curr_scope_.emplace_back(new JumpIfZero(false_label->name_get(), left));
 
         Val* right = recurse<Exp, Val>(e.right_get());
@@ -146,7 +148,7 @@ namespace ast
           new JumpIfZero(false_label->name_get(), right));
 
         curr_scope_.emplace_back(new Copy(new Constant("1"), dst));
-        Label* end_label = make_tmp_label("end_");
+        yakir::Label* end_label = make_tmp_label("end_");
         curr_scope_.emplace_back(new Jump(end_label->name_get()));
         curr_scope_.emplace_back(false_label);
         curr_scope_.emplace_back(
@@ -158,7 +160,7 @@ namespace ast
       }
     else if (e.type_get() == L_OR)
       {
-        Label* true_label = make_tmp_label("or_true_");
+        yakir::Label* true_label = make_tmp_label("or_true_");
         curr_scope_.emplace_back(
           new JumpIfNotZero(true_label->name_get(), left));
 
@@ -167,7 +169,7 @@ namespace ast
           new JumpIfNotZero(true_label->name_get(), right));
 
         curr_scope_.emplace_back(new Copy(new Constant("0"), dst));
-        Label* end_label = make_tmp_label("end_");
+        yakir::Label* end_label = make_tmp_label("end_");
         curr_scope_.emplace_back(new Jump(end_label->name_get()));
         curr_scope_.emplace_back(true_label);
         curr_scope_.emplace_back(
@@ -216,8 +218,8 @@ namespace ast
   void YakirGeneration::operator()(const IfStatement& e)
   {
     Val* cond = recurse<Exp, Val>(e.cond_get());
-    Label* end = make_tmp_label("if_end");
-    Label* els = e.else_get() ? make_tmp_label("else") : end;
+    yakir::Label* end = make_tmp_label("if_end");
+    yakir::Label* els = e.else_get() ? make_tmp_label("else") : end;
 
     curr_scope_.emplace_back(new JumpIfZero(els->name_get(), cond));
 
@@ -242,8 +244,8 @@ namespace ast
 
     Val* cond = recurse<Exp, Val>(e.cond_get());
 
-    Label* cond_false = make_tmp_label("cond_false");
-    Label* end = make_tmp_label("cond_end");
+    yakir::Label* cond_false = make_tmp_label("cond_false");
+    yakir::Label* end = make_tmp_label("cond_end");
 
     curr_scope_.emplace_back(new JumpIfZero(cond_false->name_get(), cond));
 
@@ -262,5 +264,15 @@ namespace ast
 
   void YakirGeneration::operator()(const StringExp&) {}
   void YakirGeneration::operator()(const TypeName&) {}
+
+  void YakirGeneration::operator()(const Goto& e)
+  {
+    res_ = new Jump(e.id_get());
+  }
+
+  void YakirGeneration::operator()(const Label& e)
+  {
+    res_ = new yakir::Label(e.name_get());
+  }
 
 } // namespace ast

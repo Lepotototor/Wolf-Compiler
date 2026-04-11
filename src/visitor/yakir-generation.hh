@@ -31,6 +31,8 @@ namespace ast
     virtual void operator()(const ReturnExp& e) override;
     virtual void operator()(const IfStatement& e) override;
     virtual void operator()(const ConditionalExp& e) override;
+    virtual void operator()(const Goto& e) override;
+    virtual void operator()(const Label& e) override;
     virtual void operator()(const TypeName& e) override;
 
     template <typename AST, typename YAKIR> YAKIR* recurse(const AST& t);

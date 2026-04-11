@@ -34,6 +34,8 @@ namespace ast
     virtual void operator()(const_t<ReturnExp>& e);
     virtual void operator()(const_t<IfStatement>& e);
     virtual void operator()(const_t<ConditionalExp>& e);
+    virtual void operator()(const_t<Goto>& e);
+    virtual void operator()(const_t<Label>& e);
     virtual void operator()(const_t<TypeName>& e);
   };
 

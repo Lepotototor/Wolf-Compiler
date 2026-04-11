@@ -36,6 +36,9 @@ namespace ast
 
   class BlockStatement;
 
+  class Goto;
+  class Label;
+
   class Type;
   class TypeName;
 

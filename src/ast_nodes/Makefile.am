@@ -10,6 +10,10 @@ libast_nodes_a_SOURCES =  \
   	renamer.hh \
 	ast.hh \
 	block-item.hh \
+	goto.cc \
+	goto.hh \
+	label.cc \
+	label.hh \
 	bindable.hh \
 	stmt.hh \
 	null.hh \

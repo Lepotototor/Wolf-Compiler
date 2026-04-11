@@ -147,4 +147,12 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<TypeName>&)
   {}
 
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Goto>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Label>&)
+  {}
+
 } // namespace ast
