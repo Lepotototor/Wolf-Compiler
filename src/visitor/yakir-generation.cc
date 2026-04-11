@@ -11,7 +11,9 @@
 #include "../yakir/arit-binary.hh"
 #include "../yakir/constant.hh"
 #include "../yakir/copy.hh"
+#include "../yakir/decrement.hh"
 #include "../yakir/func_def.hh"
+#include "../yakir/increment.hh"
 #include "../yakir/jump-if-not-zero.hh"
 #include "../yakir/jump-if-zero.hh"
 #include "../yakir/label.hh"
@@ -190,6 +192,15 @@ namespace ast
 
     curr_scope_.emplace_back(ins);
     res_ = new yakir::Var(dst->id_get());
+  }
+
+  void YakirGeneration::operator()(const IncrementExp& e)
+  {
+    yakir::Var* var = recurse<Exp, yakir::Var>(e.exp_get());
+
+    curr_scope_.emplace_back(new Increment(var));
+
+    res_ = new yakir::Var(var->id_get());
   }
 
   void YakirGeneration::operator()(const ReturnExp& e)

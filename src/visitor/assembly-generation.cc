@@ -8,9 +8,11 @@
 #include "../assembly/cdq.hh"
 #include "../assembly/cmp.hh"
 #include "../assembly/comment.hh"
+#include "../assembly/dec.hh"
 #include "../assembly/func_def.hh"
 #include "../assembly/idiv.hh"
 #include "../assembly/immediate.hh"
+#include "../assembly/inc.hh"
 #include "../assembly/jump.hh"
 #include "../assembly/jumpcc.hh"
 #include "../assembly/label.hh"
@@ -204,8 +206,6 @@ namespace yakir
 
   void AssemblyGeneration::operator()(const_t<LogicalBinary>& e)
   {
-    using namespace assembly;
-
     curr_func_.emplace_back(new Comment("Comparison operator"));
 
     Operand* left = recurse<Val, Operand>(e.left_get());
@@ -228,10 +228,22 @@ namespace yakir
     curr_func_.emplace_back(new SetCC(dst, e.type_get()));
   }
 
+  void AssemblyGeneration::operator()(const_t<Increment>& e)
+  {
+    Operand* ope = recurse<Val, Operand>(e.val_get());
+    curr_func_.emplace_back(new Inc(ope, 4));
+    res_ = nullptr;
+  }
+
+  void AssemblyGeneration::operator()(const_t<Decrement>& e)
+  {
+    Operand* ope = recurse<Val, Operand>(e.val_get());
+    curr_func_.emplace_back(new Dec(ope, 4));
+    res_ = nullptr;
+  }
+
   void AssemblyGeneration::operator()(const_t<Copy>& e)
   {
-    using namespace assembly;
-
     Operand* src = recurse<Val, Operand>(e.src_get());
     Operand* dst = recurse<Val, Operand>(e.dst_get());
 

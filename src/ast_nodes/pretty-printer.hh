@@ -22,6 +22,8 @@ namespace ast
     virtual void operator()(const NumberExp& e) override;
     virtual void operator()(const UnaryExp& e) override;
     virtual void operator()(const BinaryExp& e) override;
+    virtual void operator()(const IncrementExp& e) override;
+    virtual void operator()(const DecrementExp& e) override;
     virtual void operator()(const StringExp& e) override;
     virtual void operator()(const Var& e) override;
     virtual void operator()(const VarDec& e) override;

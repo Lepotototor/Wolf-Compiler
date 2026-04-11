@@ -4,9 +4,11 @@
 
 #include "../assembly/binary.hh"
 #include "../assembly/cmp.hh"
+#include "../assembly/dec.hh"
 #include "../assembly/func_def.hh"
 #include "../assembly/idiv.hh"
 #include "../assembly/immediate.hh"
+#include "../assembly/inc.hh"
 #include "../assembly/mov.hh"
 #include "../assembly/program.hh"
 #include "../assembly/ret.hh"
@@ -55,6 +57,18 @@ namespace assembly
   {
     e.left_get()->accept(*this);
     e.right_get()->accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Inc>& e)
+  {
+    e.ope_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Dec>& e)
+  {
+    e.ope_get().accept(*this);
   }
 
   template <template <typename> class Const>

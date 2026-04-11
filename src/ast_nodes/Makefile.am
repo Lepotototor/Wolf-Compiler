@@ -30,6 +30,10 @@ libast_nodes_a_SOURCES =  \
 	string-exp.cc 	\
 	unary-exp.hh 	\
 	unary-exp.cc 	\
+	increment.hh 	\
+	increment.cc 	\
+	decrement.hh 	\
+	decrement.cc 	\
 	binary-exp.hh 	\
 	binary-exp.cc 	\
 	block.hh \

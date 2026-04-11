@@ -7,8 +7,10 @@
 #include "../ast_nodes/block.hh"
 #include "../ast_nodes/conditional.hh"
 #include "../ast_nodes/dec-list.hh"
+#include "../ast_nodes/decrement.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/if.hh"
+#include "../ast_nodes/increment.hh"
 #include "../ast_nodes/number-exp.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/stmt-exp.hh"
@@ -71,6 +73,18 @@ namespace ast
   {
     e.left_get().accept(*this);
     e.right_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<IncrementExp>& e)
+  {
+    e.exp_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<DecrementExp>& e)
+  {
+    e.exp_get().accept(*this);
   }
 
   template <template <typename> class Const>

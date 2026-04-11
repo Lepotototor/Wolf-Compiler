@@ -71,6 +71,16 @@ namespace yakir
     ostr_ << " " << e.right_get() << "\n";
   }
 
+  void PrettyPrinter::operator()(const_t<Increment>& e)
+  {
+    ostr_ << TAB << "inc " << e.val_get() << "\n";
+  }
+
+  void PrettyPrinter::operator()(const_t<Decrement>& e)
+  {
+    ostr_ << TAB << "dec " << e.val_get() << "\n";
+  }
+
   void PrettyPrinter::operator()(const_t<FuncDef>& e)
   {
     ostr_ << e.name_get() << ":\n";

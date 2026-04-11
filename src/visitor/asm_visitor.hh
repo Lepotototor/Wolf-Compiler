@@ -22,6 +22,8 @@ namespace assembly
     virtual void operator()(const_t<Mov>& e);
     virtual void operator()(const_t<Unary>& e);
     virtual void operator()(const_t<Binary>& e);
+    virtual void operator()(const_t<Inc>& e);
+    virtual void operator()(const_t<Dec>& e);
     virtual void operator()(const_t<Cdq>& e);
     virtual void operator()(const_t<Idiv>& e);
     virtual void operator()(const_t<AllocateStack>& e);

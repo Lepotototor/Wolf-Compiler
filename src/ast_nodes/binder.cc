@@ -1,5 +1,7 @@
 #include "binder.hh"
 
+#include "../ast_nodes/block-item.hh"
+#include "../ast_nodes/block.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/type-name.hh"
 #include "../ast_nodes/var.hh"
@@ -17,6 +19,16 @@ namespace ast
 
     e.return_type_get().accept(*this);
     e.body_get().accept(*this);
+
+    var_map_.scope_end();
+  }
+
+  void Binder::operator()(BlockStatement& e)
+  {
+    var_map_.scope_begin();
+
+    for (BlockItem* bi : e.items_get())
+      bi->accept(*this);
 
     var_map_.scope_end();
   }

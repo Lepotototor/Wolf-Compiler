@@ -86,6 +86,24 @@ namespace ast
     ostr_ << " " << e.right_get() << ")";
   }
 
+  void PrettyPrinter::operator()(const IncrementExp& e)
+  {
+    if (e.pre_get())
+      ostr_ << "++";
+    ostr_ << e.exp_get();
+    if (!e.pre_get())
+      ostr_ << "++";
+  }
+
+  void PrettyPrinter::operator()(const DecrementExp& e)
+  {
+    if (e.pre_get())
+      ostr_ << "--";
+    ostr_ << e.exp_get();
+    if (!e.pre_get())
+      ostr_ << "--";
+  }
+
   void PrettyPrinter::operator()(const NumberExp& e) { ostr_ << e.val_get(); }
 
   void PrettyPrinter::operator()(const StringExp& e) { ostr_ << e.val_get(); }

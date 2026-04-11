@@ -21,6 +21,8 @@ namespace ast
   class BinaryExp;
   class StringExp;
   class AssignExp;
+  class IncrementExp;
+  class DecrementExp;
 
   class Statement;
   class ExpressionStatement;

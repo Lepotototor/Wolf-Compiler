@@ -5,7 +5,9 @@
 #include "../yakir/arit-binary.hh"
 #include "../yakir/constant.hh"
 #include "../yakir/copy.hh"
+#include "../yakir/decrement.hh"
 #include "../yakir/func_def.hh"
+#include "../yakir/increment.hh"
 #include "../yakir/jump-if-not-zero.hh"
 #include "../yakir/jump-if-zero.hh"
 #include "../yakir/logical-binary.hh"
@@ -100,6 +102,18 @@ namespace yakir
     e.left_get().accept(*this);
     e.right_get().accept(*this);
     e.dst_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Increment>& e)
+  {
+    e.val_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Decrement>& e)
+  {
+    e.val_get().accept(*this);
   }
 
   template <template <typename> class Const>

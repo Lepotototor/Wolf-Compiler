@@ -16,6 +16,10 @@ libyakir_a_SOURCES =  \
 	instruction.hh \
 	unary.hh \
 	unary.cc \
+	increment.hh \
+	increment.cc \
+	decrement.hh \
+	decrement.cc \
 	binary.hh \
 	arit-binary.hh \
 	arit-binary.cc \

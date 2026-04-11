@@ -18,6 +18,7 @@ namespace ast
     {}
 
     virtual void operator()(FunctionDec& e) override;
+    virtual void operator()(BlockStatement& e) override;
     virtual void operator()(Var& e) override;
     virtual void operator()(VarDec& e) override;
 

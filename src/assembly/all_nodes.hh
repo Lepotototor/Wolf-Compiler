@@ -15,6 +15,8 @@ namespace assembly
   class Mov;
   class Unary;
   class Binary;
+  class Inc;
+  class Dec;
   class AllocateStack;
   class Idiv;
   class Cdq;

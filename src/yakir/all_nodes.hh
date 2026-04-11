@@ -25,6 +25,8 @@ namespace yakir
   class Binary;
   class AritBinary;
   class LogicalBinary;
+  class Increment;
+  class Decrement;
 
   class Program;
 

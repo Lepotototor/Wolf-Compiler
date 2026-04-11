@@ -16,6 +16,10 @@ libassembly_a_SOURCES =  \
 	instruction.hh \
 	mov.hh \
 	mov.cc \
+	inc.hh \
+	inc.cc \
+	dec.hh \
+	dec.cc \
 	ret.hh \
 	ret.cc \
 	unary.hh \

@@ -29,6 +29,8 @@ namespace yakir
     virtual void operator()(const_t<Unary>& e);
     virtual void operator()(const_t<AritBinary>& e);
     virtual void operator()(const_t<LogicalBinary>& e);
+    virtual void operator()(const_t<Increment>& e);
+    virtual void operator()(const_t<Decrement>& e);
     virtual void operator()(const_t<Program>& e);
   };
 

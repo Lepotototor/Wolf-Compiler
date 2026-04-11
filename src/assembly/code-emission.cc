@@ -33,6 +33,16 @@ namespace assembly
     ostr_ << TAB << "movl " << e.src_get() << ", " << e.dst_get() << "\n";
   }
 
+  void CodeEmit::operator()(const_t<Inc>& e)
+  {
+    ostr_ << TAB << "inc" << e.mnemo_get() << " " << e.ope_get() << "\n";
+  }
+
+  void CodeEmit::operator()(const_t<Dec>& e)
+  {
+    ostr_ << TAB << "dec" << e.mnemo_get() << " " << e.ope_get() << "\n";
+  }
+
   void CodeEmit::operator()(const_t<Unary>& e)
   {
     ostr_ << TAB;
