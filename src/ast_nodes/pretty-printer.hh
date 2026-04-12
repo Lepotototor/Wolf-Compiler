@@ -34,6 +34,11 @@ namespace ast
     virtual void operator()(const ConditionalExp& e) override;
     virtual void operator()(const Goto& e) override;
     virtual void operator()(const Label& e) override;
+    virtual void operator()(const While& e) override;
+    virtual void operator()(const DoWhile& e) override;
+    virtual void operator()(const For& e) override;
+    virtual void operator()(const Break& e) override;
+    virtual void operator()(const Continue& e) override;
     virtual void operator()(const TypeName& e) override;
 
   private:

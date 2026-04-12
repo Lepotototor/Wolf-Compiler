@@ -5,9 +5,13 @@
 #include "../ast_nodes/assign.hh"
 #include "../ast_nodes/binary-exp.hh"
 #include "../ast_nodes/block.hh"
+#include "../ast_nodes/break.hh"
 #include "../ast_nodes/conditional.hh"
+#include "../ast_nodes/continue.hh"
 #include "../ast_nodes/dec-list.hh"
 #include "../ast_nodes/decrement.hh"
+#include "../ast_nodes/do-while.hh"
+#include "../ast_nodes/for.hh"
 #include "../ast_nodes/function-dec.hh"
 #include "../ast_nodes/if.hh"
 #include "../ast_nodes/increment.hh"
@@ -18,6 +22,7 @@
 #include "../ast_nodes/type-name.hh"
 #include "../ast_nodes/unary-exp.hh"
 #include "../ast_nodes/var-dec.hh"
+#include "../ast_nodes/while.hh"
 
 namespace ast
 {
@@ -154,5 +159,39 @@ namespace ast
   template <template <typename> class Const>
   void GenVisitor<Const>::operator()(const_t<Label>&)
   {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Break>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<Continue>&)
+  {}
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<While>& e)
+  {
+    e.cond_get().accept(*this);
+    e.body_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<DoWhile>& e)
+  {
+    e.cond_get().accept(*this);
+    e.body_get().accept(*this);
+  }
+
+  template <template <typename> class Const>
+  void GenVisitor<Const>::operator()(const_t<For>& e)
+  {
+    if (e.init_get())
+      e.cond_get()->accept(*this);
+    if (e.cond_get())
+      e.cond_get()->accept(*this);
+    if (e.post_get())
+      e.post_get()->accept(*this);
+    e.body_get().accept(*this);
+  }
 
 } // namespace ast

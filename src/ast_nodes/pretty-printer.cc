@@ -174,6 +174,51 @@ namespace ast
     ostr_ << e.name_get() << ":";
   }
 
+  void PrettyPrinter::operator()(const Break&) { ostr_ << "break"; }
+
+  void PrettyPrinter::operator()(const Continue&) { ostr_ << "continue"; }
+
+  void PrettyPrinter::operator()(const While& e)
+  {
+    ostr_ << "while (" << e.cond_get() << ")";
+    newline();
+    indent_++;
+    ostr_ << e.body_get();
+    indent_--;
+  }
+
+  void PrettyPrinter::operator()(const DoWhile& e)
+  {
+    ostr_ << "do ";
+    newline();
+    indent_++;
+    ostr_ << e.body_get();
+    indent_--;
+
+    ostr_ << "while (" << e.cond_get() << ")";
+  }
+
+  void PrettyPrinter::operator()(const For& e)
+  {
+    ostr_ << "for (";
+
+    if (e.init_get())
+      ostr_ << *e.init_get();
+    ostr_ << ";";
+    if (e.cond_get())
+      ostr_ << *e.cond_get();
+    ostr_ << ";";
+    if (e.post_get())
+      ostr_ << *e.post_get();
+    ostr_ << ")";
+
+    newline();
+
+    indent_++;
+    ostr_ << e.body_get();
+    indent_--;
+  }
+
   void PrettyPrinter::operator()(const TypeName& e) { ostr_ << e.name_get(); }
 } // namespace ast
 

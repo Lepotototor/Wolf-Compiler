@@ -39,6 +39,13 @@ namespace ast
   class Goto;
   class Label;
 
+  class LoopStatement;
+  class For;
+  class While;
+  class DoWhile;
+  class Continue;
+  class Break;
+
   class Type;
   class TypeName;
 

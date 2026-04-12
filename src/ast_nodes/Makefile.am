@@ -52,6 +52,17 @@ libast_nodes_a_SOURCES =  \
 	if.cc \
 	conditional.hh \
 	conditional.cc \
+	loop-stmt.hh \
+	for.cc \
+	for.hh \
+	while.hh \
+	while.cc \
+	do-while.cc \
+	do-while.hh \
+	break.hh \
+	break.cc \
+	continue.cc \
+	continue.hh \
 	type-name.hh 	\
 	type-name.cc 	\
 	type.hh

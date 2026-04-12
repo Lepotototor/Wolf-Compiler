@@ -36,6 +36,11 @@ namespace ast
     virtual void operator()(const_t<ConditionalExp>& e);
     virtual void operator()(const_t<Goto>& e);
     virtual void operator()(const_t<Label>& e);
+    virtual void operator()(const_t<While>& e);
+    virtual void operator()(const_t<DoWhile>& e);
+    virtual void operator()(const_t<For>& e);
+    virtual void operator()(const_t<Break>& e);
+    virtual void operator()(const_t<Continue>& e);
     virtual void operator()(const_t<TypeName>& e);
   };
 
