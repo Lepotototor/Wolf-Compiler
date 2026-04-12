@@ -13,7 +13,9 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [x] Local Variables
 - [x] Conditional Expressions
 - [x] Compound Statements
+- [ ] Goto and Labels
 - [ ] Loops
+- [ ] Switch
 - [ ] Functions
 - [ ] File Scope Variable
 - [ ] Storage-Class specifiers
@@ -38,7 +40,7 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [ ] Compile-Time Computation
 - [ ] Lambda Functions
 
-## Gigachade Development
+## Gigachad Development
 - [ ] Boostrap
 
 
