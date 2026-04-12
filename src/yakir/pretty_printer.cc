@@ -18,8 +18,6 @@ namespace yakir
 
   void PrettyPrinter::operator()(const_t<Copy>& e)
   {
-    ostr_ << e.dst_get();
-    ostr_ << e.src_get();
     ostr_ << TAB << e.dst_get() << " = " << e.src_get() << "\n";
   }
 

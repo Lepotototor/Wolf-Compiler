@@ -61,9 +61,10 @@ namespace ast
     e.body_get().accept(*this);
 
     // In case of no return at end of function
-    if (dynamic_cast<yakir::Ret*>(curr_scope_.back()) == nullptr)
+    if (curr_scope_.size() == 0
+        || dynamic_cast<yakir::Ret*>(curr_scope_.back()) == nullptr)
       {
-        curr_scope_.emplace_back(new Ret(new Constant("67")));
+        curr_scope_.emplace_back(new Ret(new Constant("-1")));
       }
 
     res_ = new FuncDef(e.name_get(), curr_scope_);
