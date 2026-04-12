@@ -38,10 +38,10 @@ namespace ast
 
   yakir::Label* YakirGeneration::make_tmp_label(std::string base)
   {
-    return new yakir::Label(base + std::to_string(lbl_count_++));
+    return new yakir::Label(base + "." + std::to_string(lbl_count_++));
   }
 
-  void YakirGeneration::operator()(const DecList& e)
+  void YakirGeneration::operator()(DecList& e)
   {
     std::vector<FuncDef*> funcs;
 
@@ -54,7 +54,7 @@ namespace ast
     res_ = new Program(funcs);
   }
 
-  void YakirGeneration::operator()(const FunctionDec& e)
+  void YakirGeneration::operator()(FunctionDec& e)
   {
     curr_scope_.clear();
 
@@ -69,9 +69,9 @@ namespace ast
     res_ = new FuncDef(e.name_get(), curr_scope_);
   }
 
-  void YakirGeneration::operator()(const BlockStatement& e)
+  void YakirGeneration::operator()(BlockStatement& e)
   {
-    for (const BlockItem* bi : e.items_get())
+    for (BlockItem* bi : e.items_get())
       {
         Instruction* dec_ins = recurse<BlockItem, Instruction>(bi);
         if (dec_ins)
@@ -81,12 +81,12 @@ namespace ast
       }
   }
 
-  void YakirGeneration::operator()(const Var& e)
+  void YakirGeneration::operator()(Var& e)
   {
     res_ = new yakir::Var(e.identifier_get());
   }
 
-  void YakirGeneration::operator()(const VarDec& e)
+  void YakirGeneration::operator()(VarDec& e)
   {
     if (e.init_get() == nullptr)
       {
@@ -97,23 +97,27 @@ namespace ast
     yakir::Var* dst = new yakir::Var(e.name_get());
     yakir::Val* src = recurse<Exp, yakir::Val>(*e.init_get());
 
-    res_ = new Copy(src, dst);
+    curr_scope_.emplace_back(new Copy(src, dst));
+
+    res_ = nullptr;
   }
 
-  void YakirGeneration::operator()(const AssignExp& e)
+  void YakirGeneration::operator()(AssignExp& e)
   {
     yakir::Val* src = recurse<Exp, Val>(e.rvalue_get());
     yakir::Val* dst = recurse<Exp, Val>(e.lvalue_get());
 
-    res_ = new Copy(src, dst);
+    curr_scope_.emplace_back(new Copy(src, dst));
+
+    res_ = nullptr;
   }
 
-  void YakirGeneration::operator()(const NumberExp& e)
+  void YakirGeneration::operator()(NumberExp& e)
   {
     res_ = new Constant(e.val_get());
   }
 
-  void YakirGeneration::operator()(const UnaryExp& e)
+  void YakirGeneration::operator()(UnaryExp& e)
   {
     Val* src = recurse<Exp, Val>(e.exp_get());
 
@@ -131,7 +135,7 @@ namespace ast
     res_ = new yakir::Var(dst->id_get());
   }
 
-  void YakirGeneration::operator()(const BinaryExp& e)
+  void YakirGeneration::operator()(BinaryExp& e)
   {
     Val* left = recurse<Exp, Val>(e.left_get());
 
@@ -195,7 +199,7 @@ namespace ast
     res_ = new yakir::Var(dst->id_get());
   }
 
-  void YakirGeneration::operator()(const IncrementExp& e)
+  void YakirGeneration::operator()(IncrementExp& e)
   {
     yakir::Var* var = recurse<Exp, yakir::Var>(e.exp_get());
 
@@ -204,7 +208,16 @@ namespace ast
     res_ = new yakir::Var(var->id_get());
   }
 
-  void YakirGeneration::operator()(const ReturnExp& e)
+  void YakirGeneration::operator()(DecrementExp& e)
+  {
+    yakir::Var* var = recurse<Exp, yakir::Var>(e.exp_get());
+
+    curr_scope_.emplace_back(new Decrement(var));
+
+    res_ = new yakir::Var(var->id_get());
+  }
+
+  void YakirGeneration::operator()(ReturnExp& e)
   {
     Val* val = recurse<Exp, Val>(e.return_val_get());
 
@@ -214,7 +227,7 @@ namespace ast
     res_ = new Ret(val);
   }
 
-  void YakirGeneration::operator()(const IfStatement& e)
+  void YakirGeneration::operator()(IfStatement& e)
   {
     Val* cond = recurse<Exp, Val>(e.cond_get());
     yakir::Label* end = make_tmp_label("if_end");
@@ -222,22 +235,22 @@ namespace ast
 
     curr_scope_.emplace_back(new JumpIfZero(els->name_get(), cond));
 
-    Instruction* dec_ins = recurse<BlockItem, Instruction>(e.then_get());
-    curr_scope_.emplace_back(dec_ins);
+    e.then_get().accept(*this);
 
     if (e.else_get())
       {
-        curr_scope_.emplace_back(new yakir::Jump(els->name_get()));
+        // curr_scope_.emplace_back(new yakir::Jump(els->name_get()));
         curr_scope_.emplace_back(els);
 
-        dec_ins = recurse<BlockItem, Instruction>(*e.else_get());
-        curr_scope_.emplace_back(dec_ins);
+        e.else_get()->accept(*this);
       }
 
-    res_ = end;
+    curr_scope_.emplace_back(end);
+
+    res_ = nullptr;
   }
 
-  void YakirGeneration::operator()(const ConditionalExp& e)
+  void YakirGeneration::operator()(ConditionalExp& e)
   {
     yakir::Var* res = make_tmp_var();
 
@@ -261,17 +274,110 @@ namespace ast
     res_ = res;
   }
 
-  void YakirGeneration::operator()(const StringExp&) {}
-  void YakirGeneration::operator()(const TypeName&) {}
+  void YakirGeneration::operator()(StringExp&) {}
+  void YakirGeneration::operator()(TypeName&) {}
 
-  void YakirGeneration::operator()(const Goto& e)
-  {
-    res_ = new Jump(e.id_get());
-  }
+  void YakirGeneration::operator()(Goto& e) { res_ = new Jump(e.id_get()); }
 
-  void YakirGeneration::operator()(const Label& e)
+  void YakirGeneration::operator()(Label& e)
   {
     res_ = new yakir::Label(e.name_get());
+  }
+
+  void YakirGeneration::operator()(While& e)
+  {
+    yakir::Label* cond_label = make_tmp_label("while_cond");
+    yakir::Label* end_label = make_tmp_label("while_end");
+
+    e.cond_label_set(cond_label->name_get());
+    e.end_label_set(end_label->name_get());
+
+    curr_scope_.emplace_back(cond_label);
+    yakir::Val* cond_res = recurse<Exp, Val>(e.cond_get());
+
+    curr_scope_.emplace_back(new JumpIfZero(end_label->name_get(), cond_res));
+
+    e.body_get().accept(*this);
+    delete res_;
+
+    curr_scope_.emplace_back(new Jump(cond_label->name_get()));
+    curr_scope_.emplace_back(end_label);
+
+    res_ = nullptr;
+  }
+
+  void YakirGeneration::operator()(DoWhile& e)
+  {
+    yakir::Label* start_label = make_tmp_label("do_while_start");
+    yakir::Label* cond_label = make_tmp_label("do_while_cond");
+    yakir::Label* end_label = make_tmp_label("do_while_end");
+
+    e.cond_label_set(cond_label->name_get());
+    e.end_label_set(end_label->name_get());
+
+    curr_scope_.emplace_back(start_label);
+
+    e.body_get().accept(*this);
+    delete res_;
+
+    curr_scope_.emplace_back(cond_label);
+    yakir::Val* cond_res = recurse<Exp, Val>(e.cond_get());
+
+    curr_scope_.emplace_back(
+      new JumpIfNotZero(start_label->name_get(), cond_res));
+
+    curr_scope_.emplace_back(end_label);
+  }
+
+  void YakirGeneration::operator()(For& e)
+  {
+    yakir::Label* cond_label = make_tmp_label("for_cond");
+    yakir::Label* post_label = make_tmp_label("for_post");
+    yakir::Label* end_label = make_tmp_label("for_end");
+
+    e.cond_label_set(post_label->name_get());
+    e.end_label_set(end_label->name_get());
+
+    if (e.init_get())
+      {
+        e.init_get()->accept(*this);
+        delete res_;
+      }
+
+    curr_scope_.emplace_back(cond_label);
+
+    if (e.cond_get())
+      {
+        yakir::Val* cond_res = recurse<Exp, Val>(*e.cond_get());
+        curr_scope_.emplace_back(
+          new JumpIfZero(end_label->name_get(), cond_res));
+      }
+
+    e.body_get().accept(*this);
+    delete res_;
+
+    curr_scope_.emplace_back(post_label);
+    if (e.post_get())
+      {
+        e.post_get()->accept(*this);
+        delete res_;
+      }
+
+    curr_scope_.emplace_back(new Jump(cond_label->name_get()));
+
+    curr_scope_.emplace_back(end_label);
+
+    res_ = nullptr;
+  }
+
+  void YakirGeneration::operator()(Break& e)
+  {
+    curr_scope_.emplace_back(new Jump(e.def_get()->end_label_get()));
+  }
+
+  void YakirGeneration::operator()(Continue& e)
+  {
+    curr_scope_.emplace_back(new Jump(e.def_get()->cond_label_get()));
   }
 
 } // namespace ast

@@ -5,7 +5,7 @@
 namespace ast
 {
   template <typename AST, typename YAKIR>
-  YAKIR* YakirGeneration::recurse(const AST& t)
+  YAKIR* YakirGeneration::recurse(AST& t)
   {
     t.accept(*this);
     YAKIR* res = dynamic_cast<YAKIR*>(res_);
@@ -13,7 +13,7 @@ namespace ast
   }
 
   template <typename AST, typename YAKIR>
-  YAKIR* YakirGeneration::recurse(const AST* t)
+  YAKIR* YakirGeneration::recurse(AST* t)
   {
     if (t == nullptr)
       return nullptr;

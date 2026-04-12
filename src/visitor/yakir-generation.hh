@@ -9,7 +9,7 @@
 namespace ast
 {
 
-  class YakirGeneration : public ConstVisitor
+  class YakirGeneration : public Visitor
   {
   public:
     YakirGeneration() {}
@@ -17,26 +17,32 @@ namespace ast
     yakir::Var* make_tmp_var();
     yakir::Label* make_tmp_label(std::string base = ".L");
 
-    virtual void operator()(const FunctionDec& e) override;
-    virtual void operator()(const BlockStatement& e) override;
-    virtual void operator()(const Var& e) override;
-    virtual void operator()(const VarDec& e) override;
-    virtual void operator()(const AssignExp& e) override;
-    virtual void operator()(const DecList& e) override;
-    virtual void operator()(const NumberExp& e) override;
-    virtual void operator()(const UnaryExp& e) override;
-    virtual void operator()(const BinaryExp& e) override;
-    virtual void operator()(const IncrementExp& e) override;
-    virtual void operator()(const StringExp& e) override;
-    virtual void operator()(const ReturnExp& e) override;
-    virtual void operator()(const IfStatement& e) override;
-    virtual void operator()(const ConditionalExp& e) override;
-    virtual void operator()(const Goto& e) override;
-    virtual void operator()(const Label& e) override;
-    virtual void operator()(const TypeName& e) override;
+    virtual void operator()(FunctionDec& e) override;
+    virtual void operator()(BlockStatement& e) override;
+    virtual void operator()(Var& e) override;
+    virtual void operator()(VarDec& e) override;
+    virtual void operator()(AssignExp& e) override;
+    virtual void operator()(DecList& e) override;
+    virtual void operator()(NumberExp& e) override;
+    virtual void operator()(UnaryExp& e) override;
+    virtual void operator()(BinaryExp& e) override;
+    virtual void operator()(IncrementExp& e) override;
+    virtual void operator()(DecrementExp& e) override;
+    virtual void operator()(StringExp& e) override;
+    virtual void operator()(ReturnExp& e) override;
+    virtual void operator()(IfStatement& e) override;
+    virtual void operator()(ConditionalExp& e) override;
+    virtual void operator()(Goto& e) override;
+    virtual void operator()(Label& e) override;
+    virtual void operator()(While& e) override;
+    virtual void operator()(DoWhile& e) override;
+    virtual void operator()(For& e) override;
+    virtual void operator()(Break& e) override;
+    virtual void operator()(Continue& e) override;
+    virtual void operator()(TypeName& e) override;
 
-    template <typename AST, typename YAKIR> YAKIR* recurse(const AST& t);
-    template <typename AST, typename YAKIR> YAKIR* recurse(const AST* t);
+    template <typename AST, typename YAKIR> YAKIR* recurse(AST& t);
+    template <typename AST, typename YAKIR> YAKIR* recurse(AST* t);
 
     yakir::YakirNode* res_get() { return res_; }
 

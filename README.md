@@ -14,7 +14,7 @@ Wolf is C compiler implementation inspired from [Nora Sandler guide](https://nor
 - [x] Conditional Expressions
 - [x] Compound Statements
 - [ ] Goto and Labels
-- [ ] Loops
+- [x] Loops
 - [ ] Switch
 - [ ] Functions
 - [ ] File Scope Variable

@@ -186,7 +186,7 @@ namespace ast
   void GenVisitor<Const>::operator()(const_t<For>& e)
   {
     if (e.init_get())
-      e.cond_get()->accept(*this);
+      e.init_get()->accept(*this);
     if (e.cond_get())
       e.cond_get()->accept(*this);
     if (e.post_get())
