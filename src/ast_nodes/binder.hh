@@ -19,6 +19,11 @@ namespace ast
 
     virtual void operator()(FunctionDec& e) override;
     virtual void operator()(BlockStatement& e) override;
+    virtual void operator()(While& e) override;
+    virtual void operator()(DoWhile& e) override;
+    virtual void operator()(For& e) override;
+    virtual void operator()(Break& e) override;
+    virtual void operator()(Continue& e) override;
     virtual void operator()(Var& e) override;
     virtual void operator()(VarDec& e) override;
 
@@ -27,6 +32,8 @@ namespace ast
     misc::Error& error_;
 
     misc::scoped_map<std::string, VarDec*> var_map_;
+
+    LoopStatement* curr_loop_ = nullptr;
   };
 
 } // namespace ast

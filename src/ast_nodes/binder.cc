@@ -66,4 +66,71 @@ namespace ast
       }
   }
 
+  void Binder::operator()(While& e)
+  {
+    e.cond_get().accept(*this);
+
+    LoopStatement* old_loop = curr_loop_;
+    curr_loop_ = &e;
+
+    e.body_get().accept(*this);
+
+    curr_loop_ = old_loop;
+  }
+
+  void Binder::operator()(DoWhile& e)
+  {
+    e.cond_get().accept(*this);
+
+    LoopStatement* old_loop = curr_loop_;
+    curr_loop_ = &e;
+
+    e.body_get().accept(*this);
+
+    curr_loop_ = old_loop;
+  }
+
+  void Binder::operator()(For& e)
+  {
+    var_map_.scope_begin();
+
+    if (e.init_get())
+      e.init_get()->accept(*this);
+    if (e.cond_get())
+      e.cond_get()->accept(*this);
+    if (e.post_get())
+      e.post_get()->accept(*this);
+
+    LoopStatement* old_loop = curr_loop_;
+    curr_loop_ = &e;
+
+    e.body_get().accept(*this);
+
+    curr_loop_ = old_loop;
+
+    var_map_.scope_end();
+  }
+
+  void Binder::operator()(Break& e)
+  {
+    if (curr_loop_ == nullptr)
+      {
+        error_ << misc::error_type::bind << misc::err() << e.location_get()
+               << "break outside of a loop\n";
+      }
+
+    e.def_set(curr_loop_);
+  }
+
+  void Binder::operator()(Continue& e)
+  {
+    if (curr_loop_ == nullptr)
+      {
+        error_ << misc::error_type::bind << misc::err() << e.location_get()
+               << "continue outside of a loop\n";
+      }
+
+    e.def_set(curr_loop_);
+  }
+
 } // namespace ast

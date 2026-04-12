@@ -188,7 +188,6 @@ namespace ast
       }
     else
       {
-        std::cout << "Locgical bin\n";
         ins = new LogicalBinary(e.type_get(), left, right, dst);
       }
 
