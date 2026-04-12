@@ -1,12 +1,17 @@
 #include "parser.hh"
 
 #include "../ast_nodes/block.hh"
+#include "../ast_nodes/break.hh"
+#include "../ast_nodes/continue.hh"
+#include "../ast_nodes/do-while.hh"
+#include "../ast_nodes/for.hh"
 #include "../ast_nodes/goto.hh"
 #include "../ast_nodes/if.hh"
 #include "../ast_nodes/label.hh"
 #include "../ast_nodes/null.hh"
 #include "../ast_nodes/return.hh"
 #include "../ast_nodes/stmt-exp.hh"
+#include "../ast_nodes/while.hh"
 
 using namespace lexer;
 
@@ -36,6 +41,32 @@ namespace parser
         return parse_if_statement();
       }
 
+    else if (tok == "while")
+      {
+        return parse_while_statement();
+      }
+    else if (tok == "do")
+      {
+        return parse_do_while_statement();
+      }
+    else if (tok == "for")
+      {
+        return parse_for_statement();
+      }
+
+    else if (tok == "break")
+      {
+        pop_tok();
+        expect_tok(";");
+        return new ast::Break(tok.location_get());
+      }
+    else if (tok == "continue")
+      {
+        pop_tok();
+        expect_tok(";");
+        return new ast::Continue(tok.location_get());
+      }
+
     else if (tok == "goto")
       {
         pop_tok();
@@ -45,6 +76,8 @@ namespace parser
         return new ast::Goto(tok.location_get() + id.location_get(),
                              id.val_get());
       }
+    // TODO modify label parsing
+    /*
     else if (tok.type() == lexer::IDENTIFIER_TOK)
       {
         pop_tok();
@@ -52,6 +85,7 @@ namespace parser
 
         return new ast::Label(tok.location_get(), tok.val_get());
       }
+      */
 
     else
       {
@@ -89,6 +123,99 @@ namespace parser
       cond->location_get() + (els ? els->location_get() : then->location_get());
 
     return new ast::IfStatement(loc, cond, then, els);
+  }
+
+  ast::Statement* Parser::parse_while_statement()
+  {
+    ENTER_PARSE_FUNC
+
+    expect_tok("while");
+
+    expect_tok("(");
+    ast::Exp* cond = parse_exp();
+    expect_tok(")");
+
+    ast::Statement* body = parse_statement();
+
+    return new ast::While(cond->location_get() + body->location_get(), cond,
+                          body);
+  }
+
+  ast::Statement* Parser::parse_do_while_statement()
+  {
+    ENTER_PARSE_FUNC
+
+    expect_tok("do");
+    ast::Statement* body = parse_statement();
+
+    expect_tok("while");
+
+    expect_tok("(");
+    ast::Exp* cond = parse_exp();
+    expect_tok(")");
+
+    return new ast::DoWhile(cond->location_get() + body->location_get(), cond,
+                            body);
+  }
+
+  ast::ForInit* Parser::parse_for_init()
+  {
+    ast::ForInit* res = nullptr;
+    const lexer::Token& tok = peek_tok();
+
+    if (tok == "int")
+      {
+        res = dynamic_cast<ast::ForInit*>(parse_var_dec());
+        if (res == nullptr)
+          std::clog << "Cannot cast for init dec to ast for init\n";
+        return res;
+      }
+    else if (tok != ";")
+      {
+        res = parse_exp();
+      }
+
+    expect_tok(";");
+
+    return res;
+  }
+
+  ast::Statement* Parser::parse_for_statement()
+  {
+    ENTER_PARSE_FUNC
+
+    const lexer::Token for_tok = expect_tok("for");
+    expect_tok("(");
+
+    ast::Exp* cond = nullptr;
+    ast::Exp* post = nullptr;
+
+    lexer::Token tok = peek_tok();
+    ast::ForInit* init = parse_for_init();
+    if (init == nullptr)
+      std::clog << "\n\n\nFor loop init is null\n\n\n";
+
+    tok = peek_tok();
+
+    if (tok != ";")
+      {
+        cond = parse_exp();
+      }
+
+    expect_tok(";");
+    tok = peek_tok();
+
+    if (tok != ")")
+      {
+        post = parse_exp();
+      }
+
+    expect_tok(")");
+
+    ast::Statement* body = parse_statement();
+
+    return new ast::For(for_tok.location_get() + body->location_get(), init,
+                        cond, post, body);
   }
 
   ast::Statement* Parser::parse_return_statement()

@@ -1,12 +1,15 @@
 #pragma once
 
 #include "declaration.hh"
+#include "for-init.hh"
 #include "type-name.hh"
 
 namespace ast
 {
 
-  class VarDec : public Declaration
+  class VarDec
+    : public Declaration
+    , public ForInit
   {
   public:
     VarDec(const misc::Location& loc,

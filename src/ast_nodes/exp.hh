@@ -1,15 +1,16 @@
 #pragma once
 
 #include "ast.hh"
+#include "for-init.hh"
 
 namespace ast
 {
 
-  class Exp : public Ast
+  class Exp : public ForInit
   {
   public:
     Exp(const misc::Location& l)
-      : Ast(l)
+      : ForInit(l)
     {}
 
     /// Accept a const visitor

@@ -53,6 +53,7 @@ libast_nodes_a_SOURCES =  \
 	conditional.hh \
 	conditional.cc \
 	loop-stmt.hh \
+	for-init.hh \
 	for.cc \
 	for.hh \
 	while.hh \

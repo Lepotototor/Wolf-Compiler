@@ -10,6 +10,7 @@ namespace ast
                  TypeName* type,
                  Exp* init)
     : Declaration(loc, name)
+    , ForInit(loc)
     , type_(type)
     , init_(init)
   {}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "exp.hh"
+#include "for-init.hh"
 #include "loop-stmt.hh"
 
 namespace ast
@@ -10,7 +11,7 @@ namespace ast
   {
   public:
     For(const misc::Location& loc,
-        Statement* init,
+        ForInit* init,
         Exp* cond,
         Exp* post,
         Statement* body);
@@ -22,8 +23,8 @@ namespace ast
     // Accept a non-const visitor
     virtual void accept(Visitor& v) override;
 
-    const Statement* init_get() const { return init_; }
-    Statement* init_get() { return init_; }
+    const ForInit* init_get() const { return init_; }
+    ForInit* init_get() { return init_; }
     const Exp* cond_get() const { return cond_; }
     Exp* cond_get() { return cond_; }
     const Exp* post_get() const { return post_; }
@@ -33,7 +34,7 @@ namespace ast
     Statement& body_get() { return *body_; }
 
   private:
-    Statement* init_;
+    ForInit* init_;
     Exp* cond_;
     Exp* post_;
 

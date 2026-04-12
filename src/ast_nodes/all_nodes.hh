@@ -40,6 +40,7 @@ namespace ast
   class Label;
 
   class LoopStatement;
+  class ForInit;
   class For;
   class While;
   class DoWhile;

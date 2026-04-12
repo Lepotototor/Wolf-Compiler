@@ -55,6 +55,10 @@ namespace parser
 
     ast::Statement* parse_statement();
     ast::Statement* parse_if_statement();
+    ast::Statement* parse_while_statement();
+    ast::Statement* parse_do_while_statement();
+    ast::ForInit* parse_for_init();
+    ast::Statement* parse_for_statement();
     ast::Statement* parse_return_statement();
 
     ast::Exp* parse_exp(unsigned predecence = 0);

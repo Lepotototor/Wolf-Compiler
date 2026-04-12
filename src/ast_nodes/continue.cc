@@ -5,11 +5,11 @@
 namespace ast
 {
 
-  Break::Break(const misc::Location& loc)
+  Continue::Continue(const misc::Location& loc)
     : Statement(loc)
   {}
 
-  void Break::accept(ConstVisitor& v) const { v(*this); }
-  void Break::accept(Visitor& v) { v(*this); }
+  void Continue::accept(ConstVisitor& v) const { v(*this); }
+  void Continue::accept(Visitor& v) { v(*this); }
 
 } // namespace ast

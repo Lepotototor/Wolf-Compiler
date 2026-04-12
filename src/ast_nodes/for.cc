@@ -6,7 +6,7 @@ namespace ast
 {
 
   For::For(const misc::Location& loc,
-           Statement* init,
+           ForInit* init,
            Exp* cond,
            Exp* post,
            Statement* body)

@@ -174,15 +174,14 @@ namespace ast
     ostr_ << e.name_get() << ":";
   }
 
-  void PrettyPrinter::operator()(const Break&) { ostr_ << "break"; }
+  void PrettyPrinter::operator()(const Break&) { ostr_ << "break;"; }
 
-  void PrettyPrinter::operator()(const Continue&) { ostr_ << "continue"; }
+  void PrettyPrinter::operator()(const Continue&) { ostr_ << "continue;"; }
 
   void PrettyPrinter::operator()(const While& e)
   {
     ostr_ << "while (" << e.cond_get() << ")";
-    newline();
-    indent_++;
+    indent_ += 2;
     ostr_ << e.body_get();
     indent_--;
   }
